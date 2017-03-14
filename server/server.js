@@ -1,12 +1,9 @@
 var express = require('express');
-
+var path = require('path');
 var app = express();
-
 var port = process.env.port || 3000;
 
-app.get('/', function(req, res, next) {
-	res.send('Hello World');
-});
+app.use(express.static(__dirname + '/../client'));
 
 app.listen(port);
 
