@@ -13,3 +13,6 @@ var crimeSchema = mongoose.Schema({
 });
 
 
+module.exports.Crime = mongoose.model('Crime', crimeSchema);
+
+
