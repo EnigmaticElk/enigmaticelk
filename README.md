@@ -1,13 +1,13 @@
-# Project Name
+# SF SafeWalk
 
-> Pithy project description
+SF Safewalk helps people plan safe walking routes to avoid streets high in pedestrian relevant crime. A user enters their origin, destination, and time they plan to walk and is given recommendations about what route maximizes safety as well as time efficiency. 
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Jon Chou
+  - Dylan Shelters
+  - Benicio Peinado
+  - Tyler Arbus
 
 ## Table of Contents
 
@@ -21,15 +21,11 @@
 
 ## Usage
 
-> Some usage instructions
+> TBD
 
 ## Requirements
 
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- TBD
 
 ## Development
 
@@ -45,10 +41,9 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap [here](https://docs.google.com/spreadsheets/d/15vVgIuMDFE1GMvDxHVId6Pad4HZNPv-rrrK6mR3Qblo/edit#gid=0)
 
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-# greenfield
