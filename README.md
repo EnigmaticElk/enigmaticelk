@@ -34,9 +34,7 @@ SF Safewalk helps people plan safe walking routes to avoid streets high in pedes
 From within the root directory:
 
 ```sh
-npm install -g bower
 npm install
-bower install
 ```
 
 ### Roadmap
