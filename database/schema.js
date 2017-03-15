@@ -1,15 +1,19 @@
 var mongoose = require('mongoose');
 
-var crimeSchema = mongoose.Schema({
+var crimeSchema = new mongoose.Schema({
   address: String,
   category: String,
   date: String,
-  dayofweek: String
+  dayofweek: String,
   descript: String,
   incidentnum: Number,
   time: String,
-  x: Number,
-  y: Number,
+  location: {
+        type: Object,
+        coordinates: [
+          Number, Number
+        ]
+    }
 });
 
 
