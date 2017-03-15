@@ -1,9 +1,15 @@
 import React from 'react';
 import {render} from 'react-dom';
+import Query from './query.jsx';
 
 class App extends React.Component {
   render () {
-    return <p> Hello World!</p>;
+    return (
+      <div>
+        <h1>SF SafeWalk</h1>
+        <Query/>
+      </div>
+    )
   }
 }
 
