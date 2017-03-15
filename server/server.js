@@ -3,11 +3,17 @@ var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
 var apiCall = require('./workers/openDataCaller');
-
-
+var getPosition = require('./mapsHelper');
 
 app.use(express.static(__dirname + '/../client'));
 
+app.get('/search', function(req, res) {
+  var testString = '944 Market Street';
+  getPosition(testString, function(location) {
+    // do something more useful than this with locaiton
+    res.send(location);
+  });
+});
 
 app.listen(port);
 
