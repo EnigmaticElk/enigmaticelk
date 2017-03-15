@@ -15,12 +15,4 @@ request('https://data.sfgov.org/resource/9v2m-8wqu.json', function(err, res, bod
   }
 });
 
-// quick test to show all results
-var AllLocs = db.findLocs(function(results) {
-  results.map(function(crime) {
-    return crime.location.coordinates
-  });
-})
-
-// setTimeout(findLocs, 5000);
 

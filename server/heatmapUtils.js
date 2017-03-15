@@ -1,4 +1,4 @@
-var db = require('../models/crime');
+var db = require('./models/crime');
 
 var crimeLocs = db.findLocs(function(results) {
   return results.map(function(crime) {
@@ -6,4 +6,4 @@ var crimeLocs = db.findLocs(function(results) {
   });
 })
 
-module.exports = crimeLocs;
+module.exports.crimeLocs = crimeLocs;
