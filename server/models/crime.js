@@ -36,9 +36,25 @@ var findAll = () => {
     if (err) {
       console.error(err);
     } else {
-       console.log('retrieved results', results);
+      console.log(results)
+      return results;
     }
   });
 }
 
 module.exports.findAll = findAll;
+
+
+var findLocs = (callback) => {
+  Crime.find({}, function( err, results) {
+    if (err) {
+      console.error(err);
+    } else {
+      callback(results);
+      // return results.map(function(crime) {
+      //   return crime.location.coordinates;
+      // });
+    }
+  });
+}
+module.exports.findLocs = findLocs;

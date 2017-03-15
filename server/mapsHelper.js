@@ -1,5 +1,5 @@
 var request = require('request');
-
+var db = require('../models/crime');
 
 var getPosition = function(address, callback) {
   address = address.replace(/ /g,"+");
@@ -16,3 +16,11 @@ var getPosition = function(address, callback) {
 
 
 module.exports = getPosition;
+
+
+
+var AllLocs = db.findLocs(function(results) {
+  results.map(function(crime) {
+    return crime.location.coordinates
+  });
+})
