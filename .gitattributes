@@ -1,3 +1,4 @@
 * text=auto
 
 *.json text eol=lf
+bundle.js text eol=lf

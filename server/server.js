@@ -1,8 +1,8 @@
 var express = require('express');
 var path = require('path');
 var app = express();
-var port = process.env.port || 3000;
-var apiCall = require('./Models/OpenDataCaller');
+var port = process.env.PORT || 3000;
+var apiCall = require('./models/openDataCaller');
 
 
 
