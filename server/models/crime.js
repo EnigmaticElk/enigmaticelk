@@ -14,7 +14,7 @@ var storeOpenData = (crimeData, callback) => {
       location: {
         type: "Point",
         coordinates: [
-          crime.x, crime.y
+          crime.location.longitude, crime.location.latitude
         ]
       }
     }, function (err, crime) {

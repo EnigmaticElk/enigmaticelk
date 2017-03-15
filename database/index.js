@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 
-module.exports = mongoose.connection;
+db = mongoose.connection;
 
 db.on('error', function() {
   console.log('mongoose connection error');
@@ -10,3 +10,5 @@ db.on('error', function() {
 db.once('open', function() {
   console.log('mongoose connected successfully');
 });
+
+module.exports.db = db;
