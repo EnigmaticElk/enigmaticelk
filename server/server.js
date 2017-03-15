@@ -8,7 +8,8 @@ var getPosition = require('./mapsHelper');
 app.use(express.static(__dirname + '/../client'));
 
 app.get('/search', function(req, res) {
-  getPosition(function(location) {
+  var testString = '944 Market Street';
+  getPosition(testString, function(location) {
     // do something more useful than this with locaiton
     res.send(location);
   });
