@@ -6,13 +6,12 @@ class Gmap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     }
   }
 
   mapCenterLatLng() {
-    var props = this.props;
-    return new google.maps.LatLng(props.mapCenterLat, props.mapCenterLng);
+    return new google.maps.LatLng(this.props.mapCenterLat, this.props.mapCenterLng);
   }
 
   componentDidMount() {
