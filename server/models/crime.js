@@ -1,5 +1,5 @@
-var db = require('./../database/index').db;
-var Crime = require('./../database/models/Crime');
+var db = require('../../database/index').db;
+var Crime = require('../../database/models/Crime');
 
 var storeOpenData = (crimeData, callback) => {
 
@@ -26,3 +26,19 @@ var storeOpenData = (crimeData, callback) => {
 }
 
 module.exports.storeOpenData = storeOpenData;
+
+
+
+
+// as of right now, only being used to verify results from API call
+var findAll = () => {
+    Crime.find({}, function(err, results) {
+    if (err) {
+      console.error(err);
+    } else {
+       console.log('retrieved results', results);
+    }
+  });
+}
+
+module.exports.findAll = findAll;

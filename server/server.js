@@ -2,13 +2,11 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
-var apiCall = require('./models/openDataCaller');
+var apiCall = require('./models/crime');
 
 
 
 app.use(express.static(__dirname + '/../client'));
-
-
 
 
 app.listen(port);
