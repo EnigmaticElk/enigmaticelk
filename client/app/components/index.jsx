@@ -64,6 +64,8 @@ class App extends React.Component {
           initialZoom={this.state.initialZoom}
           mapCenterLat={this.state.mapCenterLat}
           mapCenterLng={this.state.mapCenterLng}
+          origin={this.state.origin}
+          dest={this.state.destination}
         />
       </div>
     )
