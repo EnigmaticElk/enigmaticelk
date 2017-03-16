@@ -9,9 +9,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       origin: {lat: 0, lng: 0},
-      destination: {lat: 0, lng: 0}
+      destination: {lat: 0, lng: 0},
+      initialZoom: 12,
+      mapCenterLat: 37.773972,
+      mapCenterLng: -122.431297,
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
+    this.changeLoc = this.changeLoc.bind(this);    
   }
 
   setOrigAndDest (origin, destination) {
@@ -26,6 +30,12 @@ class App extends React.Component {
       });
     });
   }
+
+  changeLoc(lat, lng) {
+    this.setState({
+      mapCenterLat: lat,
+      mapCenterLng: lng
+  })
 
   getCoords (address, callback) {
     $.ajax({
@@ -50,7 +60,13 @@ class App extends React.Component {
         <h1>SF SafeWalk</h1>
         <Query setOrigAndDest={this.setOrigAndDest}/>
         <br />
-        <Gmap orig={this.state.origin} dest={this.state.destination}/>
+        <Gmap
+          initialZoom={this.state.initialZoom}
+          mapCenterLat={this.state.mapCenterLat}
+          mapCenterLng={this.state.mapCenterLng}
+          origin={this.state.origin}
+          dest={this.state.destination}
+        />
       </div>
     )
   }

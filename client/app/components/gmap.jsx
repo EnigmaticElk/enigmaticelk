@@ -41,10 +41,4 @@ class Gmap extends React.Component {
   }
 };
 
-Gmap.defaultProps = {
-  initialZoom: 12,
-  mapCenterLat: 37.773972,
-  mapCenterLng: -122.431297,
-};
-
 export default Gmap;
