@@ -5,7 +5,7 @@ var BUILD_DIR = path.resolve(__dirname, 'client/public');
 var APP_DIR = path.resolve(__dirname, 'client/app/components');
 
 var config = {
-  // devtool: 'source-map',
+  devtool: 'source-map',
   entry: APP_DIR + '/index.jsx',
   output: {
     path: BUILD_DIR,
