@@ -21,11 +21,20 @@ class App extends React.Component {
       this.getCoords(destination, (destResults) => {
         var origMarker = new google.maps.Marker({
           position: new google.maps.LatLng(oriResults.lat, oriResults.lng),
-          title: 'Origin'
+          title: 'Origin',
+          label: 'O',
+          animation: google.maps.Animation.DROP
         });
         var destMarker = new google.maps.Marker({
           position: new google.maps.LatLng(destResults.lat, destResults.lng),
-          title: 'Destination'
+          title: 'Destination',
+          label: 'D',
+          animation: google.maps.Animation.DROP
+        });
+
+        // setmap to null for any other markers
+        this.state.markers.forEach((marker) => {
+          marker.setMap(null);
         });
 
         this.setState({
