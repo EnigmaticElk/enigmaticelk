@@ -3,14 +3,15 @@ var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
 var apiCall = require('./workers/openDataCaller');
-var getPosition = require('./mapsHelper');
+var getLatLng = require('./mapsHelper');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-app.get('/search', function(req, res) {
-  var testString = '944 Market Street';
-  getPosition(testString, function(location) {
-    // do something more useful than this with locaiton
+app.post('/search', function(req, res) {
+  getLatLng(req.body.address, function(location) {
     res.send(location);
   });
 });
