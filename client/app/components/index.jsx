@@ -32,7 +32,6 @@ class App extends React.Component {
           animation: google.maps.Animation.DROP
         });
 
-        // setmap to null for any other markers
         this.state.markers.forEach((marker) => {
           marker.setMap(null);
         });
