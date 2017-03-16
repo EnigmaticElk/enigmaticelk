@@ -30,15 +30,15 @@ module.exports.storeOpenData = storeOpenData;
 
 
 
-// as of right now, only being used to verify results from API call
-var findAll = () => {
+var findAll = (callback) => {
     Crime.find({}, function(err, results) {
     if (err) {
       console.error(err);
     } else {
-       console.log('retrieved results', results);
+      callback(results);
     }
   });
 }
 
 module.exports.findAll = findAll;
+
