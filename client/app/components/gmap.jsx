@@ -27,6 +27,11 @@ class Gmap extends React.Component {
   componentDidUpdate() {
     var map = this.state.map;
     map.panTo(this.mapCenterLatLng());
+
+    this.props.markers.forEach((marker) => {
+      marker.setMap(map);
+    });
+
   }
 
   render() {
