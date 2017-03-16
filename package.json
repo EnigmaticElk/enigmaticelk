@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "postinstall": "node deploy.js"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
