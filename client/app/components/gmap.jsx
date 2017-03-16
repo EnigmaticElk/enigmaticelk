@@ -8,7 +8,7 @@ class Gmap extends React.Component {
     this.state = {
 
     }
-    this.overlayHeatmap = this.overlayHeatmap.bind(this)
+    this.overlayHeatmap = this.overlayHeatmap.bind(this);
   }
 
   mapCenterLatLng() {
@@ -43,9 +43,9 @@ class Gmap extends React.Component {
   }
 
   overlayHeatmap() {
-    var crimePoint = this.props.heatmapData
+    var crimePoint = this.props.heatmapData;
     var heatmapPoints = crimePoint.map(function(crime) {
-      return new google.maps.LatLng(crime[0], crime[1])
+      return new google.maps.LatLng(crime[0], crime[1]);
     });
 
 
@@ -56,8 +56,6 @@ class Gmap extends React.Component {
     });
 
   }
-
-  get 
 
   render() {
     var style = {
