@@ -8,8 +8,7 @@ class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      origin: {lat: 0, lng: 0},
-      destination: {lat: 0, lng: 0},
+      markers: [],
       initialZoom: 12,
       mapCenterLat: 37.773972,
       mapCenterLng: -122.431297,
@@ -21,11 +20,20 @@ class App extends React.Component {
   setOrigAndDest (origin, destination) {
     this.getCoords(origin, (oriResults) => {
       this.getCoords(destination, (destResults) => {
+        var origMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(oriResults.lat, oriResults.lng),
+          title: 'Origin'
+        });
+        var destMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(destResults.lat, destResults.lng),
+          title: 'Destination'
+        });
+
+        this.state.markers.push(origMarker);
+        this.state.markers.push(destMarker);
+
         this.setState({
-          origin: {lat: oriResults.Lat,
-                   lng: oriResults.Lng},
-          destination: {lat: destResults.Lat,
-                        lng: destResults.Lng}
+          markers: this.state.markers
         });
       });
     });
@@ -35,7 +43,8 @@ class App extends React.Component {
     this.setState({
       mapCenterLat: lat,
       mapCenterLng: lng
-  })
+    });
+  }
 
   getCoords (address, callback) {
     $.ajax({
@@ -64,8 +73,7 @@ class App extends React.Component {
           initialZoom={this.state.initialZoom}
           mapCenterLat={this.state.mapCenterLat}
           mapCenterLng={this.state.mapCenterLng}
-          origin={this.state.origin}
-          dest={this.state.destination}
+          markers={this.state.markers}
         />
       </div>
     )
