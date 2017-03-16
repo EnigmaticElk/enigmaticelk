@@ -1,5 +1,5 @@
 var request = require('request');
-
+var db = require('../models/crime');
 
 var getLatLng = function(address, callback) {
   address = address.replace(/ /g,"+");
@@ -12,6 +12,5 @@ var getLatLng = function(address, callback) {
     }
   });
 }
-
 
 module.exports = getLatLng;

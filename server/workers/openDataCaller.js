@@ -15,5 +15,3 @@ request('https://data.sfgov.org/resource/9v2m-8wqu.json', function(err, res, bod
   }
 });
 
-// quick test to show all results
-setTimeout(db.findAll, 5000);
