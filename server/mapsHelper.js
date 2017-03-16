@@ -13,9 +13,4 @@ var getLatLng = function(address, callback) {
   });
 }
 
-
-<<<<<<< HEAD
 module.exports = getLatLng;
-=======
-module.exports = getPosition;
-
