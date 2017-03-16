@@ -26,12 +26,17 @@ class Gmap extends React.Component {
 
   componentDidUpdate() {
     var map = this.state.map;
-    map.panTo(this.mapCenterLatLng());
 
-    this.props.markers.forEach((marker) => {
-      marker.setMap(map);
-    });
+    if (this.props.markers[0]) {
+      var bounds = new google.maps.LatLngBounds();
+      var infoWindow = new google.maps.InfoWindow();
 
+      this.props.markers.forEach((marker) => {
+        marker.setMap(map);
+        bounds.extend(marker.position);
+      });
+      map.fitBounds(bounds);
+    }
   }
 
   render() {

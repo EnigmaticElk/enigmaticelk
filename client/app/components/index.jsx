@@ -14,7 +14,6 @@ class App extends React.Component {
       mapCenterLng: -122.431297,
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
-    this.changeLoc = this.changeLoc.bind(this);    
   }
 
   setOrigAndDest (origin, destination) {
@@ -29,20 +28,11 @@ class App extends React.Component {
           title: 'Destination'
         });
 
-        this.state.markers.push(origMarker);
-        this.state.markers.push(destMarker);
-
         this.setState({
-          markers: this.state.markers
+          markers: [origMarker, destMarker]
         });
-      });
-    });
-  }
 
-  changeLoc(lat, lng) {
-    this.setState({
-      mapCenterLat: lat,
-      mapCenterLng: lng
+      });
     });
   }
 
