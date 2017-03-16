@@ -12,6 +12,7 @@ class App extends React.Component {
       initialZoom: 12,
       mapCenterLat: 37.773972,
       mapCenterLng: -122.431297,
+      heatmapData: [[37.773972, -122.431297]],
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
   }
@@ -72,6 +73,7 @@ class App extends React.Component {
           mapCenterLat={this.state.mapCenterLat}
           mapCenterLng={this.state.mapCenterLng}
           markers={this.state.markers}
+          heatmapData={this.state.heatmapData}
         />
       </div>
     )
