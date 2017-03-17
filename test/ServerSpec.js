@@ -23,6 +23,7 @@ describe('Server', function() {
         .expect(200)
         .end(done);
     })
+
     it('should send coordinates when sent an address', function(done) {
       request(app)
         .post('/search')
@@ -35,6 +36,7 @@ describe('Server', function() {
         })
         .end(done);
     })
+    
   })
 
 })
