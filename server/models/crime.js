@@ -14,7 +14,7 @@ var storeOpenData = (crimeData, callback) => {
       location: {
         type: "Point",
         coordinates: [
-          crime.location.latitude, crime.location.longitude
+          crime.location.longitude, crime.location.latitude
         ]
       }
     }, function (err, crime) {
@@ -31,26 +31,14 @@ module.exports.storeOpenData = storeOpenData;
 
 
 var findAll = (callback) => {
-  Crime.find({}, function(err, results) {
+    Crime.find({}, function(err, results) {
     if (err) {
       console.error(err);
     } else {
       callback(results);
     }
   });
-};
+}
 
 module.exports.findAll = findAll;
 
-
-var findLocations = (callback) => {
-  Crime.find({}, 'location.coordinates -_id', function(err, results) {
-    if (err) {
-      console.error(err);
-    } else {
-      callback(results);
-    }
-  });
-};
-
-module.exports.findLocations = findLocations;

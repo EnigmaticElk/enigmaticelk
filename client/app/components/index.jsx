@@ -12,17 +12,8 @@ class App extends React.Component {
       initialZoom: 12,
       mapCenterLat: 37.773972,
       mapCenterLng: -122.431297,
-      heatmapData: [],
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
-    this.getHeatmapData = this.getHeatmapData.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
-  }
-
-  componentDidMount() {
-    this.getHeatmapData((results) => {
-      this.setState({heatmapData: results});
-    });
   }
 
   setOrigAndDest (origin, destination) {
@@ -62,19 +53,6 @@ class App extends React.Component {
         address: address
       }),
       success: function (data) {
-        callback(JSON.parse(data));
-      },
-      error: function(err) {
-        console.log(err);
-      }
-    });
-  }
-
-  getHeatmapData (callback) {
-    $.ajax({
-      url: '/heatmapData',
-      method: 'GET',
-      success: function (data) {
         callback(data);
       },
       error: function(err) {
@@ -82,7 +60,6 @@ class App extends React.Component {
       }
     });
   }
-
 
   render () {
     return (
@@ -95,7 +72,6 @@ class App extends React.Component {
           mapCenterLat={this.state.mapCenterLat}
           mapCenterLng={this.state.mapCenterLng}
           markers={this.state.markers}
-          heatmapData={this.state.heatmapData}
         />
       </div>
     )
