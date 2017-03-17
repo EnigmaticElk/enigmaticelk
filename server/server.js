@@ -19,9 +19,9 @@ app.post('/search', function(req, res) {
 
 app.get('/heatmapData', function(req, res) {
   getCrimeLocs(function(locations) {
-    res.send(locations)
-  })
-})
+    res.send(locations);
+  });
+});
 
 app.listen(port);
 

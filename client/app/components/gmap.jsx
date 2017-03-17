@@ -45,26 +45,17 @@ class Gmap extends React.Component {
   }
 
   overlayHeatmap() {
-    var crimePoints = this.props.heatmapData;
-    // console.log('crime coordinates', crimePoints[0].location.coordinates[0] - 0)
-    
-    var crimetest = [crimePoints[0].location.coordinates[1] - 0, crimePoints[0].location.coordinates[0] - 0]
 
-    var heatmapPoints = crimePoints.map(function(crime) {
-      return (new google.maps.LatLng(crime.location.coordinates[1] - 0, crime.location.coordinates[0] - 0));
+    var heatmapPoints = this.props.heatmapData.map(function(crime) {
+      return new google.maps.LatLng(crime.location.coordinates[1] - 0, crime.location.coordinates[0] - 0);
     });
-    var heatmapSlice = heatmapPoints.slice(0, 58001);
-    console.log('heatmapPoints[0]', heatmapPoints[0])
-    console.log('heatmapSlice', heatmapSlice)
 
-    var testData = new google.maps.LatLng(crimetest[0], crimetest[1])
-    // console.log('test Data', testData)
-
-    var moarTest = new google.maps.LatLng(37.782, -122.447)
-    // console.log('moar test', moarTest)
+    // Google heatmap layer has upper limites so we can't render all at once for right now
+    var heatmapSlice = heatmapPoints.slice(0, 58000);
 
     var heatmap = new google.maps.visualization.HeatmapLayer({
       data: heatmapSlice,
+      radius: 30,
       map: this.state.map
     });
 

@@ -20,9 +20,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-
     this.getHeatmapData((results) => {
-      this.setState({heatmapData: results})
+      this.setState({heatmapData: results});
     });
   }
 
