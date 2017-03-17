@@ -8,6 +8,7 @@ class Gmap extends React.Component {
     this.state = {
 
     }
+    this.overlayHeatmap = this.overlayHeatmap.bind(this);
   }
 
   mapCenterLatLng() {
@@ -37,6 +38,27 @@ class Gmap extends React.Component {
       });
       map.fitBounds(bounds);
     }
+
+    if (this.props.heatmapData.length > 0) {
+      this.overlayHeatmap();
+    }
+  }
+
+  overlayHeatmap() {
+
+    var heatmapPoints = this.props.heatmapData.map(function(crime) {
+      return new google.maps.LatLng(crime.location.coordinates[1] - 0, crime.location.coordinates[0] - 0);
+    });
+
+    // Google heatmap layer has upper limites so we can't render all at once for right now
+    var heatmapSlice = heatmapPoints.slice(0, 58000);
+
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+      data: heatmapSlice,
+      radius: 30,
+      map: this.state.map
+    });
+
   }
 
   render() {
