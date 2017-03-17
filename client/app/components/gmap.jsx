@@ -39,19 +39,32 @@ class Gmap extends React.Component {
       map.fitBounds(bounds);
     }
 
-    this.overlayHeatmap();
+    if (this.props.heatmapData.length > 0) {
+      this.overlayHeatmap();
+    }
   }
 
   overlayHeatmap() {
-    var crimePoint = this.props.heatmapData;
-    var heatmapPoints = crimePoint.map(function(crime) {
-      return new google.maps.LatLng(crime[0], crime[1]);
+    var crimePoints = this.props.heatmapData;
+    // console.log('crime coordinates', crimePoints[0].location.coordinates[0] - 0)
+    
+    var crimetest = [crimePoints[0].location.coordinates[1] - 0, crimePoints[0].location.coordinates[0] - 0]
+
+    var heatmapPoints = crimePoints.map(function(crime) {
+      return (new google.maps.LatLng(crime.location.coordinates[1] - 0, crime.location.coordinates[0] - 0));
     });
+    var heatmapSlice = heatmapPoints.slice(0, 58001);
+    console.log('heatmapPoints[0]', heatmapPoints[0])
+    console.log('heatmapSlice', heatmapSlice)
 
+    var testData = new google.maps.LatLng(crimetest[0], crimetest[1])
+    // console.log('test Data', testData)
 
+    var moarTest = new google.maps.LatLng(37.782, -122.447)
+    // console.log('moar test', moarTest)
 
-   var heatmap = new google.maps.visualization.HeatmapLayer({
-      data: heatmapPoints,
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+      data: heatmapSlice,
       map: this.state.map
     });
 
