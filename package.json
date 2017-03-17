@@ -1,5 +1,5 @@
 {
-  "name": "SF SafeWalk",
+  "name": "SF_SafeWalk",
   "version": "",
   "description": "",
   "author": "",
@@ -33,6 +33,7 @@
     "chai": "^3.5.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "mocha": "^3.2.0",
+    "supertest": "^3.0.0",
     "webpack": "^2.2.1"
   },
   "babel": {
