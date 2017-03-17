@@ -1,9 +1,9 @@
-var db = require('./models/crime');
+var db = require('../models/crime');
 
-var getCrimeLocs = function(callback) {
-  db.findLocations(function(results) {
-    callback(results);
+var crimeLocs = db.findAll(function(results) {
+  return results.map(function(crime) {
+    return crime.location.coordinates
   });
-};
+})
 
-module.exports = getCrimeLocs;
+module.exports = crimeLocs;
