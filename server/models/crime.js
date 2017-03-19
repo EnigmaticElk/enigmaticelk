@@ -27,8 +27,13 @@ var storeOpenData = (crimeData, callback) => {
 
 module.exports.storeOpenData = storeOpenData;
 
+var clearDatabase = (callback) => {
+  Crime.remove({}, function(err) {
+    callback();
+  });
+};
 
-
+module.exports.clearDatabase = clearDatabase;
 
 var findAll = (callback) => {
   Crime.find({}, function(err, results) {
