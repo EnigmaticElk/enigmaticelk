@@ -62,7 +62,7 @@ class App extends React.Component {
         address: address
       }),
       success: function (data) {
-        callback(JSON.parse(data));
+        callback(data);
       },
       error: function(err) {
         console.log(err);

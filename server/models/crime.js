@@ -25,10 +25,11 @@ var storeOpenData = (crimeData, callback) => {
   });
 }
 
-module.exports.storeOpenData = storeOpenData;
-
-
-
+var clearDatabase = (callback) => {
+  Crime.remove({}, function(err) {
+    callback();
+  });
+};
 
 var findAll = (callback) => {
   Crime.find({}, function(err, results) {
@@ -40,9 +41,6 @@ var findAll = (callback) => {
   });
 };
 
-module.exports.findAll = findAll;
-
-
 var findLocations = (callback) => {
   Crime.find({}, 'location.coordinates -_id', function(err, results) {
     if (err) {
@@ -53,4 +51,7 @@ var findLocations = (callback) => {
   });
 };
 
+module.exports.storeOpenData = storeOpenData;
+module.exports.clearDatabase = clearDatabase;
 module.exports.findLocations = findLocations;
+module.exports.findAll = findAll;
