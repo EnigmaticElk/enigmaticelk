@@ -34,7 +34,7 @@ class Query extends React.Component {
         <br />
         Destination: <input id="dest-input" type="text" size="50" />
         <br />
-        <button onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace().formatted_address, this.state.destination.getPlace().formatted_address);}}>Search</button>
+        <button onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace(), this.state.destination.getPlace());}}>Search</button>
       </div>
     );
   }
