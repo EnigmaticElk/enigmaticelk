@@ -3,39 +3,47 @@ import React from 'react';
 class Query extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      origin: '',
-      destination: ''
+    this.state = {};
+  }
+
+  componentDidMount() {
+    var defaultBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(37.699862,-122.516221),
+      new google.maps.LatLng(37.815635, -122.369876)
+      );
+    var options = {
+      bounds: defaultBounds,
+      strictBounds: true
     };
-    this.updateOriginState = this.updateOriginState.bind(this);
-    this.updateDestinationState = this.updateDestinationState.bind(this);
-  }
+    var origin = document.getElementById('origin-input');
+    var dest = document.getElementById('dest-input');
+    var origAutocomplete = new google.maps.places.Autocomplete(origin, options);
+    var destAutocomplete = new google.maps.places.Autocomplete(dest, options);
 
-  updateOriginState (e) {
     this.setState({
-      origin: e.target.value
-    });
-  }
+      origin: origAutocomplete,
+      destination: destAutocomplete
+    })
 
-  updateDestinationState (e) {
-    this.setState({
-      destination: e.target.value
-    });
   }
 
   render () {
     return (
       <div>
-        Origin: <input type="text" onChange={this.updateOriginState}/>
-        Destination: <input type="text" onChange={this.updateDestinationState}/>
-        Time of day: <select>
-          <option>Day</option>
-          <option>Night</option>
-        </select>
-        <button onClick={() => {this.props.setOrigAndDest(this.state.origin, this.state.destination);}}>Search</button>
+        Origin: <input id="origin-input" type="text" size="50" />
+        <br />
+        Destination: <input id="dest-input" type="text" size="50" />
+        <br />
+        <button onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace(), this.state.destination.getPlace());}}>Search</button>
       </div>
     );
   }
 }
+
+//Commented out time of day until feature implemented
+// Time of day: <select>
+//   <option>Day</option>
+//   <option>Night</option>
+// </select>
 
 export default Query;
