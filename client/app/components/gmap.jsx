@@ -5,9 +5,7 @@ class Gmap extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-
-    }
+    this.state = {};
     this.overlayHeatmap = this.overlayHeatmap.bind(this);
   }
 
@@ -20,8 +18,8 @@ class Gmap extends React.Component {
     var mapOptions = {
       center: this.mapCenterLatLng(),
       zoom: this.props.initialZoom
-    },
-    map = new google.maps.Map(dom, mapOptions);
+    };
+    var map = new google.maps.Map(dom, mapOptions);
     this.setState({map: map});
   }
 

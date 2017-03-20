@@ -26,47 +26,25 @@ class App extends React.Component {
   }
 
   setOrigAndDest (origin, destination) {
-    this.getCoords(origin, (oriResults) => {
-      this.getCoords(destination, (destResults) => {
-        var origMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(oriResults.lat, oriResults.lng),
-          title: 'Origin',
-          label: 'O',
-          animation: google.maps.Animation.DROP
-        });
-        var destMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(destResults.lat, destResults.lng),
-          title: 'Destination',
-          label: 'D',
-          animation: google.maps.Animation.DROP
-        });
-
-        this.state.markers.forEach((marker) => {
-          marker.setMap(null);
-        });
-
-        this.setState({
-          markers: [origMarker, destMarker]
-        });
-
-      });
+    var origMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(origin.geometry.location.lat(), origin.geometry.location.lng()),
+      title: 'Origin',
+      label: 'O',
+      animation: google.maps.Animation.DROP
     });
-  }
+    var destMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(destination.geometry.location.lat(), destination.geometry.location.lng()),
+      title: 'Destination',
+      label: 'D',
+      animation: google.maps.Animation.DROP
+    });
 
-  getCoords (address, callback) {
-    $.ajax({
-      url: '/search',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        address: address
-      }),
-      success: function (data) {
-        callback(data);
-      },
-      error: function(err) {
-        console.log(err);
-      }
+    this.state.markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+
+    this.setState({
+      markers: [origMarker, destMarker]
     });
   }
 
@@ -82,7 +60,6 @@ class App extends React.Component {
       }
     });
   }
-
 
   render () {
     return (
