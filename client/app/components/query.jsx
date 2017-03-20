@@ -3,24 +3,7 @@ import React from 'react';
 class Query extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      origin: '',
-      destination: ''
-    };
-    this.updateOriginState = this.updateOriginState.bind(this);
-    this.updateDestinationState = this.updateDestinationState.bind(this);
-  }
-
-  updateOriginState (e) {
-    this.setState({
-      origin: e.target.value
-    });
-  }
-
-  updateDestinationState (e) {
-    this.setState({
-      destination: e.target.value
-    });
+    this.state = {};
   }
 
   componentDidMount() {
@@ -37,16 +20,21 @@ class Query extends React.Component {
     var origAutocomplete = new google.maps.places.Autocomplete(origin, options);
     var destAutocomplete = new google.maps.places.Autocomplete(dest, options);
 
+    this.setState({
+      origin: origAutocomplete,
+      destination: destAutocomplete
+    })
+
   }
 
   render () {
     return (
       <div>
-        Origin: <input id="origin-input" type="text" size="50" onChange={this.updateOriginState}/>
+        Origin: <input id="origin-input" type="text" size="50" />
         <br />
-        Destination: <input id="dest-input" type="text" size="50" onChange={this.updateDestinationState}/>
+        Destination: <input id="dest-input" type="text" size="50" />
         <br />
-        <button onClick={() => {this.props.setOrigAndDest(this.state.origin, this.state.destination);}}>Search</button>
+        <button onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace().formatted_address, this.state.destination.getPlace().formatted_address);}}>Search</button>
       </div>
     );
   }
