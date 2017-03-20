@@ -20,9 +20,9 @@ class App extends React.Component {
 
   componentDidMount() {
     axios.get('/heatmapData')
-      .then((res) => {
+      .then(({data}) => {
         this.setState({
-          heatmapData: res.data
+          heatmapData: data
         })
       })
   }
