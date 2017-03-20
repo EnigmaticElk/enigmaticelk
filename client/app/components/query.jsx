@@ -9,8 +9,8 @@ class Query extends React.Component {
   componentDidMount() {
     var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.699862,-122.516221),
-      new google.maps.LatLng(37.815635, -122.369876));
-
+      new google.maps.LatLng(37.815635, -122.369876)
+      );
     var options = {
       bounds: defaultBounds,
       strictBounds: true
