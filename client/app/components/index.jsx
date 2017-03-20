@@ -48,23 +48,6 @@ class App extends React.Component {
     });
   }
 
-  getCoords (address, callback) {
-    $.ajax({
-      url: '/search',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        address: address
-      }),
-      success: function (data) {
-        callback(data);
-      },
-      error: function(err) {
-        console.log(err);
-      }
-    });
-  }
-
   getHeatmapData (callback) {
     $.ajax({
       url: '/heatmapData',
@@ -77,7 +60,6 @@ class App extends React.Component {
       }
     });
   }
-
 
   render () {
     return (
