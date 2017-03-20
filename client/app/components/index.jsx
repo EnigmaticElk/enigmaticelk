@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
+import Directions from './directions.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -63,6 +64,7 @@ class App extends React.Component {
           markers={this.state.markers}
           heatmapData={this.state.heatmapData}
         />
+        <Directions />
       </div>
     )
   }
