@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
-import $ from 'jquery';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor (props) {
@@ -15,14 +15,16 @@ class App extends React.Component {
       heatmapData: [],
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
-    this.getHeatmapData = this.getHeatmapData.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
-    this.getHeatmapData((results) => {
-      this.setState({heatmapData: results});
-    });
+    axios.get('/heatmapData')
+      .then((res) => {
+        this.setState({
+          heatmapData: res.data
+        })
+      })
   }
 
   setOrigAndDest (origin, destination) {
@@ -45,19 +47,6 @@ class App extends React.Component {
 
     this.setState({
       markers: [origMarker, destMarker]
-    });
-  }
-
-  getHeatmapData (callback) {
-    $.ajax({
-      url: '/heatmapData',
-      method: 'GET',
-      success: function (data) {
-        callback(data);
-      },
-      error: function(err) {
-        console.log(err);
-      }
     });
   }
 
