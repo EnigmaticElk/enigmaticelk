@@ -8,25 +8,32 @@ class Directions extends React.Component {
   }
 
   componentDidMount() {
-    this.calcRoute('Hack Reactor', 'Market Street')
-  }
-
-  calcRoute(start, end) {
-    console.log('calcRoute called');
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+    this.setState({
+      directionsService: directionsService,
+      directionsDisplay: directionsDisplay
+    });
+  }
 
+  componentDidUpdate() {
+    if (this.props.origDest) {
+      this.calcRoute(this.props.origDest[0].formatted_address, this.props.origDest[1].formatted_address);
+    }
+  }
+
+  calcRoute(start, end) {
     var request = {
       origin: start,
       destination: end,
       travelMode: 'WALKING'
     }
 
-    directionsService.route(request, (response, status) => {
+    this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
-        console.log(response);
-        directionsDisplay.setDirections(response);
+        this.props.setDirections(this.state.directionsDisplay);
+        this.state.directionsDisplay.setDirections(response);
       }
     })
   }

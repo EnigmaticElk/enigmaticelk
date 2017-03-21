@@ -5,7 +5,9 @@ class Gmap extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      heatmapRendered: false
+    };
     this.overlayHeatmap = this.overlayHeatmap.bind(this);
   }
 
@@ -40,6 +42,13 @@ class Gmap extends React.Component {
     if (this.props.heatmapData.length > 0) {
       this.overlayHeatmap();
     }
+
+    if (!this.state.heatmapRendered && this.props.directions) {
+      this.props.directions.setMap(map);
+      this.setState({
+        heatmapRendered: true
+      })
+    }
   }
 
   overlayHeatmap() {
@@ -62,7 +71,7 @@ class Gmap extends React.Component {
   render() {
     var style = {
       width: '650px',
-      height: '625px'
+      height: '500px'
     };
 
     return (
