@@ -1,5 +1,4 @@
 var request = require('request');
-var path = require('path');
 var db = require('../models/crime');
 
 request('https://data.sfgov.org/resource/9v2m-8wqu.json', function(err, res, body) {

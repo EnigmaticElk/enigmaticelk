@@ -34,9 +34,9 @@ var clearDatabase = (callback) => {
 var findAll = (callback) => {
   Crime.find({}, function(err, results) {
     if (err) {
-      console.error(err);
+      callback(err, null);
     } else {
-      callback(results);
+      callback(null, results);
     }
   });
 };

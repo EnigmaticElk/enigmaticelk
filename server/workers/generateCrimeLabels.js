@@ -1,36 +1,48 @@
 var request = require('request');
-var path = require('path');
 var db = require('../models/rating.js');
+var crime = require('../models/crime');
 
-var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=37.77622099,-122.4116098&key=AIzaSyCNnBd6iXMKgGeHXV8_ctlXpgdNMUXQKyk';
-
-request(url, function(err, res, body) {
+crime.findAll(function(err, results) {
   if (err) {
     console.log(err);
   } else {
-    var street = JSON.parse(body).results[0].address_components[1].long_name;
-    db.findRatingEntry(street, function(err1, results1) {
-      if (err1) {
-        db.createRatingEntry(street, function(err2, results2) {
-          if (err2) {
-            console.log(err2);
-          } else {
-            console.log('created new entry');
-          }
-        });
-      } else {
-        console.log('hello');
-        db.updateRatingEntry(street, results1, function(err3, results3) {
-          if (err3) {
-            console.log(err3);
-          } else {
-            console.log('updated entry');
-          }
-        });
-      }
-    });
+    for (var i = 0; i < results.length; i++) {
+      updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);
+    }
   }
 });
+
+var updateCrimeCounter = function(lat, lng) {
+  var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCNnBd6iXMKgGeHXV8_ctlXpgdNMUXQKyk`;
+  request(url, function(err, res, body) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('parsed-body: ', JSON.parse(body));
+      var street = JSON.parse(body).results[0].address_components[1].long_name;
+      db.findRatingEntry(street, function(err1, results1) {
+        if (err1) {
+          db.createRatingEntry(street, function(err2, results2) {
+            if (err2) {
+              console.log(err2);
+            } else {
+              console.log('created new entry');
+            }
+          });
+        } else {
+          console.log('hello');
+          db.updateRatingEntry(street, results1, function(err3, results3) {
+            if (err3) {
+              console.log(err3);
+            } else {
+              console.log('updated entry');
+            }
+          });
+        }
+      });
+    }
+  });
+}
 
 
 // needs to run after openDataCaller finishes
@@ -54,3 +66,4 @@ request(url, function(err, res, body) {
 //rename opendata caller and findcrime addresses to match their models in the db and server
 // take out or key from requests to google, put them in a gitignore file 
 //refactor to use promises
+
