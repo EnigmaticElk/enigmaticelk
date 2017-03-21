@@ -19,6 +19,8 @@ var crimeSchema = new mongoose.Schema({
   }
 });
 
+crimeSchema.index({loc: "2dsphere"})
+
 module.exports = mongoose.model('Crime', crimeSchema);
 
 
