@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 
-
 var crimeSchema = new mongoose.Schema({
   address: String,
   category: String,
