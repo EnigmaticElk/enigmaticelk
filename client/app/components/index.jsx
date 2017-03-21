@@ -25,10 +25,12 @@ class App extends React.Component {
           heatmapData: data
         })
       })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   setOrigAndDest (origin, destination) {
-
     this.setState({
       origDest: [origin, destination]
     });
@@ -49,7 +51,6 @@ class App extends React.Component {
         <Gmap
           heatmapData={this.state.heatmapData}
           directions={this.state.directions}
-          origDest={this.state.origDest}
         />
         <Directions
           origDest={this.state.origDest}
