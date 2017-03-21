@@ -14,9 +14,12 @@ class App extends React.Component {
       mapCenterLat: 37.773972,
       mapCenterLng: -122.431297,
       heatmapData: [],
+      origDest: null,
+      directions: null
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.setDirections = this.setDirections.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +32,11 @@ class App extends React.Component {
   }
 
   setOrigAndDest (origin, destination) {
+
+    this.setState({
+      origDest: [origin, destination]
+    });
+
     var origMarker = new google.maps.Marker({
       position: new google.maps.LatLng(origin.geometry.location.lat(), origin.geometry.location.lng()),
       title: 'Origin',
@@ -51,6 +59,12 @@ class App extends React.Component {
     });
   }
 
+  setDirections(directions) {
+   this.setState({
+     directions: directions
+   });
+  }
+
   render () {
     return (
       <div>
@@ -63,8 +77,12 @@ class App extends React.Component {
           mapCenterLng={this.state.mapCenterLng}
           markers={this.state.markers}
           heatmapData={this.state.heatmapData}
+          directions={this.state.directions}
         />
-        <Directions />
+        <Directions
+          origDest={this.state.origDest}
+          setDirections={this.setDirections}
+         />
       </div>
     )
   }
