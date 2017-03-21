@@ -53,7 +53,7 @@ class Gmap extends React.Component {
 
   render() {
     var style = {
-      width: '650px',
+      width: '750px',
       height: '500px'
     };
 

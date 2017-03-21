@@ -52,6 +52,7 @@ class App extends React.Component {
           heatmapData={this.state.heatmapData}
           directions={this.state.directions}
         />
+        <br />
         <Directions
           origDest={this.state.origDest}
           setDirections={this.setDirections}
