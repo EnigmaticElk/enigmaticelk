@@ -11,12 +11,13 @@ var storeOpenData = (crimeData, callback) => {
       dayofweek: crime.dayofweek,
       descript: crime.descript,
       incidntnum: crime.incidntnum,
-      location: {
+      loc: {
         type: "Point",
         coordinates: [
           crime.location.latitude, crime.location.longitude
         ]
-      }
+      },
+      index: ""
     }, function (err, crime) {
       if (err) {
         callback(err);
@@ -42,7 +43,7 @@ var findAll = (callback) => {
 };
 
 var findLocations = (callback) => {
-  Crime.find({}, 'location.coordinates -_id', function(err, results) {
+  Crime.find({}, 'loc.coordinates -_id', function(err, results) {
     if (err) {
       console.error(err);
     } else {

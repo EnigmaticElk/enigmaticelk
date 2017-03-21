@@ -8,7 +8,7 @@ var crimeSchema = new mongoose.Schema({
   descript: String,
   incidntnum: Number,
   time: String,
-  location: {
+  loc: {
     type: Object,
     coordinates: [
       Number, Number
