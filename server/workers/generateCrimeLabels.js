@@ -2,24 +2,14 @@ var request = require('request');
 var db = require('../models/rating.js');
 var crime = require('../models/crime');
 
-crime.findAll(function(err, results) {
-  if (err) {
-    console.log(err);
-  } else {
-    for (var i = 0; i < results.length; i++) {
-      updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);
-    }
-  }
-});
-
 var updateCrimeCounter = function(lat, lng) {
-  var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCNnBd6iXMKgGeHXV8_ctlXpgdNMUXQKyk`;
+  var url =  `http://locationiq.org/v1/reverse.php?format=json&key=6bc67043075bb2c0f0b3&lat=37.77622099&lon=-122.4116098`;
   request(url, function(err, res, body) {
     if (err) {
       console.log(err);
     } else {
-      console.log('parsed-body: ', JSON.parse(body));
-      var street = JSON.parse(body).results[0].address_components[1].long_name;
+      console.log('road name: ', JSON.parse(body).address.road);
+      var street = JSON.parse(body).address.road;
       db.findRatingEntry(street, function(err1, results1) {
         if (err1) {
           db.createRatingEntry(street, function(err2, results2) {
@@ -30,7 +20,6 @@ var updateCrimeCounter = function(lat, lng) {
             }
           });
         } else {
-          console.log('hello');
           db.updateRatingEntry(street, results1, function(err3, results3) {
             if (err3) {
               console.log(err3);
@@ -42,7 +31,18 @@ var updateCrimeCounter = function(lat, lng) {
       });
     }
   });
-}
+};
+
+crime.findAll(function(err, results) {
+  if (err) {
+    console.log(err);
+  } else {
+    for (var i = 0; i < 1/*results.length*/; i++) {
+      updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);
+    }
+  }
+});
+
 
 
 // needs to run after openDataCaller finishes
