@@ -11,7 +11,7 @@ var crimeSchema = new mongoose.Schema({
     index: { unique: true }
   },
   time: String,
-  location: {
+  loc: {
     type: Object,
     coordinates: [
       Number, Number
