@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var ratingSchema = new mongoose.Schema({
-  address: String, 
+  street: String, 
   counter: Number, 
-  label: String
+  rating: String
 });
 
-module.exports = mongoose.model('Crime', crimeSchema);
+module.exports = mongoose.model('Rating', ratingSchema);

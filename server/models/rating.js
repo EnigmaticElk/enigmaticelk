@@ -1,7 +1,7 @@
 var db = require('../../database/index').db;
 var Rating = require('../../database/models/Rating');
 
-var clearCollection = (callback) => {
+var clearCollection = function(callback) {
   Rating.remove({}, function(err) {
     callback();
   });
@@ -9,7 +9,9 @@ var clearCollection = (callback) => {
 
 var findRatingEntry = function(street, callback) {
   Rating.find({street, street}, function(err, results) {
-    if (err1) {
+    // if street isn't found an empty array is returned, not an error, so to make the callback work an empty array is treated as if it were an error
+    if (results.length < 1) {
+      err = results;
       callback(err, null);
     } else {
       callback(null, results);
@@ -17,9 +19,9 @@ var findRatingEntry = function(street, callback) {
   });
 };
 
-var updateRatingEntry = function(street, callback) {
-  Rating.findOneAndUpdate({street: street}, {$set:{counter:(results1[0].counter + 1)}}, {new: true}, function(err, results) {
-    if (err2) {
+var updateRatingEntry = function(street, entry, callback) {
+  Rating.findOneAndUpdate({street: street}, {$set:{counter:(entry[0].counter + 1)}}, {new: true}, function(err, results) {
+    if (err) {
       callback(err, null);
     } else {
       callback(null, results);
