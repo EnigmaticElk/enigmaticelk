@@ -8,7 +8,7 @@ var crimeSchema = new mongoose.Schema({
   descript: String,
   incidntnum: Number,
   time: String,
-  loc: {
+  location: {
     type: Object,
     coordinates: [
       Number, Number
@@ -16,7 +16,7 @@ var crimeSchema = new mongoose.Schema({
   }
 });
 
-crimeSchema.index({loc: "2dsphere"})
+crimeSchema.index({location: "2dsphere"})
 
 module.exports = mongoose.model('Crime', crimeSchema);
 

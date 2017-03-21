@@ -11,13 +11,13 @@ var storeOpenData = (crimeData, callback) => {
       dayofweek: crime.dayofweek,
       descript: crime.descript,
       incidntnum: crime.incidntnum,
-      loc: {
+      location: {
         type: "Point",
         coordinates: [
           crime.location.longitude - 0, crime.location.latitude -0
         ]
       },
-      index: ""
+      index: "location"
     }, function (err, crime) {
       if (err) {
         callback(err);
@@ -43,7 +43,7 @@ var findAll = (callback) => {
 };
 
 var findLocations = (callback) => {
-  Crime.find({}, 'loc.coordinates -_id', function(err, results) {
+  Crime.find({}, 'location.coordinates -_id', function(err, results) {
     if (err) {
       console.error(err);
     } else {
@@ -52,30 +52,31 @@ var findLocations = (callback) => {
   });
 };
 
-// var findNearbyCrimes = (pointOfInterest, callback) => {
-//   Crime.find({
-//     loc: {
-//       $near: {
-//         $geometry: {
-//           type: "Point",
-//           coordinates: pointOfInterest
-//         },
-//         $maxDistance: 100,
-//       }
-//     }
-//   }, function (err, results) {
-//     if (err) {
-//       console.error(err);
-//     } else {
-//       console.log(results);
-//       callback(results);
-//     }
-//   })
-// }
+var findNearbyCrimes = (pointOfInterest, callback) => {
+  Crime.find({
+    location: {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: pointOfInterest
+        },
+        $maxDistance: 100,
+      }
+    }
+  }, function (err, results) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(results);
+      callback(results);
+    }
+  })
+}
 
 module.exports.storeOpenData = storeOpenData;
 module.exports.clearDatabase = clearDatabase;
 module.exports.findLocations = findLocations;
 module.exports.findAll = findAll;
 
-// module.exports.findNearbyCrimes = findNearbyCrimes;
+
+module.exports.findNearbyCrimes = findNearbyCrimes;
