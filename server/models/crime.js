@@ -14,7 +14,7 @@ var storeOpenData = (crimeData, callback) => {
       loc: {
         type: "Point",
         coordinates: [
-          crime.location.latitude, crime.location.longitude
+          crime.location.longitude - 0, crime.location.latitude -0
         ]
       },
       index: ""
@@ -52,7 +52,30 @@ var findLocations = (callback) => {
   });
 };
 
+// var findNearbyCrimes = (pointOfInterest, callback) => {
+//   Crime.find({
+//     loc: {
+//       $near: {
+//         $geometry: {
+//           type: "Point",
+//           coordinates: pointOfInterest
+//         },
+//         $maxDistance: 100,
+//       }
+//     }
+//   }, function (err, results) {
+//     if (err) {
+//       console.error(err);
+//     } else {
+//       console.log(results);
+//       callback(results);
+//     }
+//   })
+// }
+
 module.exports.storeOpenData = storeOpenData;
 module.exports.clearDatabase = clearDatabase;
-module.exports.findAll = findAll;
 module.exports.findLocations = findLocations;
+module.exports.findAll = findAll;
+
+// module.exports.findNearbyCrimes = findNearbyCrimes;
