@@ -62,7 +62,7 @@ class Gmap extends React.Component {
   render() {
     var style = {
       width: '650px',
-      height: '650px'
+      height: '625px'
     };
 
     return (
