@@ -7,9 +7,9 @@ var clearCollection = function(callback) {
   });
 };
 
+// if street isn't found an empty array is returned, not an error, so to make the callback work an empty array is treated as if it were an error
 var findRatingEntry = function(street, callback) {
   Rating.find({street, street}, function(err, results) {
-    // if street isn't found an empty array is returned, not an error, so to make the callback work an empty array is treated as if it were an error
     if (results.length < 1) {
       err = results;
       callback(err, null);
