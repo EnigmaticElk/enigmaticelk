@@ -27,11 +27,3 @@ db.findAllRatings(function(err1, results1) {
   }
 });
 
-
-
-// take out .db from crime.js and rating.js and where it gets exported (database index.js)
-// change file from above to clear database to clear collections 
-//rename opendata caller and findcrime addresses to match their models in the db and server
-// take out or key from requests to google, put them in a gitignore file 
-//refactor to use promises
-
