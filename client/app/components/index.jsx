@@ -2,20 +2,20 @@ import React from 'react';
 import {render} from 'react-dom';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
+import Directions from './directions.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      markers: [],
-      initialZoom: 12,
-      mapCenterLat: 37.773972,
-      mapCenterLng: -122.431297,
       heatmapData: [],
+      origDest: null,
+      directions: null
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.setDirections = this.setDirections.bind(this);
   }
 
   componentDidMount() {
@@ -25,29 +25,21 @@ class App extends React.Component {
           heatmapData: data
         })
       })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   setOrigAndDest (origin, destination) {
-    var origMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(origin.geometry.location.lat(), origin.geometry.location.lng()),
-      title: 'Origin',
-      label: 'O',
-      animation: google.maps.Animation.DROP
-    });
-    var destMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(destination.geometry.location.lat(), destination.geometry.location.lng()),
-      title: 'Destination',
-      label: 'D',
-      animation: google.maps.Animation.DROP
-    });
-
-    this.state.markers.forEach((marker) => {
-      marker.setMap(null);
-    });
-
     this.setState({
-      markers: [origMarker, destMarker]
+      origDest: [origin, destination]
     });
+  }
+
+  setDirections(directions) {
+   this.setState({
+     directions: directions
+   });
   }
 
   render () {
@@ -57,12 +49,14 @@ class App extends React.Component {
         <Query setOrigAndDest={this.setOrigAndDest}/>
         <br />
         <Gmap
-          initialZoom={this.state.initialZoom}
-          mapCenterLat={this.state.mapCenterLat}
-          mapCenterLng={this.state.mapCenterLng}
-          markers={this.state.markers}
           heatmapData={this.state.heatmapData}
+          directions={this.state.directions}
         />
+        <br />
+        <Directions
+          origDest={this.state.origDest}
+          setDirections={this.setDirections}
+         />
       </div>
     )
   }
