@@ -4,7 +4,9 @@ class Directions extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      origDest: null
+    };
   }
 
   componentDidMount() {
@@ -20,8 +22,11 @@ class Directions extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.origDest) {
+    if (this.props.origDest && this.props.origDest !== this.state.origDest) {
       this.calcRoute(this.props.origDest[0].formatted_address, this.props.origDest[1].formatted_address);
+      this.setState({
+        origDest: this.props.origDest
+      })
     };
   }
 
@@ -34,6 +39,7 @@ class Directions extends React.Component {
     };
     this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
+        this.props.getCrimeData(response.routes[0].legs[0].steps);
         this.props.setDirections(this.state.directionsDisplay);
         this.state.directionsDisplay.setDirections(response);
       }

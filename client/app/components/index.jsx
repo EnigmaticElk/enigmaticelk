@@ -16,6 +16,7 @@ class App extends React.Component {
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.setDirections = this.setDirections.bind(this);
+    this.getCrimeData = this.getCrimeData.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +43,20 @@ class App extends React.Component {
    });
   }
 
+  getCrimeData(steps) {
+    let coords = steps.map((step) => {
+      return [[step.start_location.lng(), step.start_location.lat()], [step.end_location.lng(), step.end_location.lat()]]
+    });
+    //function to send POST request to server once server-side routes are written
+    // axios.post('/crimesByStreet', {streets: coords})
+    //   .then((res) => {
+
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   })
+  }
+
   render () {
     return (
       <div>
@@ -56,6 +71,7 @@ class App extends React.Component {
         <Directions
           origDest={this.state.origDest}
           setDirections={this.setDirections}
+          getCrimeData={this.getCrimeData}
          />
       </div>
     )
