@@ -11,32 +11,56 @@ class Gmap extends React.Component {
     this.overlayHeatmap = this.overlayHeatmap.bind(this);
   }
 
-  mapCenterLatLng() {
-    return new google.maps.LatLng(this.props.mapCenterLat, this.props.mapCenterLng);
-  }
-
   componentDidMount() {
     var dom = ReactDOM.findDOMNode(this);
     var mapOptions = {
-      center: this.mapCenterLatLng(),
-      zoom: this.props.initialZoom
+      center: new google.maps.LatLng(37.773972, -122.431297),
+      zoom: 12
     };
     var map = new google.maps.Map(dom, mapOptions);
     this.setState({map: map});
   }
 
+  createMarkers(origin, destination) {
+
+    var map = this.state.map;
+
+    var origMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(origin.geometry.location.lat(), origin.geometry.location.lng()),
+      title: 'Origin',
+      label: 'O',
+      animation: google.maps.Animation.DROP
+    });
+    var destMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(destination.geometry.location.lat(), destination.geometry.location.lng()),
+      title: 'Destination',
+      label: 'D',
+      animation: google.maps.Animation.DROP
+    });
+
+    this.state.markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+
+    this.setState({
+      markers: [origMarker, destMarker]
+    });
+
+    var bounds = new google.maps.LatLngBounds();
+    var infoWindow = new google.maps.InfoWindow();
+
+    this.state.markers.forEach((marker) => {
+      marker.setMap(map);
+      bounds.extend(marker.position);
+    });
+    map.fitBounds(bounds);
+  }
+
   componentDidUpdate() {
     var map = this.state.map;
 
-    if (this.props.markers[0]) {
-      var bounds = new google.maps.LatLngBounds();
-      var infoWindow = new google.maps.InfoWindow();
-
-      this.props.markers.forEach((marker) => {
-        marker.setMap(map);
-        bounds.extend(marker.position);
-      });
-      map.fitBounds(bounds);
+    if (this.state.origDest) {
+      createMarkers(this.state.origDest[0],this.state.origDest[1])
     }
 
     if (this.props.heatmapData.length > 0) {

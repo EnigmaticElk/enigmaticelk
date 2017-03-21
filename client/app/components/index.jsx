@@ -9,10 +9,6 @@ class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      markers: [],
-      initialZoom: 12,
-      mapCenterLat: 37.773972,
-      mapCenterLng: -122.431297,
       heatmapData: [],
       origDest: null,
       directions: null
@@ -36,27 +32,6 @@ class App extends React.Component {
     this.setState({
       origDest: [origin, destination]
     });
-
-    var origMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(origin.geometry.location.lat(), origin.geometry.location.lng()),
-      title: 'Origin',
-      label: 'O',
-      animation: google.maps.Animation.DROP
-    });
-    var destMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(destination.geometry.location.lat(), destination.geometry.location.lng()),
-      title: 'Destination',
-      label: 'D',
-      animation: google.maps.Animation.DROP
-    });
-
-    this.state.markers.forEach((marker) => {
-      marker.setMap(null);
-    });
-
-    this.setState({
-      markers: [origMarker, destMarker]
-    });
   }
 
   setDirections(directions) {
@@ -72,12 +47,9 @@ class App extends React.Component {
         <Query setOrigAndDest={this.setOrigAndDest}/>
         <br />
         <Gmap
-          initialZoom={this.state.initialZoom}
-          mapCenterLat={this.state.mapCenterLat}
-          mapCenterLng={this.state.mapCenterLng}
-          markers={this.state.markers}
           heatmapData={this.state.heatmapData}
           directions={this.state.directions}
+          origDest={this.state.origDest}
         />
         <Directions
           origDest={this.state.origDest}
