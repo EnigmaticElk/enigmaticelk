@@ -4,6 +4,7 @@ var app = express();
 var port = process.env.PORT || 3000;
 var apiCall = require('./workers/openDataCaller');
 var utils = require('./utils')
+var heatmap = require('./heatmapUtils')
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -26,6 +27,14 @@ app.post('/ratings', function(req, res) {
     }
   });
 });
+
+// app.get('/nearbyCrimes', function(req, res) {
+//   utils.nearbyCrimes(function(locations) {
+//     res.send(locations);
+//   });
+// });
+
+
 
 app.listen(port);
 
