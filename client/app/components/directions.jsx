@@ -36,7 +36,6 @@ class Directions extends React.Component {
       if (status === 'OK') {
         this.props.setDirections(this.state.directionsDisplay);
         this.state.directionsDisplay.setDirections(response);
-        console.log(response);
       }
     })
   }
