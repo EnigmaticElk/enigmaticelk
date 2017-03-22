@@ -1,5 +1,7 @@
 var db = require('./models/crime');
 var dbBox = require('./models/boxCrime');
+// var Promise = require("bluebird");
+
 
 var crimeLocs = function (callback) {
   db.findLocations(function(results) {
@@ -29,16 +31,22 @@ var findCrimesByLine = function (directions, callback) {
 module.exports.findCrimesByLine = findCrimesByLine;
 
 var findBoxCrimesByLine = function (directions, callback) {
-  dbBox.findBoxCrimesByLine(directions, function(crimesByStreet) {
-    var results = crimesByStreet.length;
-    callback(results);
+  var asynNumCrimes = directions.map((street) => {
+    return new Promise((res, rej) => {
+      dbBox.findBoxCrimesByLine(street, function(crimes) {
+        res(crimes.length);
+      });
+    });
   });
+  Promise.all(asynNumCrimes).then(callback);
 };
 
 module.exports.findBoxCrimesByLine = findBoxCrimesByLine;
 
 var findAllBoxes = function(callback) {
+  var total = 0;
   dbBox.findAllBoxes(function(results) {
+
     callback(results);
   })
 }
