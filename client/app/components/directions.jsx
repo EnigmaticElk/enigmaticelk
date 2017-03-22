@@ -24,7 +24,6 @@ class Directions extends React.Component {
   componentDidUpdate() {
     if (this.props.map) {
       this.state.directionsDisplay.setMap(this.props.map);
-      this.drawLine();
     }
     if (this.props.origDest && this.props.origDest !== this.state.origDest) {
       this.calcRoute(this.props.origDest[0].formatted_address, this.props.origDest[1].formatted_address);
@@ -32,6 +31,13 @@ class Directions extends React.Component {
         origDest: this.props.origDest
       })
     };
+    if (this.props.streetLines) {
+      this.props.streetLines.forEach((line) => {
+        let origin = `${line[0][1]},${line[0][0]}`
+        let dest = `${line[1][1]},${line[1][0]}`
+        this.drawLine(origin, dest, line[2].rating)
+      })
+    }
   }
 
   calcRoute(start, end) {
@@ -49,27 +55,24 @@ class Directions extends React.Component {
     })
   }
 
-  drawLine() {
+  drawLine(origin, destination, rating) {
     let options = {
-      strokeColor: 'red',
-      strokeOpacity: 0.25,
+      strokeColor: rating,
+      strokeOpacity: 0.5,
       strokeWeight: 3
     }
 
     let dirRenderer = new google.maps.DirectionsRenderer({
-      supressMarkers: true,
+      suppressMarkers: true,
       polylineOptions: options,
-      markerOptions: {
-        visible: false,
-      },
       preserveViewport: true
     })
 
     dirRenderer.setMap(this.props.map);
 
     let request = {
-      origin: '37.8035631,-122.41491610000003',
-      destination: '37.78694650000001,-122.41154790000002',
+      origin: origin,
+      destination: destination,
       travelMode: 'WALKING'
     };
 

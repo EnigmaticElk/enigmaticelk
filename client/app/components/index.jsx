@@ -11,7 +11,8 @@ class App extends React.Component {
     this.state = {
       heatmapData: [],
       origDest: null,
-      map: null
+      map: null,
+      streetLines: null
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -49,15 +50,16 @@ class App extends React.Component {
     let coords = steps.map((step) => {
       return [[step.start_location.lng(), step.start_location.lat()], [step.end_location.lng(), step.end_location.lat()]]
     });
-    console.log(coords);
     //function to send POST request to server once server-side routes are written
-    // axios.post('/crimesByStreet', {streets: coords})
-    //   .then((res) => {
-
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   })
+    axios.post('/ratings', {streets: coords})
+      .then((res) => {
+        this.setState({
+          streetLines: res
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   render () {
@@ -75,6 +77,7 @@ class App extends React.Component {
           origDest={this.state.origDest}
           map={this.state.map}
           getCrimeData={this.getCrimeData}
+          streetLines={this.state.streetLines}
          />
       </div>
     )

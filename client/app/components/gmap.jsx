@@ -25,9 +25,6 @@ class Gmap extends React.Component {
   componentDidUpdate() {
     var map = this.state.map;
     this.props.setMap(map);
-    // if (this.state.origDest) {
-    //   createMarkers(this.state.origDest[0],this.state.origDest[1])
-    // }
     if (!this.state.heatmapRendered && this.props.heatmapData.length > 0) {
       this.overlayHeatmap();
       this.setState({
@@ -62,37 +59,3 @@ class Gmap extends React.Component {
 };
 
 export default Gmap;
-
-  // createMarkers(origin, destination) {
-  //   var map = this.state.map;
-
-  //   var origMarker = new google.maps.Marker({
-  //     position: new google.maps.LatLng(origin.geometry.location.lat(), origin.geometry.location.lng()),
-  //     title: 'Origin',
-  //     label: 'O',
-  //     animation: google.maps.Animation.DROP
-  //   });
-  //   var destMarker = new google.maps.Marker({
-  //     position: new google.maps.LatLng(destination.geometry.location.lat(), destination.geometry.location.lng()),
-  //     title: 'Destination',
-  //     label: 'D',
-  //     animation: google.maps.Animation.DROP
-  //   });
-
-  //   this.state.markers.forEach((marker) => {
-  //     marker.setMap(null);
-  //   });
-
-  //   this.setState({
-  //     markers: [origMarker, destMarker]
-  //   });
-
-  //   var bounds = new google.maps.LatLngBounds();
-  //   var infoWindow = new google.maps.InfoWindow();
-
-  //   this.state.markers.forEach((marker) => {
-  //     marker.setMap(map);
-  //     bounds.extend(marker.position);
-  //   });
-  //   map.fitBounds(bounds);
-  // }
