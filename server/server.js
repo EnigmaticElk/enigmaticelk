@@ -41,11 +41,16 @@ app.get('/nearbyCrimes', function(req, res) {
   });
 });
 
-app.get('/boxCrimesByStreet', function(req, res) {
+app.post('/boxCrimesByStreet', function(req, res) {
+  // the directions var in the line below will be passed into the query
+  // when getting data from the client
+  // until then I have provided some test data.
+
+  // var directions = req.body.directions;
   var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]];
   var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]];
   var test3 = test.concat(test2);
-  // var directions = req.body.directions;
+  
   geo.findBoxCrimesByLine(test3, function(crimesOnStreet) {
     res.send(JSON.stringify(crimesOnStreet));
   });
