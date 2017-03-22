@@ -1,5 +1,4 @@
 var request = require('request');
-var path = require('path');
 var db = require('../models/crime');
 
 var requestQuery =

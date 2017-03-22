@@ -34,9 +34,9 @@ var clearDatabase = (callback) => {
 var findAll = (callback) => {
   Crime.find({}, function(err, results) {
     if (err) {
-      console.error(err);
+      callback(err, null);
     } else {
-      callback(results);
+      callback(null, results);
     }
   });
 };
@@ -53,5 +53,5 @@ var findLocations = (callback) => {
 
 module.exports.storeOpenData = storeOpenData;
 module.exports.clearDatabase = clearDatabase;
-module.exports.findLocations = findLocations;
 module.exports.findAll = findAll;
+module.exports.findLocations = findLocations;

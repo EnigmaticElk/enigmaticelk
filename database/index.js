@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var uriString = process.env.MONGOLAB_URI ||
-                'mongodb://localhost/test';
+                'mongodb://localhost/sfcrime';
 
 mongoose.connect(uriString, function (err, res) {
   if (err) {
