@@ -53,5 +53,5 @@ var findLocations = (callback) => {
 
 module.exports.storeOpenData = storeOpenData;
 module.exports.clearDatabase = clearDatabase;
-module.exports.findLocations = findLocations;
 module.exports.findAll = findAll;
+module.exports.findLocations = findLocations;

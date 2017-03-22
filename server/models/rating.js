@@ -2,7 +2,7 @@ var db = require('../../database/index').db;
 var Rating = require('../../database/models/Rating');
 
 var findRatingEntry = function(street, callback) {
-  Rating.find({street, street}, function(err, results) {
+  Rating.find({street: street}, function(err, results) {
     if (results.length < 1) {
     // if street isn't found an empty array is returned, not an error, so to make the callback work an empty array is treated as if it were an error
       err = results;
@@ -24,7 +24,7 @@ var updateRatingEntry = function(street, entry, callback) {
 }
 
 var createRatingEntry = function(street, callback) {
-  Rating.create({street: street, counter: 1, rating: 'rating has not been set'}, function(err, results) {
+  Rating.create({street: street, counter: 1, rating: 'green'}, function(err, results) {
     if (err) {
       callback(err, null);
     } else {
