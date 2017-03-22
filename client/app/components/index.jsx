@@ -61,11 +61,6 @@ class App extends React.Component {
     //   .catch((err) => {
     //     console.error(err);
     //   })
-    this.setState({
-      streetLines: [
-      [[-122.4371246,37.7712708],[-122.42192499999999,37.7731804],{rating: 'red'}],
-      [[-122.42192499999999,37.7731804],[-122.40874329999997,37.7834842],{rating: 'green'}]]
-    })
   }
 
   render () {
