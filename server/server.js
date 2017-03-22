@@ -33,12 +33,40 @@ app.post('/ratings', function(req, res) {
 });
 
 
+// for testing geospatial searches
 app.get('/nearbyCrimes', function(req, res) {
   utils.nearbyCrimes(function(locations) {
     res.send(locations);
   });
 });
 
+app.get('/boxCrimesByStreet', function(req, res) {
+  // var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]]
+  var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]]
+  utils.findBoxCrimesByLine(test2, function(crimesOnStreet) {
+    res.send(JSON.stringify(crimesOnStreet));
+  });
+});
+
+app.get('/crimesByStreet', function(req, res) {
+  var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]]
+
+  utils.findCrimesByLine(test, function(crimesOnStreet) {
+    res.send(JSON.stringify(crimesOnStreet));
+  });
+});
+
+app.get('/boxCrimes', function(req, res) {
+  utils.findAllBoxes(function(boxCrimes) {
+    res.send(boxCrimes);
+  });
+});
+
+app.get('/crimes', function(req, res) {
+  utils.findAll(function(boxCrimes) {
+    res.send(boxCrimes);
+  });
+});
 
 
 

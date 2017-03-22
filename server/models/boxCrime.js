@@ -13,6 +13,16 @@ var storeOpenDataInBoxes = (crimeData, callback) => {
       upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
       lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
       lowerLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
+
+  crimeData.forEach((crime) => {
+    var long = crime.location.longitude - 0;
+    var lat = crime.location.latitude -0;
+    var mutilplier = 1000000;
+    var coords = {
+      upperLeft: [(((long * mutilplier) - 1) / mutilplier), (((lat * mutilplier) + 1) / mutilplier)],
+      upperRight: [(((long * mutilplier) + 1) / mutilplier), (((lat * mutilplier) + 1) / mutilplier)],
+      lowerRight: [(((long * mutilplier) + 1) / mutilplier), (((lat * mutilplier) - 1) / mutilplier)],
+      lowerLeft: [(((long * mutilplier) - 1) / mutilplier), (((lat * mutilplier) - 1) / mutilplier)],
     }; 
 
     BoxCrime.create({
@@ -41,8 +51,6 @@ var storeOpenDataInBoxes = (crimeData, callback) => {
   });
 };
 
-
-
 module.exports.storeOpenDataInBoxes = storeOpenDataInBoxes;
 
 
@@ -60,12 +68,14 @@ var findAllBoxes = (callback) => {
     if (err) {
       console.error(err);
     } else {
+      //only logging one for testing purposes
       callback(results[0]);
     }
   });
 };
 
 module.exports.findAllBoxes = findAllBoxes;
+
 
 
 var findBoxCrimesByLine = (lineLongLat, callback) => {
@@ -87,6 +97,30 @@ var findBoxCrimesByLine = (lineLongLat, callback) => {
     }
   });
 };
+
+var findBoxCrimesByLine = (streets, callback) => {
+  streets.forEach(function(startEndLongLat) {
+    console.log('street inside findCrimes', startEndLongLat)
+    BoxCrime.find({
+      location: {
+        $geoIntersects: {
+          $geometry: {
+            type: "LineString",
+            coordinates: startEndLongLat,
+          }
+        }
+      }
+    }, function (err, results) {
+      if (err) {
+        console.error(err);
+      } else {
+        // console.log(results);
+        callback(results);
+      }
+    });
+  });
+};
+
 
 module.exports.findBoxCrimesByLine = findBoxCrimesByLine;
 
