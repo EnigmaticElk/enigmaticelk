@@ -33,15 +33,13 @@ var convertDirectionsToStreet = function(req, callback) {
       setTimeout(function() {
         convertLatLngToStreet(req.body.streets[i][0][0], req.body.streets[i][0][1], function(err, results) {
           if (err) {
-            console.log(err);
-            //callback(err, null);
-            console.log(i);
+            callback(err, null);
             if (i === req.body.length - 1) {
               callback(err, null);
             }
           } else {
-            responseObj[i].push(results);
-            if (i === req.body.length - 1) {
+            responseObj[i].push(results[0]);
+            if (i === req.body.streets.length - 1) {
               callback(null, responseObj);
             }
           }
