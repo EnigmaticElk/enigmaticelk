@@ -50,7 +50,7 @@ var convertDirectionsToStreet = function(req, callback) {
             }
           }
         });
-      }, 100 * i);
+      }, 20 * i);
     })(i);
   }
 }

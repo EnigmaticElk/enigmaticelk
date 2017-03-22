@@ -12,21 +12,25 @@ var updateCrimeCounter = function(lat, lng) {
       var street = JSON.parse(body).results[0].address_components[1].long_name;
       db.findRatingEntry(street, function(err1, results1) {
         if (err1) {
-          db.createRatingEntry(street, function(err2, results2) {
-            if (err2) {
-              console.log(err2);
-            } else {
-              console.log('created new entry');
-            }
-          });
+          console.log(err1);
         } else {
-          db.updateRatingEntry(street, results1, function(err3, results3) {
-            if (err3) {
-              console.log(err3);
-            } else {
-              console.log('increased entry\'s crime count');
-            }
-          });
+          if (results1.length < 1) {
+            db.createRatingEntry(street, function(err2, results2) {
+              if (err2) {
+                console.log(err2);
+              } else {
+                console.log('created new entry');
+              }
+            });
+          } else {
+            db.updateRatingEntry(street, results1, function(err3, results3) {
+              if (err3) {
+                console.log(err3);
+              } else {
+                console.log('increased entry\'s crime count');
+              }
+            });
+          }
         }
       });
     }
