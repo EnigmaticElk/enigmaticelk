@@ -11,11 +11,11 @@ class App extends React.Component {
     this.state = {
       heatmapData: [],
       origDest: null,
-      directions: null
+      map: null
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.setDirections = this.setDirections.bind(this);
+    this.setMap = this.setMap.bind(this);
     this.getCrimeData = this.getCrimeData.bind(this);
   }
 
@@ -37,16 +37,19 @@ class App extends React.Component {
     });
   }
 
-  setDirections(directions) {
-   this.setState({
-     directions: directions
-   });
+  setMap(map) {
+    if (!this.state.map) {
+      this.setState({
+        map: map
+      });
+    }
   }
 
   getCrimeData(steps) {
     let coords = steps.map((step) => {
       return [[step.start_location.lng(), step.start_location.lat()], [step.end_location.lng(), step.end_location.lat()]]
     });
+    console.log(coords);
     //function to send POST request to server once server-side routes are written
     // axios.post('/crimesByStreet', {streets: coords})
     //   .then((res) => {
@@ -65,12 +68,12 @@ class App extends React.Component {
         <br />
         <Gmap
           heatmapData={this.state.heatmapData}
-          directions={this.state.directions}
+          setMap={this.setMap}
         />
         <br />
         <Directions
           origDest={this.state.origDest}
-          setDirections={this.setDirections}
+          map={this.state.map}
           getCrimeData={this.getCrimeData}
          />
       </div>

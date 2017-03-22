@@ -24,6 +24,7 @@ class Gmap extends React.Component {
 
   componentDidUpdate() {
     var map = this.state.map;
+    this.props.setMap(map);
     // if (this.state.origDest) {
     //   createMarkers(this.state.origDest[0],this.state.origDest[1])
     // }
@@ -32,9 +33,6 @@ class Gmap extends React.Component {
       this.setState({
         heatmapRendered: true
       })
-    }
-    if (this.props.directions) {
-      this.props.directions.setMap(map);
     }
   }
 
