@@ -41,11 +41,15 @@ app.get('/nearbyCrimes', function(req, res) {
 });
 
 app.get('/boxCrimesByStreet', function(req, res) {
-  // var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]]
+  var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]]
   var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]]
-  utils.findBoxCrimesByLine(test2, function(crimesOnStreet) {
+  var test3 = [[[-122.410312, 37.782182], [-122.405677, 37.778527]], [[-122.419684, 37.782110], [-122.416702, 37.782458]]]
+  // var results = [];
+  utils.findBoxCrimesByLine(test3, function(crimesOnStreet) {
     res.send(JSON.stringify(crimesOnStreet));
+    // results.push(crimesOnStreet);
   });
+  // res.end('end of res');
 });
 
 app.get('/crimesByStreet', function(req, res) {

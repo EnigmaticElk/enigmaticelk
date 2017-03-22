@@ -77,7 +77,6 @@ var findAllBoxes = (callback) => {
 module.exports.findAllBoxes = findAllBoxes;
 
 
-
 var findBoxCrimesByLine = (lineLongLat, callback) => {
 
   BoxCrime.find({
@@ -97,30 +96,6 @@ var findBoxCrimesByLine = (lineLongLat, callback) => {
     }
   });
 };
-
-var findBoxCrimesByLine = (streets, callback) => {
-  streets.forEach(function(startEndLongLat) {
-    console.log('street inside findCrimes', startEndLongLat)
-    BoxCrime.find({
-      location: {
-        $geoIntersects: {
-          $geometry: {
-            type: "LineString",
-            coordinates: startEndLongLat,
-          }
-        }
-      }
-    }, function (err, results) {
-      if (err) {
-        console.error(err);
-      } else {
-        // console.log(results);
-        callback(results);
-      }
-    });
-  });
-};
-
 
 module.exports.findBoxCrimesByLine = findBoxCrimesByLine;
 
