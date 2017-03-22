@@ -1,5 +1,7 @@
 var request = require('request');
 var db = require('../models/crime');
+var dbBox = require('../models/boxCrime');
+console.log('in open caller')
 
 var requestQuery =
 'https://data.sfgov.org/resource/9v2m-8wqu.json?\
@@ -14,12 +16,18 @@ request(requestQuery, function(err, res, body) {
   if (err) {
     console.log(err);
   } else {
+    var results = JSON.parse(body);
     db.clearDatabase(function(err) {
-      var results = JSON.parse(body);
       db.storeOpenData(results, function(err) {
-        if (err) {
-          // console.error(err);
-          // errors are shown when there is a duplicate entry.
+        } else {
+          dbBox.clearBoxDatabase(function(err) {
+            dbBox.storeOpenDataInBoxes(results, function(err) {
+              console.log('stored data in boxes')
+              if (err) {
+                console.error(err);
+              }
+            });
+          });
         }
       });
     });

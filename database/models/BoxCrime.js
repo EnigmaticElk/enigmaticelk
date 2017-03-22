@@ -1,15 +1,14 @@
 var mongoose = require('mongoose');
 
-var crimeSchema = new mongoose.Schema({
+// console.log('inside boxCrimeSchema');
+
+var boxCrimeSchema = new mongoose.Schema({
   address: String,
   category: String,
   date: String,
   dayofweek: String,
   descript: String,
-  incidntnum: {
-    type: Number,
-    index: { unique: true }
-  },
+  incidntnum: Number,
   time: String,
   location: {
     type: Object,
@@ -17,6 +16,6 @@ var crimeSchema = new mongoose.Schema({
   },
 });
 
-crimeSchema.index({location: "2dsphere"})
+boxCrimeSchema.index({location: "2dsphere"})
 
-module.exports= mongoose.model('Crime', crimeSchema);
+module.exports = mongoose.model('BoxCrime', boxCrimeSchema);
