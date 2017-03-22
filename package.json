@@ -12,7 +12,7 @@
     "test": "mocha test/ServerSpec.js & mocha test/setup.js test/ClientSpec.js",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "postinstall": "node deploy.js"
   },
   "dependencies": {
