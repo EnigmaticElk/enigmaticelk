@@ -24,21 +24,30 @@ var convertLatLngToStreet = function(lng, lat, callback) {
       })
     }
   });
-};
+}; 
 
 var convertDirectionsToStreet = function(req, callback) {
   var responseObj = req.body.streets;
-  for (var i = 0; i < req.body.length; i++) {
-    utils.convertLatLngToStreet(req.body.streets[i][0][0], req.body.streets[i][0][1], function(err, results) {
-      if (err) {
-        callback(err, null);
-      } else {
-        responseObj[i].push(results);
-      }
-    });
-    if (i === req.body.length - 1) {
-      callback(responseObj);
-    }
+  for (var i = 0; i < req.body.streets.length; i++) {
+    (function(i){
+      setTimeout(function() {
+        convertLatLngToStreet(req.body.streets[i][0][0], req.body.streets[i][0][1], function(err, results) {
+          if (err) {
+            console.log(err);
+            //callback(err, null);
+            console.log(i);
+            if (i === req.body.length - 1) {
+              callback(err, null);
+            }
+          } else {
+            responseObj[i].push(results);
+            if (i === req.body.length - 1) {
+              callback(null, responseObj);
+            }
+          }
+        });
+      }, 1000 * i);
+    })(i);
   }
 }
 
