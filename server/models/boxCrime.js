@@ -85,17 +85,16 @@ var findBoxCrimesByLine = (lineLongLat, callback) => {
         $geometry: {
           type: "LineString",
           coordinates: lineLongLat,
-        }
       }
     }
   }, function (err, crimes) {
     if (err) {
       console.error(err);
     } else {
-      callback(crimes);
+      callback(crimes)
     }
   });
-};
+}
 
 module.exports.findBoxCrimesByLine = findBoxCrimesByLine;
 

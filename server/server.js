@@ -3,8 +3,9 @@ var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
 var apiCall = require('./workers/openDataCaller');
-var utils = require('./utils')
-var heatmap = require('./heatmapUtils')
+var utils = require('./utils');
+var heatmap = require('./heatmapUtils');
+var geo = require('./geoSpatialUtils');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -35,39 +36,36 @@ app.post('/ratings', function(req, res) {
 
 // for testing geospatial searches
 app.get('/nearbyCrimes', function(req, res) {
-  utils.nearbyCrimes(function(locations) {
+  heatmap.nearbyCrimes(function(locations) {
     res.send(locations);
   });
 });
 
 app.get('/boxCrimesByStreet', function(req, res) {
-  var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]]
-  var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]]
-  var test3 = [[[-122.410312, 37.782182], [-122.405677, 37.778527]], [[-122.419684, 37.782110], [-122.416702, 37.782458]]]
-  // var results = [];
-  utils.findBoxCrimesByLine(test3, function(crimesOnStreet) {
+  var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]];
+  var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]];
+  var test3 = test.concat(test2);
+  // var directions = req.body.directions;
+  geo.findBoxCrimesByLine(test3, function(crimesOnStreet) {
     res.send(JSON.stringify(crimesOnStreet));
-    // results.push(crimesOnStreet);
   });
-  // res.end('end of res');
 });
 
 app.get('/crimesByStreet', function(req, res) {
-  var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]]
-
-  utils.findCrimesByLine(test, function(crimesOnStreet) {
+  var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]];
+  heatmap.findCrimesByLine(test, function(crimesOnStreet) {
     res.send(JSON.stringify(crimesOnStreet));
   });
 });
 
 app.get('/boxCrimes', function(req, res) {
-  utils.findAllBoxes(function(boxCrimes) {
+  geo.findAllBoxes(function(boxCrimes) {
     res.send(boxCrimes);
   });
 });
 
 app.get('/crimes', function(req, res) {
-  utils.findAll(function(boxCrimes) {
+  heatmap.findAll(function(boxCrimes) {
     res.send(boxCrimes);
   });
 });

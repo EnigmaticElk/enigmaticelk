@@ -52,6 +52,7 @@ var findLocations = (callback) => {
   });
 };
 
+//trying to make $geoIntersection
 var findNearbyCrimes = (pointOfInterest, callback) => {
   Crime.find({
     location: {
@@ -74,7 +75,6 @@ var findNearbyCrimes = (pointOfInterest, callback) => {
 
 var findCrimesByLine = (streets, callback) => {
   streets.forEach(function(startEndLongLat) {
-    console.log('street inside findCrimes', startEndLongLat)
     Crime.find({
       location: {
         $geoIntersects: {
@@ -88,7 +88,6 @@ var findCrimesByLine = (streets, callback) => {
       if (err) {
         console.error(err);
       } else {
-        console.log(results);
         callback(results);
       }
     });
