@@ -67,16 +67,38 @@ var findNearbyCrimes = (pointOfInterest, callback) => {
     if (err) {
       console.error(err);
     } else {
-      console.log(results);
       callback(results);
     }
+  });
+}
+
+var findCrimesByLine = (streets, callback) => {
+  streets.forEach(function(startEndLongLat) {
+    console.log('street inside findCrimes', startEndLongLat)
+    Crime.find({
+      location: {
+        $geoIntersects: {
+          $geometry: {
+            type: "LineString",
+            coordinates: startEndLongLat,
+          }
+        }
+      }
+    }, function (err, results) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(results);
+        callback(results);
+      }
+    });
   })
 }
+
 
 module.exports.storeOpenData = storeOpenData;
 module.exports.clearDatabase = clearDatabase;
 module.exports.findLocations = findLocations;
 module.exports.findAll = findAll;
-
-
 module.exports.findNearbyCrimes = findNearbyCrimes;
+module.exports.findCrimesByLine = findCrimesByLine;
