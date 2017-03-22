@@ -9,7 +9,7 @@
   },
   "main": "server/server.js",
   "scripts": {
-    "test": "mocha test/ServerSpec.js & mocha test/setup.js test/ClientSpec.js",
+    "test": "mocha test/ServerSpec.js test/setup.js test/ClientSpec.js test/DatabaseSpec.js",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
     "start": "nodemon server/server.js",
@@ -33,8 +33,10 @@
     "chai": "^3.5.0",
     "enzyme": "^2.7.1",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "jsdom": "^9.12.0",
     "mocha": "^3.2.0",
     "react-addons-test-utils": "^15.4.2",
+    "sinon": "^2.1.0",
     "supertest": "^3.0.0",
     "webpack": "^2.2.1"
   },
