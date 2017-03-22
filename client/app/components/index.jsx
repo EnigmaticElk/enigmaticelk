@@ -51,16 +51,15 @@ class App extends React.Component {
       return [[step.start_location.lng(), step.start_location.lat()], [step.end_location.lng(), step.end_location.lat()]]
     });
     //function to send POST request to server once server-side routes are written
-    // axios.post('/ratings', {streets: coords})
-    //   .then((res) => {
-    //     // this.setState({
-    //     //   streetLines: res
-    //     // })
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   })
+    axios.post('/ratings', {streets: coords})
+      .then((res) => {
+        this.setState({
+          streetLines: res.data
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   render () {

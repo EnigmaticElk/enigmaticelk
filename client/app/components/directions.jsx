@@ -12,7 +12,8 @@ class Directions extends React.Component {
   componentDidMount() {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer({
-      draggable: true
+      draggable: true,
+      suppressPolylines: true
     });
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     this.setState({

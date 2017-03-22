@@ -1,6 +1,7 @@
 var dbCrime = require('./models/crime.js');
 var dbRating = require('./models/rating.js');
 var request = require('request');
+var API_KEY = require('../googleMapsConfig.js');
 
 var getCrimeLocs = function (callback) {
   dbCrime.findLocations(function(results) {
@@ -9,25 +10,29 @@ var getCrimeLocs = function (callback) {
 };
 
 var convertLatLngToStreet = function(lng, lat, callback) {
-  var url =  `http://locationiq.org/v1/reverse.php?format=json&key=6bc67043075bb2c0f0b3&lat=${lat}&lon=${lng}`;
+  var url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`;
   request(url, function(err, res, body) {
     if (err) {
       callback(err, null);
     } else {
-      var street = JSON.parse(body).address.road;
+      var street = JSON.parse(body).results[0].address_components[1].long_name;
       dbRating.findRatingEntry(street, function(err, results) {
         if(err) {
-          callback(err, null);
+          //callback(err, null);
+          // refactor this and add the street name street: 'Market St' back in to the default response
+          var defaultResponse = [{counter: 5, rating: 'red'}];
+          callback(null, defaultResponse);
         } else {
           callback(null, results);
         }
       })
     }
   });
-}; 
+};
 
 var convertDirectionsToStreet = function(req, callback) {
   var responseObj = req.body.streets;
+  var counter = 0;
   for (var i = 0; i < req.body.streets.length; i++) {
     (function(i){
       setTimeout(function() {
@@ -39,12 +44,13 @@ var convertDirectionsToStreet = function(req, callback) {
             }
           } else {
             responseObj[i].push(results[0]);
-            if (i === req.body.streets.length - 1) {
+            counter++;
+            if (counter === req.body.streets.length) {
               callback(null, responseObj);
             }
           }
         });
-      }, 1000 * i);
+      }, 100 * i);
     })(i);
   }
 }

@@ -1,17 +1,14 @@
 var request = require('request');
 var db = require('../models/rating.js');
 var crime = require('../models/crime');
+var API_KEY = require('../googleMapsConfig.js');
 
 var updateCrimeCounter = function(lat, lng) {
-  //var url =  `http://locationiq.org/v1/reverse.php?format=json&key=6bc67043075bb2c0f0b3&lat=${lat}&lon=${lng}`;
-  var url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyA3j_oiWaOl_WTRllB88q3KMq4tLGufcOs`;
-  //var url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=37.7868476,-122.41236300000003&key=AIzaSyCeRlYlmITEn4ItFmhN48Yo0IPR_88E_u4`;
-
+  var url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`;
   request(url, function(err, res, body) {
     if (err) {
       console.log(err);
     } else {
-      //console.log('here: ', JSON.parse(body).results[0].address_components[1].long_name);
       var street = JSON.parse(body).results[0].address_components[1].long_name;
       db.findRatingEntry(street, function(err1, results1) {
         if (err1) {
@@ -41,7 +38,7 @@ crime.findAll(function(err, results) {
   if (err) {
     console.log(err);
   } else {
-    for (var i = 0; i < 0; i++) {
+    for (var i = 0; i < 10; i++) {
       (function(i) {
         setTimeout(function() {
           updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);
