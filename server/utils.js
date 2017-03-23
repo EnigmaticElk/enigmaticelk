@@ -1,7 +1,7 @@
 var dbCrime = require('./models/crime.js');
 var dbRating = require('./models/rating.js');
 var request = require('request');
-var API_KEY = require('../googleMapsConfig.js');
+var API_KEY = require('./googleMapsConfig.js');
 
 var getCrimeLocs = function (callback) {
   dbCrime.findLocations(function(results) {
@@ -17,13 +17,15 @@ var convertLatLngToStreet = function(lng, lat, callback) {
     } else {
       var street = JSON.parse(body).results[0].address_components[1].long_name;
       dbRating.findRatingEntry(street, function(err, results) {
-        if(err) {
-          //callback(err, null);
-          // refactor this and add the street name street: 'Market St' back in to the default response
-          var defaultResponse = [{counter: 5, rating: 'red'}];
-          callback(null, defaultResponse);
+        if (err) {
+          callback(err, null);
         } else {
-          callback(null, results);
+          if (results.length < 1) {
+            var defaultResponse = [{street: street, counter: 5, rating: 'red'}];
+            callback(null, defaultResponse);
+          } else {
+            callback(null, results);
+          }
         }
       })
     }
