@@ -21,7 +21,7 @@ var convertLatLngToStreet = function(lng, lat, callback) {
           callback(err, null);
         } else {
           if (results.length < 1) {
-            var defaultResponse = [{street: street, counter: 5, rating: 'red'}];
+            var defaultResponse = [{street: street, counter: 1, rating: 'green'}];
             callback(null, defaultResponse);
           } else {
             callback(null, results);
@@ -33,7 +33,7 @@ var convertLatLngToStreet = function(lng, lat, callback) {
 };
 
 var convertDirectionsToStreet = function(req, callback) {
-  var responseObj = req.body.streets;
+  var coordinatesWithAddresses = req.body.streets;
   var counter = 0;
   for (var i = 0; i < req.body.streets.length; i++) {
     (function(i){
@@ -41,14 +41,11 @@ var convertDirectionsToStreet = function(req, callback) {
         convertLatLngToStreet(req.body.streets[i][0][0], req.body.streets[i][0][1], function(err, results) {
           if (err) {
             callback(err, null);
-            if (i === req.body.length - 1) {
-              callback(err, null);
-            }
           } else {
-            responseObj[i].push(results[0]);
+            coordinatesWithAddresses.push(results[0]);
             counter++;
             if (counter === req.body.streets.length) {
-              callback(null, responseObj);
+              callback(null, coordinatesWithAddresses);
             }
           }
         });
