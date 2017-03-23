@@ -19,7 +19,7 @@ describe('Server', function() {
         .get('/heatmapData')
         .expect(200)
         .expect(function(res) {
-          console.log(res.body);
+          // able to get res.body, but it's empty.
         })
         .end(done);
     });
