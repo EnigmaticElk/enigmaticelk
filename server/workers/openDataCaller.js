@@ -16,21 +16,20 @@ request(requestQuery, function(err, res, body) {
     console.log(err);
   } else {
     var results = JSON.parse(body);
-    dbBox.clearBoxDatabase(function(err) {
-      dbBox.storeOpenDataInBoxes(results, function(err) {
-        if (err) {
-          console.error(err);
-        } else {
-          db.clearDatabase(function(err) {
-            db.storeOpenData(results, function(err) {
-              if (err) {
-                console.error(err);
-              }
-            });
-          });
-        }
+    console.log(results[0]);
+    db.clearDatabase()
+      .then(() => {
+        db.storeOpenData(results);
+      })
+      .then(() => {
+      dbBox.clearBoxDatabase();
+      })
+      .then(() => {
+        dbBox.storeOpenDataInBoxes(results);
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    });
   }
 });
 

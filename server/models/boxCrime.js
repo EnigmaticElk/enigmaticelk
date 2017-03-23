@@ -1,53 +1,65 @@
 var db = require('../../database/index').db;
 var BoxCrime = require('../../database/models/BoxCrime');
 
-var storeOpenDataInBoxes = (crimeData, callback) => {
+var storeOpenDataInBoxes = (crimeData) => {
+  console.log('alive in storeOpenDataInBoxes');
+  var asyncBoxStore = crimeData.forEach((crime) => {
+    return new Promise((res, rej) => {
 
-  crimeData.forEach((crime) => {
-    var long = crime.location.longitude - 0;
-    var lat = crime.location.latitude - 0;
-    var mutilplier = 1000000000000;
-    var boxPadding = 20000000;
-    
-    var coords = {
-      upperLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
-      upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
-      lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
-      lowerLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
-    }; 
+      var long = crime.location.longitude - 0;
+      var lat = crime.location.latitude - 0;
+      var mutilplier = 1000000000000;
+      var boxPadding = 20000000;
+      
+      var coords = {
+        upperLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
+        upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
+        lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
+        lowerLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
+      }; 
 
-    BoxCrime.create({
-      address: crime.address,
-      category: crime.category,
-      date: crime.date,
-      dayofweek: crime.dayofweek,
-      descript: crime.descript,
-      incidntnum: crime.incidntnum,
-      location: {
-        type: "Polygon",
-        coordinates: [[
-          coords.upperLeft,
-          coords.upperRight,
-          coords.lowerRight,
-          coords.lowerLeft,
-          coords.upperLeft
-        ]]
-      },
-      index: "location"
-    }, function (err, crime) {
-      if (err) {
-        callback(err);
-      }
+      BoxCrime.create({
+        address: crime.address,
+        category: crime.category,
+        date: crime.date,
+        dayofweek: crime.dayofweek,
+        descript: crime.descript,
+        incidntnum: crime.incidntnum,
+        location: {
+          type: "Polygon",
+          coordinates: [[
+            coords.upperLeft,
+            coords.upperRight,
+            coords.lowerRight,
+            coords.lowerLeft,
+            coords.upperLeft
+          ]]
+        },
+        index: "location"
+      }, function (err, crime) {
+        if (err) {
+          rej(err);
+        } else {
+          res();
+        }
+      });
     });
   });
+  Promise.all(asyncBoxStore);
 };
 
 module.exports.storeOpenDataInBoxes = storeOpenDataInBoxes;
 
 
-var clearBoxDatabase = (callback) => {
-  BoxCrime.remove({}, function(err) {
-    callback();
+var clearBoxDatabase = () => {
+  return new Promise((res, rej) => {
+    BoxCrime.remove({}, function(err) {
+      if (err) {
+        rej(err);
+      } else {
+        res();
+      }
+    });
   });
 };
 
