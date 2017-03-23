@@ -2,7 +2,7 @@ var db = require('../../database/index').db;
 var Crime = require('../../database/models/Crime');
 
 var storeOpenData = (crimeData, callback) => {
-
+  console.log('I am alive inside storingdata');
   crimeData.forEach((crime) => {
     Crime.create({
       address: crime.address,

@@ -31,6 +31,7 @@ request(requestQuery, function(err, res, body) {
         }
       });
     });
+          console.log('length result from api call', results.length);
   }
 });
 
