@@ -3,9 +3,7 @@ var Rating = require('../../database/models/Rating');
 
 var findRatingEntry = function(street, callback) {
   Rating.find({street: street}, function(err, results) {
-    if (results.length < 1) {
-    // if street isn't found an empty array is returned, not an error, so to make the callback work an empty array is treated as if it were an error
-      err = results;
+    if (err) {
       callback(err, null);
     } else {
       callback(null, results);
