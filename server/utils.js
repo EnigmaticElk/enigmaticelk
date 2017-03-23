@@ -59,8 +59,12 @@ var convertDirectionsToStreet = function(req, callback) {
 var findBoxCrimesByLine = function(directions, callback) {
   var asyncNumCrimes = directions.map((street) => {
     return new Promise((res, rej) => {
-      dbGeo.findBoxCrimesByLine(street, function(crimes) {
-        res(crimes.length);
+      dbGeo.findBoxCrimesByLine(street, function(err, crimes) {
+        if (err) {
+          rej(err);
+        } else {
+          res(crimes.length);
+        }
       });
     });
   });

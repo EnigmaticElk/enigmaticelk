@@ -16,7 +16,6 @@ request(requestQuery, function(err, res, body) {
     console.log(err);
   } else {
     var results = JSON.parse(body);
-    console.log(results[0]);
     db.clearDatabase()
       .then(() => {
         db.storeOpenData(results);
