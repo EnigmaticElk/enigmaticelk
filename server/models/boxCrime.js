@@ -2,7 +2,7 @@ var db = require('../../database/index').db;
 var BoxCrime = require('../../database/models/BoxCrime');
 
 var storeOpenDataInBoxes = (crimeData) => {
-  console.log('alive in storeOpenDataInBoxes');
+  
   var asyncBoxStore = crimeData.forEach((crime) => {
     return new Promise((res, rej) => {
 
@@ -93,9 +93,9 @@ var findBoxCrimesByLine = (lineLongLat, callback) => {
     }
   }, function (err, crimes) {
     if (err) {
-      console.error(err);
+      callback(err, null);
     } else {
-      callback(crimes);
+      callback(null, crimes);
     }
   });
 };
