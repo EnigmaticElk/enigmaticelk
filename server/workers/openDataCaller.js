@@ -22,6 +22,11 @@ request(requestQuery, (err, res, body) => {
       .catch((err) => {
         console.error(err);
       });
+<<<<<<< HEAD
+=======
+    });
+          console.log('length result from api call', results.length);
+>>>>>>> (bug) Work towards updating geo queries with updated master
   }
 });
 
