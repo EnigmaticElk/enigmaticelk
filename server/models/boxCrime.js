@@ -8,7 +8,7 @@ var storeOpenDataInBoxes = (crimeData, callback) => {
     var lat = crime.location.latitude - 0;
     var mutilplier = 1000000000000;
     var boxPadding = 20000000;
-
+    
     var coords = {
       upperLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
       upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
@@ -83,7 +83,6 @@ var findBoxCrimesByLine = (lineLongLat, callback) => {
     if (err) {
       console.error(err);
     } else {
-      console.log(crimes);
       callback(crimes);
     }
   });
