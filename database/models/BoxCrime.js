@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 
-// console.log('inside boxCrimeSchema');
 
 var boxCrimeSchema = new mongoose.Schema({
   address: String,
