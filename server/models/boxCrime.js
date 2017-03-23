@@ -5,7 +5,7 @@ var storeOpenDataInBoxes = (crimeData, callback) => {
 
   crimeData.forEach((crime) => {
     var long = crime.location.longitude - 0;
-    var lat = crime.location.latitude -0;
+    var lat = crime.location.latitude - 0;
     var mutilplier = 1000000000000;
     var boxPadding = 20000000;
     var coords = {
@@ -13,17 +13,6 @@ var storeOpenDataInBoxes = (crimeData, callback) => {
       upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
       lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
       lowerLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
-
-  crimeData.forEach((crime) => {
-    var long = crime.location.longitude - 0;
-    var lat = crime.location.latitude -0;
-    var mutilplier = 1000000;
-    var coords = {
-      upperLeft: [(((long * mutilplier) - 1) / mutilplier), (((lat * mutilplier) + 1) / mutilplier)],
-      upperRight: [(((long * mutilplier) + 1) / mutilplier), (((lat * mutilplier) + 1) / mutilplier)],
-      lowerRight: [(((long * mutilplier) + 1) / mutilplier), (((lat * mutilplier) - 1) / mutilplier)],
-      lowerLeft: [(((long * mutilplier) - 1) / mutilplier), (((lat * mutilplier) - 1) / mutilplier)],
-    }; 
 
     BoxCrime.create({
       address: crime.address,
@@ -94,7 +83,7 @@ var findBoxCrimesByLine = (lineLongLat, callback) => {
       callback(crimes)
     }
   });
-}
+};
 
 module.exports.findBoxCrimesByLine = findBoxCrimesByLine;
 
