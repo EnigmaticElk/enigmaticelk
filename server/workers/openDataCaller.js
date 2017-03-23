@@ -16,13 +16,13 @@ request(requestQuery, function(err, res, body) {
     console.log(err);
   } else {
     var results = JSON.parse(body);
-    db.clearDatabase(function(err) {
-      db.storeOpenData(results, function(err) {
+          dbBox.clearBoxDatabase(function(err) {
+            dbBox.storeOpenDataInBoxes(results, function(err) {
         if (err) {
           console.error(err);
         } else {
-          dbBox.clearBoxDatabase(function(err) {
-            dbBox.storeOpenDataInBoxes(results, function(err) {
+    db.clearDatabase(function(err) {
+      db.storeOpenData(results, function(err) {
               if (err) {
                 console.error(err);
               }
