@@ -9,7 +9,7 @@
   },
   "main": "server/server.js",
   "scripts": {
-    "test": "mocha test/ServerSpec.js & mocha test/setup.js test/ClientSpec.js",
+    "test": "mocha test/ServerSpec.js test/setup.js test/ClientSpec.js test/DatabaseSpec.js",
     "dev": "webpack -d --watch",
     "build": "webpack -p",
     "start": "nodemon server/server.js",

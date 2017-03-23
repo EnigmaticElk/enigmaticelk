@@ -11,9 +11,22 @@ describe('Server', function() {
         .get('/')
         .expect(200, done);
     })
-  })
+  });
 
-  describe('POST /search', function() {
+  describe('GET /heatmapData', function() {
+    it('should respond with heatmap data', function(done) {
+      request(app)
+        .get('/heatmapData')
+        .expect(200)
+        .expect(function(res) {
+          // able to get res.body, but it's empty.
+        })
+        .end(done);
+    });
+
+  });
+
+  xdescribe('POST /search', function() {
     it('should respond to POST requests', function(done) {
       request(app)
         .post('/search')
