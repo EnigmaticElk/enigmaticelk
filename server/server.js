@@ -3,7 +3,7 @@ var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
 var apiCall = require('./workers/openDataCaller');
-var utils = require('./utils')
+var utils = require('./utils');
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -64,6 +64,18 @@ app.get('/allCrimes', (req, res) => {
       res.writeHead(500);
       res.end();
     });
+
+
+app.get('/boxCrimes', function(req, res) {
+  utils.findAllBoxes(function(boxCrimes) {
+    res.json(JSON.stringify(boxCrimes));
+  });
+});
+
+app.get('/allCrimes', function(req, res) {
+  utils.findAllCrimes(function(crimes) {
+    res.json(crimes);
+  });
 });
 
 
