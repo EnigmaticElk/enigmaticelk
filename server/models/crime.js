@@ -3,7 +3,7 @@ var Crime = require('../../database/models/Crime');
 
 var storeOpenData = (crimeData) => {
 
-  var asyncStore = crimeData.forEach((crime) => {
+  var asyncStore = crimeData.map((crime) => {
     return new Promise((res, rej) => {
       Crime.create({
         address: crime.address,
