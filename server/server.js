@@ -34,15 +34,12 @@ app.post('/ratings', function(req, res) {
 
 app.get('/boxCrimesByStreet', function(req, res) {
   
-  // var directions = req.body;
-  // console.log(directions);
   var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]];
   var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]];
-  var test3 = test.concat(test2);
-  var test4 = [[[-122.405261, 37.773710], [-122.394992, 37.781952]]]
+  var test3 = [[[-122.405261, 37.773710], [-122.394992, 37.781952]]]
+  var test4 = test.concat(test2.concat(test3));
   
   utils.findBoxCrimesByLine(test4, function(crimesPerStreet) {
-    // console.log('crimesPerStreet in server ', crimesPerStreet);
     res.send(JSON.stringify(crimesPerStreet));
   });
 });
