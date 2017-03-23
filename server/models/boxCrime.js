@@ -8,11 +8,13 @@ var storeOpenDataInBoxes = (crimeData, callback) => {
     var lat = crime.location.latitude - 0;
     var mutilplier = 1000000000000;
     var boxPadding = 20000000;
+
     var coords = {
       upperLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
       upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
       lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
       lowerLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
+    }; 
 
     BoxCrime.create({
       address: crime.address,
@@ -74,13 +76,15 @@ var findBoxCrimesByLine = (lineLongLat, callback) => {
         $geometry: {
           type: "LineString",
           coordinates: lineLongLat,
+        }
       }
     }
   }, function (err, crimes) {
     if (err) {
       console.error(err);
     } else {
-      callback(crimes)
+      console.log(crimes);
+      callback(crimes);
     }
   });
 };
