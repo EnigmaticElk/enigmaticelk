@@ -2,7 +2,6 @@ var db = require('../../database/index').db;
 var Crime = require('../../database/models/Crime');
 
 var storeOpenData = (crimeData) => {
-  console.log('alive in storeOpenData');
 
   var asyncStore = crimeData.forEach((crime) => {
     return new Promise((res, rej) => {
