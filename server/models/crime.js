@@ -1,33 +1,46 @@
 var db = require('../../database/index');
 var Crime = require('../../database/models/Crime');
 
-var storeOpenData = (crimeData, callback) => {
-  crimeData.forEach((crime) => {
-    Crime.create({
-      address: crime.address,
-      category: crime.category,
-      date: crime.date,
-      dayofweek: crime.dayofweek,
-      descript: crime.descript,
-      incidntnum: crime.incidntnum,
-      location: {
-        type: "Point",
-        coordinates: [
-          crime.location.longitude - 0, crime.location.latitude -0
-        ]
-      },
-      index: "location"
-    }, function (err, crime) {
-      if (err) {
-        callback(err);
-      }
+var storeOpenData = (crimeData) => {
+  console.log('alive in storeOpenData');
+
+  var asyncStore = crimeData.forEach((crime) => {
+    return new Promise((res, rej) => {
+      Crime.create({
+        address: crime.address,
+        category: crime.category,
+        date: crime.date,
+        dayofweek: crime.dayofweek,
+        descript: crime.descript,
+        incidntnum: crime.incidntnum,
+        location: {
+          type: "Point",
+          coordinates: [
+            crime.location.longitude - 0, crime.location.latitude -0
+          ]
+        },
+        index: "location"
+      }, function (err, crime) {
+        if (err) {
+          rej(err);
+        } else {
+          res();
+        }
+      });
     });
   });
+  Promise.all(asyncStore);
 }
 
-var clearDatabase = (callback) => {
-  Crime.remove({}, function(err) {
-    callback();
+var clearDatabase = () => {
+  return new Promise((res, rej) => {
+    Crime.remove({}, function(err) {
+      if (err) {
+        rej(err);
+      } else {
+        res();
+      }
+    });
   });
 };
 
