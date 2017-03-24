@@ -8,7 +8,7 @@ category!="NON-CRIMINAL" AND \
 category!="BAD CHECKS" AND \
 category!="BRIBERY" AND \
 category!="FORGERY/COUNTERFEITING" AND \
-category!="FRAUD"&$limit=12000';
+category!="FRAUD"&$limit=10000';
 
 request(requestQuery, function(err, res, body) {
   if (err) {

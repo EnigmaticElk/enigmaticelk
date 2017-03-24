@@ -26,4 +26,3 @@ db.findAllRatings(function(err1, results1) {
     }
   }
 });
-
