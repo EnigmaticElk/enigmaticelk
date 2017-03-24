@@ -71,6 +71,21 @@ var findBoxCrimesByLine = function(directions, callback) {
   Promise.all(asyncNumCrimes).then(callback);
 };
 
+var findCrimesByLine = function(directions, callback) {
+  var asyncNumCrimes = directions.map((street) => {
+    return new Promise((res, rej) => {
+      dbCrime.findCrimesByLine(street, function(err, crimes) {
+        if (err) {
+          console.error(err);
+          rej(err);
+        } else {
+          res(crimes.length);
+        }
+      });
+    });
+  });
+  Promise.all(asyncNumCrimes).then(callback);
+};
 
 var findAllBoxes = function(callback) {
   dbGeo.findAllBoxes(function(results) {
@@ -89,3 +104,4 @@ module.exports.convertDirectionsToStreet = convertDirectionsToStreet;
 module.exports.findAllBoxes = findAllBoxes;
 module.exports.findBoxCrimesByLine = findBoxCrimesByLine;
 module.exports.findAllCrimes = findAllCrimes;
+module.exports.findCrimesByLine = findCrimesByLine;

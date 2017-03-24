@@ -3,7 +3,7 @@ var BoxCrime = require('../../database/models/BoxCrime');
 
 var storeOpenDataInBoxes = (crimeData) => {
   
-  var asyncBoxStore = crimeData.forEach((crime) => {
+  var asyncBoxStore = crimeData.map((crime) => {
     return new Promise((res, rej) => {
 
       var long = crime.location.longitude - 0;
