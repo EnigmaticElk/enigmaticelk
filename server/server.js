@@ -18,9 +18,9 @@ app.get('/heatmapData', function(req, res) {
 
 
 // return number of crimes that happened and crime rating 
-// [[[-122.41236300000003, 37.7868476], [-122.41236300000003, 37.7868476], [{street: 'Market St', counter: 5, rating: 'red'}]], [], [], []]
+[[[-122.41236300000003, 37.7868476], [-122.41236300000003, 37.7868476], [{street: 'Market St', counter: 5, rating: 'red'}]], [], [], []]
 
-app.post('/ratings', function(req, res) {
+app.post('/ratingsForEntireStreet', function(req, res) {
   utils.convertDirectionsToStreet(req, function(err, response) {
     if (err) {
       res.writeHead(404);
@@ -32,14 +32,16 @@ app.post('/ratings', function(req, res) {
 });
 
 
-app.get('/crimesByStreet', function(req, res) {
+app.post('/ratingsForDirections', function(req, res) {
   
-  var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]];
-  var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]];
-  var test3 = [[[-122.405261, 37.773710], [-122.394992, 37.781952]]]
-  var test4 = test.concat(test2.concat(test3));
-  
-  utils.findCrimesByLine(test4, function(crimesPerStreet) {
+  // var test = [[[-122.410312, 37.782182], [-122.405677, 37.778527]]];
+  // var test2 = [[[-122.419684, 37.782110], [-122.416702, 37.782458]]];
+  // var test3 = [[[-122.405261, 37.773710], [-122.394992, 37.781952]]]
+  // var test4 = test.concat(test2.concat(test3));
+  var directions = req.body.streets;
+  console.log('directions in server', directions);
+  utils.findCrimesByLine(directions, function(crimesPerStreet) {
+    console.log(crimesPerStreet);
     res.send(JSON.stringify(crimesPerStreet));
   });
 });

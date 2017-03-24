@@ -52,6 +52,7 @@ class App extends React.Component {
     });
     axios.post('/ratings', {streets: coords})
       .then((res) => {
+        console.log('res.data after ratings call', res.data);
         this.setState({
           streetLines: res.data
         })
