@@ -3,7 +3,7 @@ var path = require('path');
 var app = express();
 var port = process.env.PORT || 3000;
 var apiCall = require('./workers/openDataCaller');
-var utils = require('./utils');
+var utils = require('./utils')
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
