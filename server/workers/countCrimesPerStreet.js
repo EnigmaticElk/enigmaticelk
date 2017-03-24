@@ -46,7 +46,7 @@ crime.findAll(function(err, results) {
   if (err) {
     console.log(err);
   } else {
-    for (var i = 0; i < 5000; i++) {
+    for (var i = 0; i < 10000; i++) {
       (function(i) {
         setTimeout(function() {
           updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);
