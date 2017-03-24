@@ -60,10 +60,20 @@ var findCrimesByLine = function(directions, callback) {
     return new Promise((res, rej) => {
       dbCrime.findCrimesByLine(street, function(err, crimes) {
         if (err) {
-          console.error(err);
           rej(err);
         } else {
-          res(crimes.length);
+          var stInfo = {};
+          stInfo.counter = crimes.length;
+          
+          if (crimes.length > 20) {
+            stInfo.color = 'red';           
+          } else if (crimes.length > 10) {
+            stInfo.color = 'yellow';
+          } else {
+            stInfo.color = 'green';
+          }
+          var line = [street[0], street[1], stInfo];
+          res(line);
         }
       });
     });

@@ -53,6 +53,7 @@ class App extends React.Component {
     //function to send POST request to server once server-side routes are written
     axios.post('/ratings', {streets: coords})
       .then((res) => {
+        console.log('res.data after ratings call', res.data);
         this.setState({
           streetLines: res.data
         })
