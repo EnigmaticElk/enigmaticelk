@@ -3,11 +3,7 @@ var dbRating = require('./models/rating.js');
 var request = require('request');
 var GOOGLE_API_KEY = require('./googleMapsConfig.js');
 
-var getCrimeLocs = function (callback) {
-  dbCrime.findLocations(function(results) {
-    callback(results);
-  });
-};
+var getCrimeLocs = dbCrime.findLocations;
 
 var assignStreetFromLngLat = function(lng, lat, callback) {
   var url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
@@ -55,11 +51,14 @@ var convertDirectionsToStreet = function(req, callback) {
 };
 
 
-var findCrimesByLine = function(directions) {
+var findCrimesByLine = (directions) => {
   var asyncNumCrimes = directions.map((street) => {
     return new Promise((res, rej) => {
       dbCrime.findCrimeByLine(street)
-        .then((crimes) => {
+        .then((crimes, err) => {
+          if (err) {
+            rej(err);
+          }
           var stInfo = {};
           stInfo.counter = crimes.length;
           
@@ -79,11 +78,7 @@ var findCrimesByLine = function(directions) {
 };
 
 
-var findAllCrimes = function(callback) {
-  dbCrime.findAll(function(err, results) {
-    callback(results);
-  });
-};
+var findAllCrimes = dbCrime.findAll;
 
 module.exports.getCrimeLocs = getCrimeLocs;
 module.exports.convertDirectionsToStreet = convertDirectionsToStreet;

@@ -10,9 +10,15 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-app.get('/heatmapData', function(req, res) {
-  utils.getCrimeLocs(function(locations) {
-    res.send(locations);
+app.get('/heatmapData', (req, res) => {
+  utils.getCrimeLocs()
+    .then((locations) => {
+      res.send(locations);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.writeHead(404);
+      res.end();
   });
 });
 
@@ -32,7 +38,7 @@ app.post('/ratingsForEntireStreet', function(req, res) {
 });
 
 
-app.post('/ratings', function(req, res) {
+app.post('/ratings', (req, res) => {
   
   var directions = req.body.streets;
   utils.findCrimesByLine(directions)
@@ -41,15 +47,23 @@ app.post('/ratings', function(req, res) {
     })
     .catch((err) => {
       console.error(err);
+      res.writeHead(500);
+      res.end();
     });
-    
+
 });
 
 
-app.get('/allCrimes', function(req, res) {
-  utils.findAllCrimes(function(crimes) {
-    res.json(crimes);
-  });
+app.get('/allCrimes', (req, res) => {
+  utils.findAllCrimes()
+    .then((crimes) => {
+      res.json(crimes);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.writeHead(500);
+      res.end();
+    });
 });
 
 

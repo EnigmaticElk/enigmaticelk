@@ -51,7 +51,9 @@ var storeOpenData = (crimeData) => {
       });
     });
   });
-  Promise.all(asyncStore);
+  return Promise.all(asyncStore).catch((err) => {
+    console.error('err in store: ', err);
+  });
 };
 
 var clearDatabase = () => {
@@ -66,7 +68,7 @@ var clearDatabase = () => {
   });
 };
 
-var findAll = (callback) => {
+var findAll = () => {
   return new Promise ((res, rej) => {
     Crime.find({}, function(err, results) {
       if (err) {
@@ -75,17 +77,18 @@ var findAll = (callback) => {
         res(results);
       }
     });
-  })
-  .then(callback);
+  });
 };
 
-var findLocations = (callback) => {
-  Crime.find({}, 'location.coordinates -_id', function(err, results) {
-    if (err) {
-      console.error(err);
-    } else {
-      callback(results);
-    }
+var findLocations = () => {
+  return new Promise((res, rej) => {
+    Crime.find({}, 'location.coordinates -_id', function(err, results) {
+      if (err) {
+        rej(err);
+      } else {
+        res(results);
+      }
+    });
   });
 };
 
@@ -109,8 +112,7 @@ var findNearbyCrimes = (pointOfInterest) => {
         res(results);
       }
     });
-  })
-  .then(callback);
+  });
 };
 
 var findCrimeByLine = (lineLongLat) => {

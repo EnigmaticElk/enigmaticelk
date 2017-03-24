@@ -10,7 +10,7 @@ category!="BRIBERY" AND \
 category!="FORGERY/COUNTERFEITING" AND \
 category!="FRAUD"&$limit=10000';
 
-request(requestQuery, function(err, res, body) {
+request(requestQuery, (err, res, body) => {
   if (err) {
     console.log(err);
   } else {
