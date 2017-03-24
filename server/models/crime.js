@@ -67,13 +67,16 @@ var clearDatabase = () => {
 };
 
 var findAll = (callback) => {
-  Crime.find({}, function(err, results) {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, results);
-    }
-  });
+  return new Promise ((res, rej) => {
+    Crime.find({}, function(err, results) {
+      if (err) {
+        rej(err);
+      } else {
+        res(results);
+      }
+    });
+  })
+  .then(callback);
 };
 
 var findLocations = (callback) => {
@@ -87,42 +90,47 @@ var findLocations = (callback) => {
 };
 
 // trying to make $geoIntersection
-var findNearbyCrimes = (pointOfInterest, callback) => {
-  Crime.find({
-    location: {
-      $near: {
-        $geometry: {
-          type: "Point",
-          coordinates: pointOfInterest
-        },
-        $maxDistance: 100,
-      }
-    }
-  }, function (err, results) {
-    if (err) {
-      console.error(err);
-    } else {
-      callback(results);
-    }
-  });
-};
-
-var findCrimesByLine = (lineLongLat, callback) => {
-  Crime.find({
-    box: {
-      $geoIntersects: {
-        $geometry: {
-          type: "LineString",
-          coordinates: lineLongLat,
+var findNearbyCrimes = (pointOfInterest) => {
+  return new Promise((res, rej) => {
+    Crime.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: pointOfInterest
+          },
+          $maxDistance: 100,
         }
       }
-    }
-  }, function (err, results) {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, results);
-    }
+    }, function (err, results) {
+      if (err) {
+        rej(err);
+      } else {
+        res(results);
+      }
+    });
+  })
+  .then(callback);
+};
+
+var findCrimeByLine = (lineLongLat) => {
+  return new Promise((res, rej) => {    
+    Crime.find({
+      box: {
+        $geoIntersects: {
+          $geometry: {
+            type: "LineString",
+            coordinates: lineLongLat,
+          }
+        }
+      }
+    }, function (err, results) {
+      if (err) {
+        rej(err);
+      } else {
+        res(results);
+      }
+    });
   });
 };
 
@@ -132,4 +140,4 @@ module.exports.clearDatabase = clearDatabase;
 module.exports.findLocations = findLocations;
 module.exports.findAll = findAll;
 module.exports.findNearbyCrimes = findNearbyCrimes;
-module.exports.findCrimesByLine = findCrimesByLine;
+module.exports.findCrimeByLine = findCrimeByLine;

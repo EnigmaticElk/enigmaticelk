@@ -55,13 +55,11 @@ var convertDirectionsToStreet = function(req, callback) {
 };
 
 
-var findCrimesByLine = function(directions, callback) {
+var findCrimesByLine = function(directions) {
   var asyncNumCrimes = directions.map((street) => {
     return new Promise((res, rej) => {
-      dbCrime.findCrimesByLine(street, function(err, crimes) {
-        if (err) {
-          rej(err);
-        } else {
+      dbCrime.findCrimeByLine(street)
+        .then((crimes) => {
           var stInfo = {};
           stInfo.counter = crimes.length;
           
@@ -74,11 +72,10 @@ var findCrimesByLine = function(directions, callback) {
           }
           var line = [street[1], street[0], stInfo];
           res(line);
-        }
-      });
+        });
     });
   });
-  Promise.all(asyncNumCrimes).then(callback);
+  return Promise.all(asyncNumCrimes);
 };
 
 
