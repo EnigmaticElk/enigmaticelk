@@ -10,7 +10,7 @@ var boxCrimeSchema = new mongoose.Schema({
   incidntnum: Number,
   time: String,
   location: {
-    type: Object,
+    type: String,
     coordinates: []
   },
 });
