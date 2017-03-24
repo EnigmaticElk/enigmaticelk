@@ -1,4 +1,4 @@
-var db = require('../../database/index').db;
+var db = require('../../database/index');
 var Rating = require('../../database/models/Rating');
 
 var findRatingEntry = function(street, callback) {

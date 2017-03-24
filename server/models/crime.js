@@ -1,4 +1,4 @@
-var db = require('../../database/index').db;
+var db = require('../../database/index');
 var Crime = require('../../database/models/Crime');
 
 var storeOpenData = (crimeData, callback) => {
