@@ -1,7 +1,7 @@
 var dbCrime = require('./models/crime.js');
 var dbRating = require('./models/rating.js');
 var request = require('request');
-var API_KEY = require('./googleMapsConfig.js');
+var GOOGLE_API_KEY = require('./googleMapsConfig.js');
 
 var getCrimeLocs = function (callback) {
   dbCrime.findLocations(function(results) {
@@ -10,7 +10,7 @@ var getCrimeLocs = function (callback) {
 };
 
 var assignStreetFromLngLat = function(lng, lat, callback) {
-  var url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`;
+  var url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
   request(url, function(err, res, body) {
     if (err) {
       callback(err, null);
@@ -21,7 +21,7 @@ var assignStreetFromLngLat = function(lng, lat, callback) {
           callback(err, null);
         } else {
           if (results.length < 1) {
-            var defaultResponse = [{street: street, counter: 1, rating: 'green'}];
+            var defaultResponse = [{street: street, counter: 0, rating: 'green'}];
             callback(null, defaultResponse);
           } else {
             callback(null, results);
