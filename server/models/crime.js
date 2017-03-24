@@ -1,7 +1,7 @@
-var db = require('../../database/index');
-var Crime = require('../../database/models/Crime');
+let db = require('../../database/index');
+let Crime = require('../../database/models/Crime');
 
-var storeOpenData = (crimeData, callback) => {
+let storeOpenData = (crimeData, callback) => {
 
   crimeData.forEach((crime) => {
     Crime.create({
@@ -25,13 +25,13 @@ var storeOpenData = (crimeData, callback) => {
   });
 }
 
-var clearDatabase = (callback) => {
+let clearDatabase = (callback) => {
   Crime.remove({}, function(err) {
     callback();
   });
 };
 
-var findAll = (callback) => {
+let findAll = (callback) => {
   Crime.find({}, function(err, results) {
     if (err) {
       callback(err, null);
@@ -41,7 +41,7 @@ var findAll = (callback) => {
   });
 };
 
-var findLocations = (callback) => {
+let findLocations = (callback) => {
   Crime.find({}, 'location.coordinates -_id', function(err, results) {
     if (err) {
       console.error(err);

@@ -3,14 +3,14 @@ var db = require('../models/rating.js');
 var crime = require('../models/crime');
 var LOC_API_KEY = require('../locationIQConfig.js');
 
-var updateCrimeCounter = function(lat, lng) {
-  var url =  `http://locationiq.org/v1/reverse.php?format=json&key=${LOC_API_KEY}&lat=${lat}&lon=${lng}`;
+let updateCrimeCounter = function(lat, lng) {
+  let url =  `http://locationiq.org/v1/reverse.php?format=json&key=${LOC_API_KEY}&lat=${lat}&lon=${lng}`;
   request(url, function(err, res, body) {
     if (err) {
       console.log(err);
     } else {
       if (JSON.parse(body).address) {
-        var street = JSON.parse(body).address.road;
+        let street = JSON.parse(body).address.road;
         db.findRatingEntry(street, function(err1, results1) {
           if (err1) {
             console.log(err1);
@@ -46,7 +46,7 @@ crime.findAll(function(err, results) {
   if (err) {
     console.log(err);
   } else {
-    for (var i = 0; i < 5000; i++) {
+    for (let i = 0; i < 5000; i++) {
       (function(i) {
         setTimeout(function() {
           updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);

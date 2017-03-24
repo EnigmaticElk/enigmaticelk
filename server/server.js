@@ -17,14 +17,14 @@ app.get('/heatmapData', function(req, res) {
 });
 
 app.post('/ratings', function(req, res) {
-  utils.convertDirectionsToStreet(req, function(err, response) {
-    if (err) {
+  utils.convertDirectionsToStreet(req)
+    .then((response) => {
+      res.send(JSON.stringify(response));
+    })
+    .catch((err) => {
       res.writeHead(404);
       res.end();
-    } else {
-      res.send(JSON.stringify(response));
-    }
-  });
+    });
 });
 
 app.listen(port);
