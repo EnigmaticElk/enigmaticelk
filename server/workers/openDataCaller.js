@@ -1,5 +1,6 @@
 var request = require('request');
 var db = require('../models/crime');
+var dbBox = require('../models/boxCrime');
 
 var requestQuery =
 'https://data.sfgov.org/resource/9v2m-8wqu.json?\
@@ -14,14 +15,20 @@ request(requestQuery, function(err, res, body) {
   if (err) {
     console.log(err);
   } else {
-    db.clearDatabase(function(err) {
-      var results = JSON.parse(body);
-      db.storeOpenData(results, function(err) {
-        if (err) {
-          console.error(err);
-        }
+    var results = JSON.parse(body);
+    db.clearDatabase()
+      .then(() => {
+        db.storeOpenData(results);
+      })
+      .then(() => {
+      dbBox.clearBoxDatabase();
+      })
+      .then(() => {
+        dbBox.storeOpenDataInBoxes(results);
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    });
   }
 });
 
