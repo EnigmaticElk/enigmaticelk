@@ -1,5 +1,5 @@
-var db = require('../../database/index');
-var Crime = require('../../database/models/Crime');
+let db = require('../../database/index');
+let Crime = require('../../database/models/Crime');
 
 
 var storeOpenData = (crimeData) => {
@@ -64,10 +64,6 @@ var clearDatabase = () => {
         rej(err);
       } else {
         res();
-      }
-    });
-  });
-};
 
 var findAll = () => {
   return new Promise ((res, rej) => {
@@ -80,6 +76,7 @@ var findAll = () => {
     });
   });
 };
+
 
 var findLocations = () => {
   return new Promise((res, rej) => {
@@ -136,6 +133,7 @@ var findCrimeByLine = (lineLongLat) => {
     });
   });
 };
+
 
 
 module.exports.storeOpenData = storeOpenData;

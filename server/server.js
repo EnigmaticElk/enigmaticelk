@@ -23,18 +23,19 @@ app.get('/heatmapData', (req, res) => {
 });
 
 
+
 // return number of crimes that happened and crime rating 
 // [[[-122.41236300000003, 37.7868476], [-122.41236300000003, 37.7868476], [{street: 'Market St', counter: 5, rating: 'red'}]], [], [], []]
 
 app.post('/ratingsForEntireStreet', function(req, res) {
-  utils.convertDirectionsToStreet(req, function(err, response) {
-    if (err) {
+  utils.convertDirectionsToStreet(req)
+    .then((response) => {
+      res.send(JSON.stringify(response));
+    })
+    .catch((err) => {
       res.writeHead(404);
       res.end();
-    } else {
-      res.send(JSON.stringify(response));
-    }
-  });
+    });
 });
 
 
