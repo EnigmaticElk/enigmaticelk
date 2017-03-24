@@ -8,7 +8,7 @@ category!="NON-CRIMINAL" AND \
 category!="BAD CHECKS" AND \
 category!="BRIBERY" AND \
 category!="FORGERY/COUNTERFEITING" AND \
-category!="FRAUD"&$limit=30000';
+category!="FRAUD"&$limit=12000';
 
 request(requestQuery, function(err, res, body) {
   if (err) {
@@ -18,7 +18,8 @@ request(requestQuery, function(err, res, body) {
       var results = JSON.parse(body);
       db.storeOpenData(results, function(err) {
         if (err) {
-          console.error(err);
+          // console.error(err);
+          // errors are shown when there is a duplicate entry.
         }
       });
     });
