@@ -15,8 +15,13 @@ var crimeSchema = new mongoose.Schema({
     type: Object,
     coordinates: []
   },
+  box: {
+    type: Object,
+    coordinates: []
+  },
 });
 
-crimeSchema.index({location: "2dsphere"})
+crimeSchema.index({box: "2dsphere"});
+crimeSchema.index({location: "2dsphere"});
 
 module.exports= mongoose.model('Crime', crimeSchema);
