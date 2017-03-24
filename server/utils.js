@@ -1,6 +1,5 @@
 var dbCrime = require('./models/crime.js');
 var dbRating = require('./models/rating.js');
-var dbGeo = require('./models/boxCrime.js');
 var request = require('request');
 var GOOGLE_API_KEY = require('./googleMapsConfig.js');
 
@@ -52,6 +51,7 @@ var convertDirectionsToStreet = function(req, callback) {
 };
 
 
+
 var findCrimesByLine = (directions) => {
   var asyncNumCrimes = directions.map((street) => {
     return new Promise((res, rej) => {
@@ -77,6 +77,7 @@ var findCrimesByLine = (directions) => {
   });
   return Promise.all(asyncNumCrimes);
 };
+
 
 var findAllCrimes = dbCrime.findAll;
 

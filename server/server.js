@@ -38,6 +38,7 @@ app.post('/ratingsForEntireStreet', function(req, res) {
 });
 
 
+
 app.post('/ratings', (req, res) => {
   
   var directions = req.body.streets;
@@ -64,18 +65,6 @@ app.get('/allCrimes', (req, res) => {
       res.writeHead(500);
       res.end();
     });
-
-
-app.get('/boxCrimes', function(req, res) {
-  utils.findAllBoxes(function(boxCrimes) {
-    res.json(JSON.stringify(boxCrimes));
-  });
-});
-
-app.get('/allCrimes', function(req, res) {
-  utils.findAllCrimes(function(crimes) {
-    res.json(crimes);
-  });
 });
 
 
