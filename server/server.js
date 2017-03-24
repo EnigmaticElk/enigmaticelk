@@ -38,7 +38,10 @@ app.post('/ratingsForEntireStreet', function(req, res) {
 });
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> (refact) Refactor geo-related function stacks to promises
 app.post('/ratings', (req, res) => {
   
   var directions = req.body.streets;

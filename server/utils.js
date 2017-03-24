@@ -51,7 +51,6 @@ var convertDirectionsToStreet = function(req, callback) {
 };
 
 
-
 var findCrimesByLine = (directions) => {
   var asyncNumCrimes = directions.map((street) => {
     return new Promise((res, rej) => {
