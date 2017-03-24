@@ -66,13 +66,13 @@ var findCrimesByLine = function(directions, callback) {
           stInfo.counter = crimes.length;
           
           if (crimes.length > 20) {
-            stInfo.color = 'red';           
+            stInfo.rating = 'red';           
           } else if (crimes.length > 10) {
-            stInfo.color = 'yellow';
+            stInfo.rating = 'yellow';
           } else {
-            stInfo.color = 'green';
+            stInfo.rating = 'green';
           }
-          var line = [street[0], street[1], stInfo];
+          var line = [street[1], street[0], stInfo];
           res(line);
         }
       });
