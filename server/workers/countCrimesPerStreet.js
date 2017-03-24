@@ -9,7 +9,7 @@ var updateCrimeCounter = function(lat, lng) {
     if (err) {
       console.log(err);
     } else {
-      var street = JSON.parse(body).results[0].address_components[1].long_name;
+      var street = JSON.parse(body).results[0].address_components[1].short_name;
       db.findRatingEntry(street, function(err1, results1) {
         if (err1) {
           console.log(err1);
