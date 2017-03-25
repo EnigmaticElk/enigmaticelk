@@ -22,6 +22,6 @@ request(requestQuery, (err, res, body) => {
       .catch((err) => {
         console.error(err);
       });
-    });
+    }
 });
 
