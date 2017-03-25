@@ -13,7 +13,7 @@ let updateCrimeCounter = function(lat, lng) {
         let street = JSON.parse(body).address.road;
         return db.findRatingEntry(street)
           .then((results) => {
-            if (results1.length < 1) {
+            if (results.length < 1) {
               db.createRatingEntry(street)
                 .then(() => {
                   console.log('created new entry');
@@ -46,7 +46,8 @@ crime.findAll(function(err, results) {
   if (err) {
     console.log(err);
   } else {
-    for (let i = 0; i < 5000; i++) {
+    console.log('results', results);
+    for (let i = 0; i < 1000; i++) {
       (function(i) {
         setTimeout(function() {
           updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);

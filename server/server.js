@@ -2,9 +2,10 @@ let express = require('express');
 let path = require('path');
 let app = express();
 let port = process.env.PORT || 3000;
-let apiCall = require('./workers/openDataCaller');
+// let apiCall = require('./workers/openDataCaller');
 let utils = require('./utils')
 let bodyParser = require('body-parser');
+// let rate = require('./workers/countCrimesPerStreet');
 
 app.use(bodyParser.json());
 
