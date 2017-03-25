@@ -2,17 +2,17 @@ let db = require('../../database/index');
 let Crime = require('../../database/models/Crime');
 
 
-var storeOpenData = (crimeData) => {
+let storeOpenData = (crimeData) => {
 
-  var asyncStore = crimeData.map((crime) => {
+  let asyncStore = crimeData.map((crime) => {
     return new Promise((res, rej) => {
 
-      var long = crime.location.longitude - 0;
-      var lat = crime.location.latitude - 0;
-      var mutilplier = 1000000000000;
-      var boxPadding = 20000000;
+      let long = crime.location.longitude - 0;
+      let lat = crime.location.latitude - 0;
+      let mutilplier = 1000000000000;
+      let boxPadding = 20000000;
       
-      var coords = {
+      let coords = {
         upperLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
         upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
         lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
@@ -43,7 +43,7 @@ var storeOpenData = (crimeData) => {
           ]]
         },
         index: "box"
-      }, function (err, crime) {
+      }, (err, crime) => {
         if (err) {
           rej(err);
         } else {
@@ -57,9 +57,9 @@ var storeOpenData = (crimeData) => {
   });
 };
 
-var clearDatabase = () => {
+let clearDatabase = () => {
   return new Promise((res, rej) => {
-    Crime.remove({}, function(err) {
+    Crime.remove({}, (err) => {
       if (err) {
         rej(err);
       } else {
@@ -69,9 +69,9 @@ var clearDatabase = () => {
   });
 };
 
-var findAll = () => {
+let findAll = () => {
   return new Promise ((res, rej) => {
-    Crime.find({}, function(err, results) {
+    Crime.find({}, (err, results) => {
       if (err) {
         rej(err);
       } else {
@@ -82,9 +82,9 @@ var findAll = () => {
 };
 
 
-var findLocations = () => {
+let findLocations = () => {
   return new Promise((res, rej) => {
-    Crime.find({}, 'location.coordinates -_id', function(err, results) {
+    Crime.find({}, 'location.coordinates -_id', (err, results) => {
       if (err) {
         rej(err);
       } else {
@@ -95,7 +95,7 @@ var findLocations = () => {
 };
 
 // trying to make $geoIntersection
-var findNearbyCrimes = (pointOfInterest) => {
+let findNearbyCrimes = (pointOfInterest) => {
   return new Promise((res, rej) => {
     Crime.find({
       location: {
@@ -107,7 +107,7 @@ var findNearbyCrimes = (pointOfInterest) => {
           $maxDistance: 100,
         }
       }
-    }, function (err, results) {
+    }, (err, results) => {
       if (err) {
         rej(err);
       } else {
@@ -117,7 +117,7 @@ var findNearbyCrimes = (pointOfInterest) => {
   });
 };
 
-var findCrimeByLine = (lineLongLat) => {
+let findCrimeByLine = (lineLongLat) => {
   return new Promise((res, rej) => {    
     Crime.find({
       box: {
@@ -128,7 +128,7 @@ var findCrimeByLine = (lineLongLat) => {
           }
         }
       }
-    }, function (err, results) {
+    }, (err, results) => {
       if (err) {
         rej(err);
       } else {

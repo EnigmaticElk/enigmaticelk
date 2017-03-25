@@ -27,7 +27,7 @@ app.get('/heatmapData', (req, res) => {
 // return number of crimes that happened and crime rating 
 // [[[-122.41236300000003, 37.7868476], [-122.41236300000003, 37.7868476], [{street: 'Market St', counter: 5, rating: 'red'}]], [], [], []]
 
-app.post('/ratingsForEntireStreet', function(req, res) {
+app.post('/ratingsForEntireStreet', (req, res) => {
   utils.convertDirectionsToStreet(req)
     .then((response) => {
       res.send(JSON.stringify(response));
@@ -42,7 +42,7 @@ app.post('/ratingsForEntireStreet', function(req, res) {
 
 app.post('/ratings', (req, res) => {
   
-  var directions = req.body.streets;
+  let directions = req.body.streets;
   utils.findCrimesByLine(directions)
     .then((crimesPerStreet) => {
       res.send(JSON.stringify(crimesPerStreet));

@@ -3,12 +3,12 @@ let dbRating = require('./models/rating.js');
 let request = require('request');
 let GOOGLE_API_KEY = require('./googleMapsConfig.js');
 
-var getCrimeLocs = dbCrime.findLocations;
+let getCrimeLocs = dbCrime.findLocations;
 
 let assignStreetFromLngLat = (lng, lat) => {
   return new Promise((response, rej) => {
     let url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
-    request(url, function(err, res, body) {
+    request(url, (err, res, body) => {
       if (err) {
         rej(err);
       } else {
@@ -32,15 +32,15 @@ let assignStreetFromLngLat = (lng, lat) => {
 
 
 
-var findCrimesByLine = (directions) => {
-  var asyncNumCrimes = directions.map((street) => {
+let findCrimesByLine = (directions) => {
+  let asyncNumCrimes = directions.map((street) => {
     return new Promise((res, rej) => {
       dbCrime.findCrimeByLine(street)
         .then((crimes, err) => {
           if (err) {
             rej(err);
           }
-          var stInfo = {};
+          let stInfo = {};
           stInfo.counter = crimes.length;
           
           if (crimes.length > 20) {
@@ -50,7 +50,7 @@ var findCrimesByLine = (directions) => {
           } else {
             stInfo.rating = 'green';
           }
-          var line = [street[1], street[0], stInfo];
+          let line = [street[1], street[0], stInfo];
           res(line);
         });
     });
@@ -59,10 +59,10 @@ var findCrimesByLine = (directions) => {
 };
 
 
-var findAllCrimes = dbCrime.findAll;
+let findAllCrimes = dbCrime.findAll;
 
 
-let convertDirectionsToStreet = function(req) {
+let convertDirectionsToStreet = (req) => {
   return new Promise((res, rej) => {
     let coordsWithAddresses = req.body.streets;
     let counter = 0;

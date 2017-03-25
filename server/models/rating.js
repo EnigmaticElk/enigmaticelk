@@ -3,7 +3,7 @@ let Rating = require('../../database/models/Rating');
 
 let findRatingEntry = (street) => {
   return new Promise((res, rej) => {
-    Rating.find({street: street}, function(err, results) {
+    Rating.find({street: street}, (err, results) => {
       if (err) {
         rej(err);
       } else {
@@ -13,9 +13,9 @@ let findRatingEntry = (street) => {
   });
 };
 
-let updateRatingEntry = function(street, entry) {
+let updateRatingEntry = (street, entry) => {
   return new Promise((res, rej) => {
-    Rating.findOneAndUpdate({street: street}, {$set:{counter:(entry[0].counter + 1)}}, {new: true}, function(err, results) {
+    Rating.findOneAndUpdate({street: street}, {$set:{counter:(entry[0].counter + 1)}}, {new: true}, (err, results) => {
       if (err) {
         rej(err);
       } else {
@@ -25,9 +25,9 @@ let updateRatingEntry = function(street, entry) {
   });
 };
 
-let createRatingEntry = function(street) {
+let createRatingEntry = (street) => {
   return new Promise((res, rej) => {
-    Rating.create({street: street, counter: 1, rating: 'green'}, function(err, results) {
+    Rating.create({street: street, counter: 1, rating: 'green'}, (err, results) => {
       if (err) {
         rej(err);
       } else {
@@ -39,7 +39,7 @@ let createRatingEntry = function(street) {
 
 let findAllRatings = () => {
   return new Promise((res, rej) => {
-    Rating.find({}, function(err, results) {
+    Rating.find({}, (err, results) => {
       if (err) {
         rej(err);
       } else {
@@ -49,9 +49,9 @@ let findAllRatings = () => {
   });
 };
 
-let assignOneRating = function(street, rating) {
+let assignOneRating = (street, rating) => {
   return new Promise((res, rej) => {
-    Rating.findOneAndUpdate({street: street}, {$set:{rating: rating}}, {new: true}, function(err, results) {
+    Rating.findOneAndUpdate({street: street}, {$set:{rating: rating}}, {new: true}, (err, results) => {
       if (err) {
         rej(err, null);
       } else {

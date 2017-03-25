@@ -1,6 +1,6 @@
 let db = require('../models/rating.js');
 
-let assign = function(street, rating) {
+let assign = (street, rating) => {
   db.assignOneRating(street, rating)
     .then((results) => {
       console.log('assigned rating');

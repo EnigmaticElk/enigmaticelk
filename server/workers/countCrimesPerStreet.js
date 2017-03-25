@@ -3,9 +3,9 @@ let db = require('../models/rating.js');
 let crime = require('../models/crime');
 let LOC_API_KEY = require('../locationIQConfig.js');
 
-let updateCrimeCounter = function(lat, lng) {
+let updateCrimeCounter = (lat, lng) => {
   let url =  `http://locationiq.org/v1/reverse.php?format=json&key=${LOC_API_KEY}&lat=${lat}&lon=${lng}`;
-  request(url, function(err, res, body) {
+  request(url, (err, res, body) => {
     if (err) {
       console.log(err);
     } else {
@@ -42,14 +42,14 @@ let updateCrimeCounter = function(lat, lng) {
 };
 
 // counts crimes on each street
-crime.findAll(function(err, results) {
+crime.findAll((err, results) => {
   if (err) {
     console.log(err);
   } else {
     console.log('results', results);
     for (let i = 0; i < 1000; i++) {
-      (function(i) {
-        setTimeout(function() {
+      ((i) => {
+        setTimeout(() => {
           updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);
         }, 1000 * i);
       })(i);
