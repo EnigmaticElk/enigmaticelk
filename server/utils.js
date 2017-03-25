@@ -6,7 +6,7 @@ let GOOGLE_API_KEY = require('./googleMapsConfig.js');
 let getCrimeLocs = dbCrime.findLocations;
 
 let assignStreetFromLngLat = (lng, lat) => {
-  return new Promise((response, rej) => {
+  return new Promise((resolve, rej) => {
     let url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
     request(url, (err, res, body) => {
       if (err) {
@@ -17,9 +17,9 @@ let assignStreetFromLngLat = (lng, lat) => {
           .then((results) => {
             if (results.length < 1) {
               let defaultResponse = [{street: street, counter: 0, rating: 'green'}];
-              response(defaultResponse);
+              resolve(defaultResponse);
             } else {
-              response(results);
+              resolve(results);
             }
           })
           .catch((err) => {
