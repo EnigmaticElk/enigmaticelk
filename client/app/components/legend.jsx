@@ -34,7 +34,6 @@ let Legend = (props) => {
     }
   };
 
-
   return (
     <table>
       <tbody>
@@ -49,7 +48,7 @@ let Legend = (props) => {
         </tr>
       </tbody>
     </table>
-  )
-}
+  );
+};
 
 export default Legend;

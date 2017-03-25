@@ -138,8 +138,6 @@ let findCrimeByLine = (lineLongLat) => {
   });
 };
 
-
-
 module.exports.storeOpenData = storeOpenData;
 module.exports.clearDatabase = clearDatabase;
 module.exports.findLocations = findLocations;
