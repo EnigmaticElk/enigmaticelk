@@ -59,7 +59,7 @@ let assignOneRating = (street, rating) => {
       }
     });
   });
-}
+};
 
 module.exports.findRatingEntry = findRatingEntry;
 module.exports.updateRatingEntry = updateRatingEntry;

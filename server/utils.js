@@ -7,7 +7,7 @@ let getCrimeLocs = dbCrime.findLocations;
 
 let assignStreetFromLngLat = (lng, lat) => {
   return new Promise((resolve, rej) => {
-    let url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
     request(url, (err, res, body) => {
       if (err) {
         rej(err);
@@ -25,12 +25,10 @@ let assignStreetFromLngLat = (lng, lat) => {
           .catch((err) => {
             rej(err);
           });
-        }
+      }
     });
   });
 };
-
-
 
 let findCrimesByLine = (directions) => {
   let asyncNumCrimes = directions.map((street) => {
@@ -58,10 +56,6 @@ let findCrimesByLine = (directions) => {
   return Promise.all(asyncNumCrimes);
 };
 
-
-let findAllCrimes = dbCrime.findAll;
-
-
 let convertDirectionsToStreet = (req) => {
   return new Promise((res, rej) => {
     let coordsWithAddresses = req.body.streets;
@@ -80,7 +74,7 @@ let convertDirectionsToStreet = (req) => {
             .catch((err) => {
               rej(err);
             });
-        }, 20 * i);
+        }, 1000 * i);
       })(i);
     }
   });
@@ -88,5 +82,5 @@ let convertDirectionsToStreet = (req) => {
 
 module.exports.getCrimeLocs = getCrimeLocs;
 module.exports.convertDirectionsToStreet = convertDirectionsToStreet;
-module.exports.findAllCrimes = findAllCrimes;
+module.exports.findAllCrimes = dbCrime.findAll;
 module.exports.findCrimesByLine = findCrimesByLine;

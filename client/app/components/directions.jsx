@@ -39,14 +39,14 @@ class Directions extends React.Component {
       this.calcRoute(this.props.origDest[0].formatted_address, this.props.origDest[1].formatted_address);
       this.setState({
         origDest: this.props.origDest
-      })
+      });
     };
     if (this.props.streetLines) {
       this.props.streetLines.forEach((line) => {
-        let origin = `${line[0][1]},${line[0][0]}`
-        let dest = `${line[1][1]},${line[1][0]}`
-        this.drawLine(origin, dest, line[2].rating)
-      })
+        let origin = `${line[0][1]},${line[0][0]}`;
+        let dest = `${line[1][1]},${line[1][0]}`;
+        this.drawLine(origin, dest, line[2].rating);
+      });
     }
   }
 
@@ -54,15 +54,14 @@ class Directions extends React.Component {
     var request = {
       origin: start,
       destination: end,
-      travelMode: 'DRIVING',
-      avoidHighways: true,
+      travelMode: 'WALKING',
       provideRouteAlternatives: true
     };
     this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
         this.state.directionsDisplay.setDirections(response);
       }
-    })
+    });
   }
 
   drawLine(origin, destination, rating) {
@@ -70,13 +69,13 @@ class Directions extends React.Component {
       strokeColor: rating,
       strokeOpacity: 0.75,
       strokeWeight: 5
-    }
+    };
 
     let dirRenderer = new google.maps.DirectionsRenderer({
       suppressMarkers: true,
       polylineOptions: options,
       preserveViewport: true
-    })
+    });
 
     this.state.lines.push(dirRenderer);
     dirRenderer.setMap(this.props.map);
@@ -84,33 +83,32 @@ class Directions extends React.Component {
     let request = {
       origin: origin,
       destination: destination,
-      travelMode: 'DRIVING',
-      avoidHighways: true
+      travelMode: 'WALKING'
     };
 
     this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
         dirRenderer.setDirections(response);
       }
-    })
+    });
   }
 
   clearLines() {
     this.state.lines.forEach((line) => {
       line.setMap(null);
-    })
+    });
   }
 
   render() {
     var style = {
       width: '750px',
       height: '650px'
-    }
+    };
 
     return (
       <div id='directionsPanel' style={style}></div>
-      )
-  };
+    );
+  }
 };
 
 export default Directions;
