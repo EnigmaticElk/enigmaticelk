@@ -64,6 +64,10 @@ var clearDatabase = () => {
         rej(err);
       } else {
         res();
+      }
+    });
+  });
+};
 
 var findAll = () => {
   return new Promise ((res, rej) => {
