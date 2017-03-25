@@ -1,4 +1,6 @@
 import React from 'react';
+import Legend from './Legend.jsx';
+
 
 class Directions extends React.Component {
 
@@ -8,6 +10,7 @@ class Directions extends React.Component {
       origDest: null,
       lines: []
     };
+    this.displayLegend = this.displayLegend.bind(this);
   }
 
   componentDidMount() {
@@ -101,6 +104,12 @@ class Directions extends React.Component {
     })
   }
 
+  displayLegend() {
+    if (this.state.origDest) {
+      return <Legend />
+    }
+  }
+
   render() {
     var style = {
       width: '750px',
@@ -108,7 +117,9 @@ class Directions extends React.Component {
     }
 
     return (
-      <div id='directionsPanel' style={style}></div>
+      <div id='directionsPanel' style={style}>
+        {this.displayLegend()}
+      </div>
       )
   };
 };

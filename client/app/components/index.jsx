@@ -73,7 +73,6 @@ class App extends React.Component {
           setMap={this.setMap}
         />
         <br />
-        <Legend />
         <Directions
           origDest={this.state.origDest}
           map={this.state.map}

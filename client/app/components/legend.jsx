@@ -34,17 +34,6 @@ let Legend = (props) => {
     }
   };
 
-  // let hrStyle = {
-  //   display: 'block',
-  //   // align: '0',
-  //   // height: '1px',
-  //   // border: '0',
-  //   color: 'red',
-  //   // margin: '1em 0',
-  //   // padding: '0',
-  //   width: '75px',
-  //   // left: '0',
-  // };
 
   return (
     <table>
