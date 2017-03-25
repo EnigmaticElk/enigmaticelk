@@ -52,7 +52,33 @@ var convertDirectionsToStreet = function(req, callback) {
       }, 20 * i);
     })(i);
   }
-}
+};
+
+
+var findCrimesByLine = function(directions, callback) {
+  var asyncNumCrimes = directions.map((street) => {
+    return new Promise((res, rej) => {
+      dbCrime.findCrimesByLine(street, function(err, crimes) {
+        if (err) {
+          console.error(err);
+          rej(err);
+        } else {
+          res(crimes.length);
+        }
+      });
+    });
+  });
+  Promise.all(asyncNumCrimes).then(callback);
+};
+
+
+var findAllCrimes = function(callback) {
+  dbCrime.findAll(function(err, results) {
+    callback(results);
+  });
+};
 
 module.exports.getCrimeLocs = getCrimeLocs;
 module.exports.convertDirectionsToStreet = convertDirectionsToStreet;
+module.exports.findAllCrimes = findAllCrimes;
+module.exports.findCrimesByLine = findCrimesByLine;

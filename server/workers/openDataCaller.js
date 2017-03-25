@@ -14,15 +14,14 @@ request(requestQuery, function(err, res, body) {
   if (err) {
     console.log(err);
   } else {
-    db.clearDatabase(function(err) {
-      var results = JSON.parse(body);
-      db.storeOpenData(results, function(err) {
-        if (err) {
-          // console.error(err);
-          // errors are shown when there is a duplicate entry.
-        }
+    var results = JSON.parse(body);
+    return db.clearDatabase()
+      .then(() => {
+        db.storeOpenData(results);
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    });
   }
 });
 

@@ -1,33 +1,68 @@
 var db = require('../../database/index');
 var Crime = require('../../database/models/Crime');
 
-var storeOpenData = (crimeData, callback) => {
+var storeOpenData = (crimeData) => {
 
-  crimeData.forEach((crime) => {
-    Crime.create({
-      address: crime.address,
-      category: crime.category,
-      date: crime.date,
-      dayofweek: crime.dayofweek,
-      descript: crime.descript,
-      incidntnum: crime.incidntnum,
-      location: {
-        type: "Point",
-        coordinates: [
-          crime.location.latitude, crime.location.longitude
-        ]
-      }
-    }, function (err, crime) {
-      if (err) {
-        callback(err);
-      }
+  var asyncStore = crimeData.map((crime) => {
+    return new Promise((res, rej) => {
+
+      var long = crime.location.longitude - 0;
+      var lat = crime.location.latitude - 0;
+      var mutilplier = 1000000000000;
+      var boxPadding = 20000000;
+      
+      var coords = {
+        upperLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
+        upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
+        lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
+        lowerLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
+      }; 
+
+      Crime.create({
+        address: crime.address,
+        category: crime.category,
+        date: crime.date,
+        dayofweek: crime.dayofweek,
+        descript: crime.descript,
+        incidntnum: crime.incidntnum,
+        location: {
+          type: "Point",
+          coordinates: [
+            long, lat
+          ]
+        },
+        box: {
+          type: "Polygon",
+          coordinates: [[
+            coords.upperLeft,
+            coords.upperRight,
+            coords.lowerRight,
+            coords.lowerLeft,
+            coords.upperLeft
+          ]]
+        },
+        index: "box"
+      }, function (err, crime) {
+        if (err) {
+          rej(err);
+        } else {
+          res();
+        }
+      });
     });
   });
-}
+  Promise.all(asyncStore);
+};
 
-var clearDatabase = (callback) => {
-  Crime.remove({}, function(err) {
-    callback();
+var clearDatabase = () => {
+  return new Promise((res, rej) => {
+    Crime.remove({}, function(err) {
+      if (err) {
+        rej(err);
+      } else {
+        res();
+      }
+    });
   });
 };
 
@@ -51,7 +86,50 @@ var findLocations = (callback) => {
   });
 };
 
+// trying to make $geoIntersection
+var findNearbyCrimes = (pointOfInterest, callback) => {
+  Crime.find({
+    location: {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: pointOfInterest
+        },
+        $maxDistance: 100,
+      }
+    }
+  }, function (err, results) {
+    if (err) {
+      console.error(err);
+    } else {
+      callback(results);
+    }
+  });
+};
+
+var findCrimesByLine = (lineLongLat, callback) => {
+  Crime.find({
+    box: {
+      $geoIntersects: {
+        $geometry: {
+          type: "LineString",
+          coordinates: lineLongLat,
+        }
+      }
+    }
+  }, function (err, results) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+
 module.exports.storeOpenData = storeOpenData;
 module.exports.clearDatabase = clearDatabase;
-module.exports.findAll = findAll;
 module.exports.findLocations = findLocations;
+module.exports.findAll = findAll;
+module.exports.findNearbyCrimes = findNearbyCrimes;
+module.exports.findCrimesByLine = findCrimesByLine;
