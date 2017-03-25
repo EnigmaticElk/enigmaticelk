@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
 import Directions from './directions.jsx';
+import Legend from './Legend.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -72,6 +73,7 @@ class App extends React.Component {
           setMap={this.setMap}
         />
         <br />
+        <Legend />
         <Directions
           origDest={this.state.origDest}
           map={this.state.map}
