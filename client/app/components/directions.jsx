@@ -109,6 +109,6 @@ class Directions extends React.Component {
       <div id='directionsPanel' style={style}></div>
     );
   }
-};
+}
 
 export default Directions;

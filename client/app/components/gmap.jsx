@@ -56,6 +56,6 @@ class Gmap extends React.Component {
       <div className='map' style={style}></div>
     );
   }
-};
+}
 
 export default Gmap;
