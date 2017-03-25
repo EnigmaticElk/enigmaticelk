@@ -11,29 +11,29 @@ let updateCrimeCounter = function(lat, lng) {
     } else {
       if (JSON.parse(body).address) {
         let street = JSON.parse(body).address.road;
-        db.findRatingEntry(street, function(err1, results1) {
-          if (err1) {
-            console.log(err1);
-          } else {
+        return db.findRatingEntry(street)
+          .then((results) => {
             if (results1.length < 1) {
-              db.createRatingEntry(street, function(err2, results2) {
-                if (err2) {
-                  console.log(err2);
-                } else {
+              db.createRatingEntry(street)
+                .then(() => {
                   console.log('created new entry');
-                }
-              });
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
             } else {
-              db.updateRatingEntry(street, results1, function(err3, results3) {
-                if (err3) {
-                  console.log(err3);
-                } else {
+              db.updateRatingEntry(street, results)
+                .then((results) => {
                   console.log('increased entry\'s crime count');
-                }
-              });
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
             }
-          }
-        });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       } else {
         console.log('API connection error');
       }
