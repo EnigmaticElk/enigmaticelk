@@ -35,4 +35,3 @@ bower_components/
 # API Keys
 server/googleMapsConfig.js
 server/locationIQConfig.js
-
