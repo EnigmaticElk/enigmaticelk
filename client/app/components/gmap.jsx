@@ -29,7 +29,7 @@ class Gmap extends React.Component {
       this.overlayHeatmap();
       this.setState({
         heatmapRendered: true
-      })
+      });
     }
   }
 
@@ -56,6 +56,6 @@ class Gmap extends React.Component {
       <div className='map' style={style}></div>
     );
   }
-};
+}
 
 export default Gmap;
