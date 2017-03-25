@@ -1,10 +1,11 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var port = process.env.PORT || 3000;
-var apiCall = require('./workers/openDataCaller');
-var utils = require('./utils')
-var bodyParser = require('body-parser');
+let express = require('express');
+let path = require('path');
+let app = express();
+let port = process.env.PORT || 3000;
+// let apiCall = require('./workers/openDataCaller');
+let utils = require('./utils')
+let bodyParser = require('body-parser');
+// let rate = require('./workers/countCrimesPerStreet');
 
 app.use(bodyParser.json());
 
@@ -17,14 +18,15 @@ app.get('/heatmapData', function(req, res) {
 });
 
 app.post('/ratings', function(req, res) {
-  utils.convertDirectionsToStreet(req, function(err, response) {
-    if (err) {
-      res.writeHead(404);
-      res.end();
-    } else {
+  utils.convertDirectionsToStreet(req)
+    .then((response) => {
       res.send(JSON.stringify(response));
-    }
-  });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.writeHead(500);
+      res.end();
+    });
 });
 
 app.listen(port);
