@@ -28,5 +28,5 @@ describe('Server', function() {
     });
 
   });
-
-})
+  
+});

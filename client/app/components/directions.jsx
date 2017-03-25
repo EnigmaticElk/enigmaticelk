@@ -119,6 +119,6 @@ class Directions extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default Directions;
