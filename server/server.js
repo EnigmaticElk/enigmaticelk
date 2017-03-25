@@ -1,10 +1,10 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var port = process.env.PORT || 3000;
-var apiCall = require('./workers/openDataCaller');
-var utils = require('./utils')
-var bodyParser = require('body-parser');
+let express = require('express');
+let path = require('path');
+let app = express();
+let port = process.env.PORT || 3000;
+let apiCall = require('./workers/openDataCaller');
+let utils = require('./utils')
+let bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
