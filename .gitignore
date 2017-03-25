@@ -32,6 +32,7 @@ client/public/
 node_modules/
 bower_components/
 
-# Google Maps API Key
+# API Keys
 server/googleMapsConfig.js
+server/locationIQConfig.js
 

@@ -16,9 +16,9 @@ db.findAllRatings(function(err1, results1) {
     console.log(err1);
   } else {
     for (var i = 0; i < results1.length; i++) {
-      if (results1[i].counter > 20) {
+      if (results1[i].counter > 19) {
         assign(results1[i].street, 'red');
-      } else if (results1[i].counter > 10) {
+      } else if (results1[i].counter > 9) {
         assign(results1[i].street, 'yellow');
       } else {
         assign(results1[i].street, 'green');
@@ -26,4 +26,3 @@ db.findAllRatings(function(err1, results1) {
     }
   }
 });
-
