@@ -5,7 +5,8 @@ class Directions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      origDest: null
+      origDest: null,
+      lines: []
     };
   }
 
@@ -13,9 +14,17 @@ class Directions extends React.Component {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer({
       draggable: true,
-      suppressPolylines: true
+      polylineOptions: {
+        strokeOpacity: 0.25
+      }
     });
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+    directionsDisplay.addListener('routeindex_changed', () => {
+      this.clearLines();
+      let directions = directionsDisplay.directions;
+      let routeIndex = directionsDisplay.getRouteIndex();
+      this.props.getCrimeData(directions.routes[routeIndex].legs[0].steps);
+    });
     this.setState({
       directionsService: directionsService,
       directionsDisplay: directionsDisplay
@@ -45,12 +54,12 @@ class Directions extends React.Component {
     var request = {
       origin: start,
       destination: end,
-      travelMode: 'WALKING',
+      travelMode: 'DRIVING',
+      avoidHighways: true,
       provideRouteAlternatives: true
     };
     this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
-        this.props.getCrimeData(response.routes[0].legs[0].steps);
         this.state.directionsDisplay.setDirections(response);
       }
     })
@@ -59,8 +68,8 @@ class Directions extends React.Component {
   drawLine(origin, destination, rating) {
     let options = {
       strokeColor: rating,
-      strokeOpacity: 0.5,
-      strokeWeight: 3
+      strokeOpacity: 0.75,
+      strokeWeight: 5
     }
 
     let dirRenderer = new google.maps.DirectionsRenderer({
@@ -69,18 +78,26 @@ class Directions extends React.Component {
       preserveViewport: true
     })
 
+    this.state.lines.push(dirRenderer);
     dirRenderer.setMap(this.props.map);
 
     let request = {
       origin: origin,
       destination: destination,
-      travelMode: 'WALKING'
+      travelMode: 'DRIVING',
+      avoidHighways: true
     };
 
     this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
         dirRenderer.setDirections(response);
       }
+    })
+  }
+
+  clearLines() {
+    this.state.lines.forEach((line) => {
+      line.setMap(null);
     })
   }
 
