@@ -10,7 +10,7 @@ let getCrimeLocs = function (callback) {
 };
 
 let assignStreetFromLngLat = (lng, lat) => {
-  return new Promise((res, rej) => {
+  return new Promise((response, rej) => {
     let url =`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_API_KEY}`;
     request(url, function(err, res, body) {
       if (err) {
@@ -21,9 +21,9 @@ let assignStreetFromLngLat = (lng, lat) => {
           .then((results) => {
             if (results.length < 1) {
               let defaultResponse = [{street: street, counter: 0, rating: 'green'}];
-              res(defaultResponse);
+              response(defaultResponse);
             } else {
-              res(results);
+              response(results);
             }
           })
           .catch((err) => {

@@ -22,7 +22,8 @@ app.post('/ratings', function(req, res) {
       res.send(JSON.stringify(response));
     })
     .catch((err) => {
-      res.writeHead(404);
+      console.error(err);
+      res.writeHead(500);
       res.end();
     });
 });
