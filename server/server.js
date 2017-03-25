@@ -3,7 +3,7 @@ let path = require('path');
 let app = express();
 let port = process.env.PORT || 3000;
 let apiCall = require('./workers/openDataCaller');
-let utils = require('./utils')
+let utils = require('./utils');
 let bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -41,7 +41,6 @@ app.post('/ratingsForEntireStreet', (req, res) => {
 
 
 app.post('/ratings', (req, res) => {
-  
   let directions = req.body.streets;
   utils.findCrimesByLine(directions)
     .then((crimesPerStreet) => {
@@ -52,9 +51,7 @@ app.post('/ratings', (req, res) => {
       res.writeHead(500);
       res.end();
     });
-
 });
-
 
 app.get('/allCrimes', (req, res) => {
   utils.findAllCrimes()
@@ -67,7 +64,6 @@ app.get('/allCrimes', (req, res) => {
       res.end();
     });
 });
-
 
 app.listen(port);
 

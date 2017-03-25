@@ -4,7 +4,7 @@ let crime = require('../models/crime');
 let LOC_API_KEY = require('../locationIQConfig.js');
 
 let updateCrimeCounter = (lat, lng) => {
-  let url =  `http://locationiq.org/v1/reverse.php?format=json&key=${LOC_API_KEY}&lat=${lat}&lon=${lng}`;
+  let url = `http://locationiq.org/v1/reverse.php?format=json&key=${LOC_API_KEY}&lat=${lat}&lon=${lng}`;
   request(url, (err, res, body) => {
     if (err) {
       console.log(err);

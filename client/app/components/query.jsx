@@ -10,7 +10,7 @@ class Query extends React.Component {
     var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.699862,-122.516221),
       new google.maps.LatLng(37.815635, -122.369876)
-      );
+    );
     var options = {
       bounds: defaultBounds,
       strictBounds: true
@@ -23,8 +23,7 @@ class Query extends React.Component {
     this.setState({
       origin: origAutocomplete,
       destination: destAutocomplete
-    })
-
+    });
   }
 
   render () {
