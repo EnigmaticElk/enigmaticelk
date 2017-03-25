@@ -13,9 +13,13 @@ class Directions extends React.Component {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer({
       draggable: true,
-      suppressPolylines: true
+      //suppressPolylines: true
     });
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+    directionsDisplay.addListener('directions_changed', () => {
+      let directions = directionsDisplay.directions;
+      this.props.getCrimeData(directions.routes[0].legs[0].steps);
+    })
     this.setState({
       directionsService: directionsService,
       directionsDisplay: directionsDisplay
@@ -45,12 +49,12 @@ class Directions extends React.Component {
     var request = {
       origin: start,
       destination: end,
-      travelMode: 'WALKING',
+      travelMode: 'DRIVING',
+      avoidHighways: true,
       provideRouteAlternatives: true
     };
     this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
-        this.props.getCrimeData(response.routes[0].legs[0].steps);
         this.state.directionsDisplay.setDirections(response);
       }
     })
@@ -59,7 +63,7 @@ class Directions extends React.Component {
   drawLine(origin, destination, rating) {
     let options = {
       strokeColor: rating,
-      strokeOpacity: 0.5,
+      strokeOpacity: 0.75,
       strokeWeight: 3
     }
 
@@ -74,7 +78,8 @@ class Directions extends React.Component {
     let request = {
       origin: origin,
       destination: destination,
-      travelMode: 'WALKING'
+      travelMode: 'DRIVING',
+      avoidHighways: true
     };
 
     this.state.directionsService.route(request, (response, status) => {
