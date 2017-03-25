@@ -5,7 +5,8 @@ class Directions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      origDest: null
+      origDest: null,
+      lines: []
     };
   }
 
@@ -13,10 +14,13 @@ class Directions extends React.Component {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer({
       draggable: true,
-      //suppressPolylines: true
+      polylineOptions: {
+        strokeOpacity: 0.25
+      }
     });
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
     directionsDisplay.addListener('directions_changed', () => {
+      this.clearLines();
       let directions = directionsDisplay.directions;
       this.props.getCrimeData(directions.routes[0].legs[0].steps);
     })
@@ -64,7 +68,7 @@ class Directions extends React.Component {
     let options = {
       strokeColor: rating,
       strokeOpacity: 0.75,
-      strokeWeight: 3
+      strokeWeight: 5
     }
 
     let dirRenderer = new google.maps.DirectionsRenderer({
@@ -73,6 +77,7 @@ class Directions extends React.Component {
       preserveViewport: true
     })
 
+    this.state.lines.push(dirRenderer);
     dirRenderer.setMap(this.props.map);
 
     let request = {
@@ -86,6 +91,12 @@ class Directions extends React.Component {
       if (status === 'OK') {
         dirRenderer.setDirections(response);
       }
+    })
+  }
+
+  clearLines() {
+    this.state.lines.forEach((line) => {
+      line.setMap(null);
     })
   }
 
