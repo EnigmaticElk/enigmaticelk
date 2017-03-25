@@ -1,28 +1,29 @@
-var db = require('../models/rating.js');
+let db = require('../models/rating.js');
 
-var assign = function(street, rating) {
-  db.assignOneRating(street, rating, function(err2, results2) {
-    if (err2) {
-      console.log(err2);
-    } else {
+let assign = (street, rating) => {
+  db.assignOneRating(street, rating)
+    .then((results) => {
       console.log('assigned rating');
-    }
+    })
+    .catch((err) => {
+      console.log(err);
   });  
-}
+};
 
 // assigns ratings to streets
-db.findAllRatings(function(err1, results1) {
-  if (err1) {
-    console.log(err1);
-  } else {
-    for (var i = 0; i < results1.length; i++) {
-      if (results1[i].counter > 40) {
-        assign(results1[i].street, 'red');
-      } else if (results1[i].counter > 10) {
-        assign(results1[i].street, 'yellow');
+db.findAllRatings()
+  .then((results) => {
+    for (let i = 0; i < results.length; i++) {
+      if (results[i].counter > 19) {
+        assign(results[i].street, 'red');
+      } else if (results[i].counter > 9) {
+        assign(results[i].street, 'yellow');
       } else {
-        assign(results1[i].street, 'green');
+        assign(results[i].street, 'green');
       }
     }
-  }
-});
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+

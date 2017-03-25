@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var ratingSchema = new mongoose.Schema({
+let ratingSchema = new mongoose.Schema({
   street: String, 
   counter: Number, 
   rating: String

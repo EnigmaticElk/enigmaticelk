@@ -1,7 +1,7 @@
-var request = require('request');
-var db = require('../models/crime');
+let request = require('request');
+let db = require('../models/crime');
 
-var requestQuery =
+let requestQuery =
 'https://data.sfgov.org/resource/9v2m-8wqu.json?\
 $where=\
 category!="NON-CRIMINAL" AND \
@@ -10,19 +10,18 @@ category!="BRIBERY" AND \
 category!="FORGERY/COUNTERFEITING" AND \
 category!="FRAUD"&$limit=10000';
 
-request(requestQuery, function(err, res, body) {
+request(requestQuery, (err, res, body) => {
   if (err) {
     console.log(err);
   } else {
-    db.clearDatabase(function(err) {
-      var results = JSON.parse(body);
-      db.storeOpenData(results, function(err) {
-        if (err) {
-          // console.error(err);
-          // errors are shown when there is a duplicate entry.
-        }
+    let results = JSON.parse(body);
+    return db.clearDatabase()
+      .then(() => {
+        db.storeOpenData(results);
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    });
-  }
+    }
 });
 
