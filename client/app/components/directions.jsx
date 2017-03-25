@@ -19,11 +19,12 @@ class Directions extends React.Component {
       }
     });
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
-    directionsDisplay.addListener('directions_changed', () => {
+    directionsDisplay.addListener('routeindex_changed', () => {
       this.clearLines();
       let directions = directionsDisplay.directions;
-      this.props.getCrimeData(directions.routes[0].legs[0].steps);
-    })
+      let routeIndex = directionsDisplay.getRouteIndex();
+      this.props.getCrimeData(directions.routes[routeIndex].legs[0].steps);
+    });
     this.setState({
       directionsService: directionsService,
       directionsDisplay: directionsDisplay
