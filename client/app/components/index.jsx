@@ -3,7 +3,6 @@ import {render} from 'react-dom';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
 import Directions from './directions.jsx';
-import Legend from './Legend.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
