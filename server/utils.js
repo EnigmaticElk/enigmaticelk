@@ -2,6 +2,8 @@ let dbCrime = require('./models/crime.js');
 let dbRating = require('./models/rating.js');
 let request = require('request');
 let GOOGLE_API_KEY = require('./googleMapsConfig.js');
+let ratingInfo = require('./ratingInfo');
+
 
 let getCrimeLocs = dbCrime.findLocations;
 
@@ -31,6 +33,7 @@ let assignStreetFromLngLat = (lng, lat) => {
 };
 
 let findCrimesByLine = (directions) => {
+
   let asyncNumCrimes = directions.map((street) => {
     return new Promise((res, rej) => {
       dbCrime.findCrimeByLine(street)
@@ -41,12 +44,12 @@ let findCrimesByLine = (directions) => {
           let stInfo = {};
           stInfo.counter = crimes.length;
           
-          if (crimes.length > 20) {
-            stInfo.rating = 'red';           
-          } else if (crimes.length > 10) {
-            stInfo.rating = 'yellow';
+          if (crimes.length >= ratingInfo.high.num) {
+            stInfo.rating = ratingInfo.high.color;
+          } else if (crimes.length >= ratingInfo.moderate.num) {
+            stInfo.rating = ratingInfo.moderate.color;
           } else {
-            stInfo.rating = 'green';
+            stInfo.rating = ratingInfo.safe.color;
           }
           let line = [street[1], street[0], stInfo];
           res(line);

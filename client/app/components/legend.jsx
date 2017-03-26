@@ -1,53 +1,29 @@
 import React from 'react';
+import Row from './Row.jsx';
 
 let Legend = (props) => {
-  let high = {
-    desc:'High',
-    style: {
-      display: 'block',
-      width: '75px',
-      color: 'red',
-      paddingTop: '7px',
-      borderBottom: '5px solid red',
-    }
-  };
 
-  let mod = {
-    desc: 'Moderate',
-    style: {
-      display: 'block',
-      width: '75px',
-      color: 'yellow',
-      paddingTop: '7px',
-      borderBottom: '5px solid yellow',
+  let makeRows = (infos) => {
+    let results = [];
+    for (var key in infos) {
+      results.push(infos[key]);
     }
-  };
+    return results;
+  }
 
-  let safe = {
-    desc: 'Safe',
-    style: {
-      display: 'block',
-      width: '75px',
-      color: 'green',
-      paddingTop: '7px',
-      borderBottom: '5px solid green',
-    }
-  };
+  let rows = makeRows(props.ratingInfo);
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <td>{high.desc}</td><td style={high.style}></td>
-        </tr>
-        <tr>
-          <td>{mod.desc}</td><td style={mod.style}></td>
-        </tr>
-        <tr>
-          <td>{safe.desc}</td><td style={safe.style}></td>
-        </tr>
-      </tbody>
-    </table>
+    <div>
+      <p>Legend</p>
+      <table>
+        <tbody>
+          {rows.map((row) => {
+            return <Row key={row.desc} desc={row.desc} color={row.color} info={row.info} />
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

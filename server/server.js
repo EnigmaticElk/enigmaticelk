@@ -5,6 +5,7 @@ let port = process.env.PORT || 3000;
 let apiCall = require('./workers/openDataCaller');
 let utils = require('./utils');
 let bodyParser = require('body-parser');
+let ratingInfo = require('./ratingInfo');
 
 app.use(bodyParser.json());
 
@@ -42,16 +43,14 @@ app.post('/ratingsForEntireStreet', (req, res) => {
 
 app.post('/ratings', (req, res) => {
   let directions = req.body.streets;
-  console.log('directions', directions);
   
   utils.findCrimesByLine(directions)
     .then((crimesPerStreet) => {
-      let data = {
+      let crimeData = {
         crimesPerStreet: crimesPerStreet,
-        // ratingMetrics: ratingMetrics,
+        ratingInfo: ratingInfo,
       };
-      console.log('data', data);
-      res.send(JSON.stringify(data));
+      res.send(JSON.stringify(crimeData));
     })
     .catch((err) => {
       console.error(err);
