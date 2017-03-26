@@ -19,7 +19,13 @@ let Legend = (props) => {
       <table>
         <tbody>
           {rows.map((row) => {
-            return <Row key={row.desc} desc={row.desc} color={row.color} info={row.info} />
+            return <Row 
+                    key={row.desc} 
+                    desc={row.desc} 
+                    color={row.color} 
+                    info={row.info} 
+                    num={row.num}
+                    />
           })}
         </tbody>
       </table>
