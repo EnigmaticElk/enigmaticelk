@@ -23,7 +23,6 @@ class App extends React.Component {
   componentDidMount() {
     axios.get('/heatmapData')
       .then(({data}) => {
-        console.log(data);
         this.setState({
           heatmapData: data.heatmapData,
           ratingInfo: data.ratingInfo

@@ -7,7 +7,9 @@ class Directions extends React.Component {
     super(props);
     this.state = {
       origDest: null,
-      lines: []
+      drawnLines: [],
+      undrawnLines: [],
+      routeIndex: 0
     };
     this.displayLegend = this.displayLegend.bind(this);
   }
@@ -21,16 +23,28 @@ class Directions extends React.Component {
       }
     });
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
-    directionsDisplay.addListener('routeindex_changed', () => {
-      this.clearLines();
-      let directions = directionsDisplay.directions;
-      let routeIndex = directionsDisplay.getRouteIndex();
-      this.props.getCrimeData(directions.routes[routeIndex].legs[0].steps);
-    });
     this.setState({
       directionsService: directionsService,
       directionsDisplay: directionsDisplay
     });
+    directionsDisplay.addListener('directions_changed', () => {
+      this.renderLines(0);
+    });
+    directionsDisplay.addListener('routeindex_changed', () => {
+      let routeIndex = directionsDisplay.getRouteIndex();
+      if (this.state.routeIndex !== routeIndex) {
+        this.setState({
+          routeIndex: routeIndex
+        });
+        this.renderLines(routeIndex);
+      }
+    });
+  }
+
+  renderLines(routeIndex) {
+    this.clearLines();
+    let directions = this.state.directionsDisplay.directions;
+    this.props.getCrimeData(directions.routes[routeIndex].legs[0].steps);    
   }
 
   componentDidUpdate() {
@@ -42,7 +56,7 @@ class Directions extends React.Component {
       this.setState({
         origDest: this.props.origDest
       });
-    };
+    }
     if (this.props.streetLines) {
       this.props.streetLines.forEach((line) => {
         let origin = `${line[0][1]},${line[0][0]}`;
@@ -79,7 +93,7 @@ class Directions extends React.Component {
       preserveViewport: true
     });
 
-    this.state.lines.push(dirRenderer);
+    this.state.drawnLines.push(dirRenderer);
     dirRenderer.setMap(this.props.map);
 
     let request = {
@@ -91,14 +105,21 @@ class Directions extends React.Component {
     this.state.directionsService.route(request, (response, status) => {
       if (status === 'OK') {
         dirRenderer.setDirections(response);
+      } else if (status === 'OVER_QUERY_LIMIT') {
+        this.state.undrawnLines.push(setTimeout(() => {
+          this.drawLine(origin, destination, rating)
+        }, 1000));
       }
     });
   }
 
   clearLines() {
-    this.state.lines.forEach((line) => {
+    this.state.drawnLines.forEach((line) => {
       line.setMap(null);
     });
+    this.state.undrawnLines.forEach((line) => {
+      clearTimeout(line);
+    })
   }
 
   displayLegend() {
