@@ -42,7 +42,6 @@ class Directions extends React.Component {
   }
 
   renderLines(routeIndex) {
-    console.log('renderLines called')
     this.clearLines();
     let directions = this.state.directionsDisplay.directions;
     this.props.getCrimeData(directions.routes[routeIndex].legs[0].steps);    
@@ -104,7 +103,6 @@ class Directions extends React.Component {
     };
 
     this.state.directionsService.route(request, (response, status) => {
-      console.log(status)
       if (status === 'OK') {
         dirRenderer.setDirections(response);
       } else if (status === 'OVER_QUERY_LIMIT') {
