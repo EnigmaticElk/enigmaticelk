@@ -23,8 +23,10 @@ class App extends React.Component {
   componentDidMount() {
     axios.get('/heatmapData')
       .then(({data}) => {
+        console.log(data);
         this.setState({
-          heatmapData: data
+          heatmapData: data.heatmapData,
+          ratingInfo: data.ratingInfo
         });
       })
       .catch((err) => {
@@ -54,7 +56,6 @@ class App extends React.Component {
       .then((res) => {
         this.setState({
           streetLines: res.data.crimesPerStreet,
-          ratingInfo: res.data.ratingInfo
         });
       })
       .catch((err) => {
