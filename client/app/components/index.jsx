@@ -52,8 +52,9 @@ class App extends React.Component {
     });
     axios.post('/ratings', {streets: coords})
       .then((res) => {
+        console.log('res.data.crimesPerStreet: ', res.data.crimesPerStreet);
         this.setState({
-          streetLines: res.data
+          streetLines: res.data.crimesPerStreet
         });
       })
       .catch((err) => {

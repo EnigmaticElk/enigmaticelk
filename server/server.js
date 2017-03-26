@@ -42,9 +42,16 @@ app.post('/ratingsForEntireStreet', (req, res) => {
 
 app.post('/ratings', (req, res) => {
   let directions = req.body.streets;
+  console.log('directions', directions);
+  
   utils.findCrimesByLine(directions)
     .then((crimesPerStreet) => {
-      res.send(JSON.stringify(crimesPerStreet));
+      let data = {
+        crimesPerStreet: crimesPerStreet,
+        // ratingMetrics: ratingMetrics,
+      };
+      console.log('data', data);
+      res.send(JSON.stringify(data));
     })
     .catch((err) => {
       console.error(err);
