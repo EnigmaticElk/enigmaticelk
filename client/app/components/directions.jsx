@@ -50,20 +50,20 @@ class Directions extends React.Component {
   componentDidUpdate() {
     if (this.props.map) {
       this.state.directionsDisplay.setMap(this.props.map);
-    };
+    }
     if (this.props.origDest && this.props.origDest !== this.state.origDest) {
       this.calcRoute(this.props.origDest[0].formatted_address, this.props.origDest[1].formatted_address);
       this.setState({
         origDest: this.props.origDest
       });
-    };
+    }
     if (this.props.streetLines) {
       this.props.streetLines.forEach((line) => {
         let origin = `${line[0][1]},${line[0][0]}`;
         let dest = `${line[1][1]},${line[1][0]}`;
         this.drawLine(origin, dest, line[2].rating);
       });
-    };
+    }
   }
 
   calcRoute(start, end) {
