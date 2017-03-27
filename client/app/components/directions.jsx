@@ -1,5 +1,4 @@
 import React from 'react';
-import Legend from './legend.jsx';
 
 class Directions extends React.Component {
 
@@ -10,9 +9,7 @@ class Directions extends React.Component {
       drawnLines: [],
       undrawnLines: [],
       routeIndex: 0,
-      legendRendered: false
     };
-    this.displayLegend = this.displayLegend.bind(this);
   }
 
   componentDidMount() {
@@ -65,7 +62,6 @@ class Directions extends React.Component {
         this.drawLine(origin, dest, line[2].rating);
       });
     }
-    this.displayLegend();
   }
 
   calcRoute(start, end) {
@@ -124,24 +120,13 @@ class Directions extends React.Component {
     })
   }
 
-  displayLegend() {
-    if (!this.state.legendRendered && this.props.map) {
-      this.props.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('legend'));
-      this.setState({
-        legendRendered: true
-      });
-    }
-  }
-
   render() {
     var style = {
-      width: '750px',
-      height: '650px'
+      margin: 20,
     };
 
     return (
       <div id='directionsPanel' style={style}>
-        <Legend ratingInfo={this.props.ratingInfo} />
       </div>
     );
   }
