@@ -60,7 +60,7 @@ class Query extends React.Component {
             marginTop: 5,
             marginLeft: 5
           }}
-        >
+          >
           Search
         </RaisedButton>
       </div>

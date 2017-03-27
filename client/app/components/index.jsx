@@ -84,6 +84,7 @@ class App extends React.Component {
         <div>
           <AppBar
             title="SF SafeWalk"
+            iconElementLeft={<div />}
           />
           <Query setOrigAndDest={this.setOrigAndDest}/>
           <br />
