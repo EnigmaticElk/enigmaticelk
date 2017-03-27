@@ -123,7 +123,6 @@ class Directions extends React.Component {
   render() {
     var style = {
       margin: 20,
-      // width: '100%',
     };
 
     return (
