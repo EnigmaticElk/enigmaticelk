@@ -1,19 +1,19 @@
 let ratingInfo = {
   high: {
     desc: 'Risky',
-    minNum: 10,
+    minNum: 20,
     color: 'red',
   },
   moderate: {
     desc: 'Sketchy',
-    minNum: 5,
+    minNum: 10,
     color: 'yellow',
   },
   safe: {
     desc: 'Safe',
     minNum: 0,
     color: 'green',
-    maxNum: 5,
+    maxNum: 10,
   },
 };
 
@@ -21,7 +21,8 @@ module.exports.ratingInfo = ratingInfo;
 
 
 const calcRating = (streetLength, numCrimes) => {
-  let crimePerkM = (numCrimes / streetLength) / 1000;
+  console.log('streetLength, numCrimes', streetLength, numCrimes);
+  let crimePerkM = (numCrimes / streetLength) * 1000;
   if (crimePerkM >= ratingInfo.high.minNum) {
     return ratingInfo.high.color;
   } else if (crimePerkM >= ratingInfo.moderate.minNum) {

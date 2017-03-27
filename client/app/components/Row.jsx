@@ -18,9 +18,9 @@ class Row extends React.Component {
   toggleInfo(e) {
     let info;
     if (this.props.minNum > 0) {
-      info = `${this.props.minNum} or more crimes /kM on this stretch in last 30 days`;
+      info = `${this.props.minNum} or more crimes per kM on this stretch in last 30 days`;
     } else {
-      info = `Less than ${this.props.maxNum} crimes /kM on this stretch in last 30 days`;
+      info = `Less than ${this.props.maxNum} crimes per kM on this stretch in last 30 days`;
     }
     
     if (!this.state.desc) {
