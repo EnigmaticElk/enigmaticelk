@@ -8,9 +8,9 @@ import Directions from '../client/app/components/directions.jsx';
 
 describe('<Query />', () => {
 
-  it ('renders a button component', () => {
+  it ('renders a RaisedButton component', () => {
     const wrapper = shallow(<Query />);
-    expect(wrapper.find('button')).to.have.length(1);
+    expect(wrapper.find('RaisedButton')).to.have.length(1);
   });
 
   it ('renders an origin input', () => {
