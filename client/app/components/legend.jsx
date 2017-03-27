@@ -13,8 +13,14 @@ let Legend = (props) => {
   let rows = makeRows(props.ratingInfo);
 
   return (
-    <div>
-      <p>Legend</p>
+    <div
+      id='legend'
+      style={{
+        backgroundColor: "rgba(255,255,255,0.75)",
+        marginTop: "10px",
+        marginRight: "10px"
+      }}
+    >
       <table>
         <tbody>
           {rows.map((row) => {
