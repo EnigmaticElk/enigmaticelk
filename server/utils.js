@@ -2,7 +2,7 @@ let dbCrime = require('./models/crime.js');
 let dbRating = require('./models/rating.js');
 let request = require('request');
 let GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || require('./googleMapsConfig.js');
-let calcRating = require('./models/ratingInfo').calcRating;
+let calcRating = require('./ratingInfo').calcRating;
 
 
 let getCrimeLocs = dbCrime.findLocations;
