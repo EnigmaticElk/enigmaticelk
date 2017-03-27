@@ -28,12 +28,11 @@ describe("Crimes", function() {
       box: {
         type: "Polygon",
         coordinates: [[
-          [-122.40884329999997, 37.7835842],
-          [-122.40864329999997, 37.7835842],
-          [-122.40864329999997, 37.7833842],
-          [-122.40884329999997, 37.7833842],
-          [-122.40884329999997, 37.7835842],
-
+          [-122.40888329999996, 37.7835242],
+          [-122.40880329999997, 37.7835242],
+          [-122.40880329999997, 37.7834442],
+          [-122.40888329999996, 37.7834442],
+          [-122.40888329999996, 37.7835242],
         ]]
       },
       index: "box"
@@ -93,6 +92,7 @@ describe("Crimes", function() {
     let marketStreet = [[-122.403377, 37.787719], [-122.414781, 37.778749]]; //from 3rd 8th St.
     crime.findCrimeByLine(marketStreet)
           .then((crimesOnStreet) => {
+            console.log('crimesOnStreet', crimesOnStreet);
             expect(crimesOnStreet).to.exist;
             expect(crimesOnStreet.length).to.eql(1);
             done();
