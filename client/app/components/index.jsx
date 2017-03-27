@@ -1,5 +1,9 @@
 import React from 'react';
 import {render} from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+import AppBar from 'material-ui/AppBar';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
 import Directions from './directions.jsx';
@@ -64,23 +68,28 @@ class App extends React.Component {
 
   render () {
     return (
-      <div>
-        <h1>SF SafeWalk</h1>
-        <Query setOrigAndDest={this.setOrigAndDest}/>
-        <br />
-        <Gmap
-          heatmapData={this.state.heatmapData}
-          setMap={this.setMap}
-        />
-        <br />
-        <Directions
-          origDest={this.state.origDest}
-          map={this.state.map}
-          getCrimeData={this.getCrimeData}
-          streetLines={this.state.streetLines}
-          ratingInfo={this.state.ratingInfo}
-         />
-      </div>
+      <MuiThemeProvider>
+        <div>
+          <h1>SF SafeWalk</h1>
+            <AppBar
+              title="SF SafeWalk"
+            />
+          <Query setOrigAndDest={this.setOrigAndDest}/>
+          <br />
+          <Gmap
+            heatmapData={this.state.heatmapData}
+            setMap={this.setMap}
+          />
+          <br />
+          <Directions
+            origDest={this.state.origDest}
+            map={this.state.map}
+            getCrimeData={this.getCrimeData}
+            streetLines={this.state.streetLines}
+            ratingInfo={this.state.ratingInfo}
+           />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

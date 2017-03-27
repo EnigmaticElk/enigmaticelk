@@ -1,4 +1,6 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Query extends React.Component {
   constructor (props) {
@@ -33,7 +35,7 @@ class Query extends React.Component {
         <br />
         Destination: <input id="dest-input" type="text" size="50" />
         <br />
-        <button onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace(), this.state.destination.getPlace());}}>Search</button>
+        <RaisedButton onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace(), this.state.destination.getPlace());}}>Search</RaisedButton>
       </div>
     );
   }
