@@ -3,11 +3,11 @@ import {render} from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
-import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
 import Directions from './directions.jsx';
+import MenuBar from './MenuBar.jsx'
 import axios from 'axios';
 
 class App extends React.Component {
@@ -86,10 +86,7 @@ class App extends React.Component {
     return (
       <MuiThemeProvider>
         <div>
-          <AppBar
-            title="SF SafeWalk"
-            iconElementLeft={<div />}
-          />
+          <MenuBar />
           <Query setOrigAndDest={this.setOrigAndDest}/>
           <br />
           <Paper
