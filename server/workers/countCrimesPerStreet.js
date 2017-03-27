@@ -1,7 +1,7 @@
 let request = require('request');
 let db = require('../models/rating.js');
 let crime = require('../models/crime');
-let LOC_API_KEY = require('../locationIQConfig.js');
+let LOC_API_KEY = process.env.LOC_API_KEY || require('../locationIQConfig.js');
 
 let updateCrimeCounter = (lat, lng) => {
   let url = `http://locationiq.org/v1/reverse.php?format=json&key=${LOC_API_KEY}&lat=${lat}&lon=${lng}`;
