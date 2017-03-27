@@ -50,7 +50,7 @@ class Query extends React.Component {
           placeholder=""
           style={{
             width: '400px',
-            marginLeft: 15
+            marginLeft: 5
           }}
           />
         <br />
