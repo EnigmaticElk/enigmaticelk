@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
 import Query from './query.jsx';
 import Gmap from './gmap.jsx';
 import Directions from './directions.jsx';
@@ -67,18 +68,33 @@ class App extends React.Component {
   }
 
   render () {
+
+    const mapStyle = {
+      height: '500px',
+      width: '99%',
+      marginLeft: 5,
+      marginTop: 5,
+      marginRight: 10,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
+
     return (
       <MuiThemeProvider>
         <div>
-          <h1>SF SafeWalk</h1>
-            <AppBar
-              title="SF SafeWalk"
-            />
+          <AppBar
+            title="SF SafeWalk"
+          />
           <Query setOrigAndDest={this.setOrigAndDest}/>
           <br />
-          <Gmap
-            heatmapData={this.state.heatmapData}
-            setMap={this.setMap}
+          <Paper
+            style={mapStyle}
+            zDepth={3}
+            children={<Gmap
+                heatmapData={this.state.heatmapData}
+                setMap={this.setMap}
+              />
+            }
           />
           <br />
           <Directions
