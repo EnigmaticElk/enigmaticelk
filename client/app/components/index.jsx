@@ -8,6 +8,7 @@ import Query from './query.jsx';
 import Gmap from './gmap.jsx';
 import Directions from './directions.jsx';
 import MenuBar from './MenuBar.jsx'
+import Legend from './legend.jsx';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -17,12 +18,14 @@ class App extends React.Component {
       heatmapData: [],
       origDest: null,
       map: null,
-      streetLines: null
+      streetLines: null,
+      legendRendered: false
     };
     this.setOrigAndDest = this.setOrigAndDest.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.setMap = this.setMap.bind(this);
     this.getCrimeData = this.getCrimeData.bind(this);
+    this.displayLegend = this.displayLegend.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +41,10 @@ class App extends React.Component {
       });
   }
 
+  componentDidUpdate() {
+    this.displayLegend();
+  }
+
   setOrigAndDest (origin, destination) {
     this.setState({
       origDest: [origin, destination]
@@ -48,6 +55,15 @@ class App extends React.Component {
     if (!this.state.map) {
       this.setState({
         map: map
+      });
+    }
+  }
+
+  displayLegend() {
+    if (!this.state.legendRendered && this.state.map) {
+      this.state.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(document.getElementById('legend'));
+      this.setState({
+        legendRendered: true
       });
     }
   }
@@ -83,6 +99,14 @@ class App extends React.Component {
       display: 'inline-block',
     };
 
+    const directionsStyle = {
+      width: '60%',
+      marginLeft: 5,
+      marginTop: 5,
+      marginRight: 10,
+      display: 'inline-block',
+    };
+
     return (
       <MuiThemeProvider>
         <div>
@@ -99,13 +123,19 @@ class App extends React.Component {
             }
           />
           <br />
-          <Directions
-            origDest={this.state.origDest}
-            map={this.state.map}
-            getCrimeData={this.getCrimeData}
-            streetLines={this.state.streetLines}
-            ratingInfo={this.state.ratingInfo}
-           />
+          <br />
+          <Paper
+            zDepth={this.state.origDest ? 1 : 0}
+            style={directionsStyle}
+          >
+            <Directions
+              origDest={this.state.origDest}
+              map={this.state.map}
+              getCrimeData={this.getCrimeData}
+              streetLines={this.state.streetLines}
+            />
+          </Paper>
+           <Legend ratingInfo={this.state.ratingInfo} />
         </div>
       </MuiThemeProvider>
     );
