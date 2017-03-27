@@ -27,7 +27,7 @@ app.get('/heatmapData', (req, res) => {
   });
 });
 
-
+// This endpoint is not currently being used by the client. Use this endpoint to access ratings for every street in the city
 app.post('/ratingsForEntireStreet', (req, res) => {
   utils.convertDirectionsToStreet(req)
     .then((response) => {
@@ -39,7 +39,6 @@ app.post('/ratingsForEntireStreet', (req, res) => {
       res.end();
     });
 });
-
 
 app.post('/ratings', (req, res) => {
   let directions = req.body.streets;

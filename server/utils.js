@@ -3,9 +3,26 @@ let dbRating = require('./models/rating.js');
 let request = require('request');
 let GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || require('./googleMapsConfig.js');
 let calcRating = require('./ratingInfo').calcRating;
-
-
 let getCrimeLocs = dbCrime.findLocations;
+
+let findCrimesByLine = (directions) => {
+  let asyncNumCrimes = directions.map((street) => {
+    return new Promise((res, rej) => {
+      dbCrime.findCrimeByLine(street.lngLat)
+        .then((crimes, err) => {
+          if (err) {
+            rej(err);
+          }
+          let stInfo = {};
+          stInfo.counter = crimes.length;
+          stInfo.rating = calcRating(street.distance, stInfo.counter);
+          let line = [street.lngLat[1], street.lngLat[0], stInfo];
+          res(line);
+        });
+    });
+  });
+  return Promise.all(asyncNumCrimes);
+};
 
 let assignStreetFromLngLat = (lng, lat) => {
   return new Promise((resolve, rej) => {
@@ -32,25 +49,6 @@ let assignStreetFromLngLat = (lng, lat) => {
   });
 };
 
-let findCrimesByLine = (directions) => {
-
-  let asyncNumCrimes = directions.map((street) => {
-    return new Promise((res, rej) => {
-      dbCrime.findCrimeByLine(street.lngLat)
-        .then((crimes, err) => {
-          if (err) {
-            rej(err);
-          }
-          let stInfo = {};
-          stInfo.counter = crimes.length;
-          stInfo.rating = calcRating(street.distance, stInfo.counter);
-          let line = [street.lngLat[1], street.lngLat[0], stInfo];
-          res(line);
-        });
-    });
-  });
-  return Promise.all(asyncNumCrimes);
-};
 
 let convertDirectionsToStreet = (req) => {
   return new Promise((res, rej) => {
@@ -76,7 +74,7 @@ let convertDirectionsToStreet = (req) => {
   });
 };
 
+module.exports.findCrimesByLine = findCrimesByLine;
 module.exports.getCrimeLocs = getCrimeLocs;
 module.exports.convertDirectionsToStreet = convertDirectionsToStreet;
 module.exports.findAllCrimes = dbCrime.findAll;
-module.exports.findCrimesByLine = findCrimesByLine;

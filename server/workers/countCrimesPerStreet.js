@@ -47,7 +47,8 @@ crime.findAll((err, results) => {
     console.log(err);
   } else {
     console.log('results', results);
-    for (let i = 0; i < 1000; i++) {
+    // to count all 10,000 of the most recent crimes, change 10 to 10,000 in the for loop. It is set to 10 so that you can see how it works without using up your daily limit of 10,000 requests per day to the locationiq API.
+    for (let i = 0; i < 10; i++) {
       ((i) => {
         setTimeout(() => {
           updateCrimeCounter(results[i].location.coordinates[0], results[i].location.coordinates[1]);

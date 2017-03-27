@@ -14,7 +14,7 @@ let assign = (street, rating) => {
 db.findAllRatings()
   .then((results) => {
     for (let i = 0; i < results.length; i++) {
-      if (results[i].counter > 20) {
+      if (results[i].counter > 40) {
         assign(results[i].street, 'red');
       } else if (results[i].counter > 10) {
         assign(results[i].street, 'yellow');

@@ -1,7 +1,6 @@
 let db = require('../../database/index');
 let Crime = require('../../database/models/Crime');
 
-
 let storeOpenData = (crimeData) => {
 
   let asyncStore = crimeData.map((crime) => {
@@ -17,7 +16,7 @@ let storeOpenData = (crimeData) => {
         upperRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
         lowerRight: [(((long * mutilplier) + boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
         lowerLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) - boxPadding) / mutilplier)],
-      }; 
+      };
 
       Crime.create({
         address: crime.address,
