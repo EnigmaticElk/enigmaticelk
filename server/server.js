@@ -5,7 +5,7 @@ let port = process.env.PORT || 3000;
 let apiCall = require('./workers/openDataCaller');
 let utils = require('./utils');
 let bodyParser = require('body-parser');
-let ratingInfo = require('./ratingInfo');
+let ratingInfo = require('./ratingInfo').ratingInfo;
 
 app.use(bodyParser.json());
 

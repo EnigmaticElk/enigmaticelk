@@ -2,7 +2,6 @@ import React from 'react';
 import Row from './Row.jsx';
 
 let Legend = (props) => {
-
   let makeRows = (infos) => {
     let results = [];
     for (var key in infos) {
@@ -22,9 +21,9 @@ let Legend = (props) => {
             return <Row 
                     key={row.desc} 
                     desc={row.desc} 
-                    color={row.color} 
-                    info={row.info} 
-                    num={row.num}
+                    color={row.color}  
+                    minNum={row.minNum}
+                    maxNum={row.maxNum}
                     />
           })}
         </tbody>

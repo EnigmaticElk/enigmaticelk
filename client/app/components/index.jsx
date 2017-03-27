@@ -25,7 +25,7 @@ class App extends React.Component {
       .then(({data}) => {
         this.setState({
           heatmapData: data.heatmapData,
-          ratingInfo: data.ratingInfo
+          ratingInfo: data.ratingInfo,
         });
       })
       .catch((err) => {
@@ -49,7 +49,11 @@ class App extends React.Component {
 
   getCrimeData(steps) {
     let coords = steps.map((step) => {
-      return [[step.start_location.lng(), step.start_location.lat()], [step.end_location.lng(), step.end_location.lat()]];
+      let stepInfo = {
+        lngLat: [[step.start_location.lng(), step.start_location.lat()], [step.end_location.lng(), step.end_location.lat()]],
+        distance: step.distance.value,
+      };
+      return stepInfo;
     });
     axios.post('/ratings', {streets: coords})
       .then((res) => {
