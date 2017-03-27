@@ -1,4 +1,6 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Query extends React.Component {
   constructor (props) {
@@ -29,20 +31,41 @@ class Query extends React.Component {
   render () {
     return (
       <div>
-        Origin: <input id="origin-input" type="text" size="50" />
+        <TextField
+          id="origin-input"
+          floatingLabelText="Origin"
+          type="text"
+          size="50"
+          placeholder=""
+          style={{
+            width: '400px',
+            marginLeft: 5,
+          }}
+        />
+        <TextField
+          id="dest-input"
+          type="text"
+          size="50"
+          floatingLabelText="Destination"
+          placeholder=""
+          style={{
+            width: '400px',
+            marginLeft: 5
+          }}
+          />
         <br />
-        Destination: <input id="dest-input" type="text" size="50" />
-        <br />
-        <button onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace(), this.state.destination.getPlace());}}>Search</button>
+        <RaisedButton
+          onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace(), this.state.destination.getPlace());}}
+          style={{
+            marginTop: 5,
+            marginLeft: 5
+          }}
+          >
+          Search
+        </RaisedButton>
       </div>
     );
   }
 }
-
-//Commented out time of day until feature implemented
-// Time of day: <select>
-//   <option>Day</option>
-//   <option>Night</option>
-// </select>
 
 export default Query;

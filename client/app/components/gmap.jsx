@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Paper from 'material-ui/Paper';
 
 class Gmap extends React.Component {
 
@@ -47,9 +48,9 @@ class Gmap extends React.Component {
   }
 
   render() {
-    var style = {
-      width: '750px',
-      height: '500px'
+    const style = {
+      width: '100%',
+      height: '500px',
     };
 
     return (
