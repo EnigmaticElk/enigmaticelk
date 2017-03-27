@@ -9,7 +9,7 @@ let storeOpenData = (crimeData) => {
       let long = crime.location.longitude - 0;
       let lat = crime.location.latitude - 0;
       let mutilplier = 1000000000000;
-      let boxPadding = 20000000;
+      let boxPadding = 40000000;
       
       let coords = {
         upperLeft: [(((long * mutilplier) - boxPadding) / mutilplier), (((lat * mutilplier) + boxPadding) / mutilplier)],
