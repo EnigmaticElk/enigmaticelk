@@ -6,6 +6,7 @@ class Query extends React.Component {
   constructor (props) {
     super(props);
     this.state = {};
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +29,52 @@ class Query extends React.Component {
     });
   }
 
+  handleKeyDown(event) {
+    switch(event.key) {
+      case 'Enter':
+        this.checkTextInput();
+        break;
+      default: break;
+    }
+  }
+
+  checkTextInput() {
+    var start = this.state.origin.getPlace();
+    var end = this.state.destination.getPlace();
+
+    if (start && !start.formatted_address) {
+      this.setState({
+        origErrorText: 'Incorrect Address'
+      });
+    } else if (!start) {
+      this.setState({
+        origErrorText: 'Field is required'
+      });
+    } else {
+      this.setState({
+        origErrorText: ''
+      });
+    }
+
+    if (end && !end.formatted_address) {
+      this.setState({
+        destErrorText: 'Incorrect Address'
+      });
+    } else if (!end) {
+      this.setState({
+        destErrorText: 'Field is required'
+      });
+    } else {
+      this.setState({
+        destErrorText: ''
+      });
+    }
+
+    if (start && end && start.formatted_address && end.formatted_address) {
+      this.props.setOrigAndDest(start, end);
+    }
+  }
+
   render () {
     return (
       <div>
@@ -38,9 +85,14 @@ class Query extends React.Component {
           size="50"
           placeholder=""
           style={{
-            width: '400px',
+            width: '500px',
             marginLeft: 5,
           }}
+          errorText={this.state.origErrorText}
+          errorStyle={{
+            float: 'left'
+          }}
+          onKeyDown={this.handleKeyDown}
         />
         <TextField
           id="dest-input"
@@ -49,16 +101,19 @@ class Query extends React.Component {
           floatingLabelText="Destination"
           placeholder=""
           style={{
-            width: '400px',
+            width: '500px',
             marginLeft: 5
           }}
+          errorText={this.state.destErrorText}
+          errorStyle={{
+            float: 'left'
+          }}
+          onKeyDown={this.handleKeyDown}
           />
-        <br />
         <RaisedButton
-          onClick={() => {this.props.setOrigAndDest(this.state.origin.getPlace(), this.state.destination.getPlace());}}
+          onClick={this.checkTextInput.bind(this)}
           style={{
-            marginTop: 5,
-            marginLeft: 5
+            marginLeft: 10,
           }}
           >
           Search
