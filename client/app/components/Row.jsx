@@ -11,18 +11,16 @@ class Row extends React.Component {
         borderBottom: `5px solid ${this.props.color}`,
       },
       desc: null
-    };
-    
-
+    };    
     this.toggleInfo = this.toggleInfo.bind(this);
   }
 
   toggleInfo(e) {
     let info;
-    if (this.props.num > 0) {
-      info = `${this.props.num} or more crimes on this stretch in last 30 days`;
+    if (this.props.minNum > 0) {
+      info = `${this.props.minNum} or more crimes /kM on this stretch in last 30 days`;
     } else {
-      info = `Less than 10 crimes on this stretch in last 30 days`;
+      info = `Less than ${this.props.maxNum} crimes /kM on this stretch in last 30 days`;
     }
     
     if (!this.state.desc) {
