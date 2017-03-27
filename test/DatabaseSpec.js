@@ -81,12 +81,6 @@ describe("Crimes", function() {
     });
   });
 
-  it('creates a new Crime instance in the database', (done) => {
-    Crime.find({}, (err, crimes) => {
-      expect(crimes).to.exist;
-      done();
-    });
-  });
 
   it('find a crime if it is on the street', (done) => {
     let marketStreet = [[-122.403377, 37.787719], [-122.414781, 37.778749]]; //from 3rd 8th St.
